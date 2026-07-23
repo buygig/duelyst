@@ -1,6 +1,6 @@
-const BOUNTY = require('server/ai/scoring/bounty');
+const BOUNTY = require('packages/game-ai/scoring/bounty');
 const ModifierBanding = require('app/sdk/modifiers/modifierBanding');
-const arePositionsEqualOrAdjacent = require('server/ai/scoring/utils/utils_arePositionsEqualOrAdjacent');
+const arePositionsEqualOrAdjacent = require('packages/game-ai/scoring/utils/utils_arePositionsEqualOrAdjacent');
 
 /**
  * Should be used for scoring positions for purposes of summoning/moving/teleporting.

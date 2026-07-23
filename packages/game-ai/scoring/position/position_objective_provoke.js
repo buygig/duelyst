@@ -1,5 +1,5 @@
-const distanceBetweenBoardPositions = require('server/ai/scoring/utils/utils_distanceBetweenBoardPositions');
-const BOUNTY = require('server/ai/scoring/bounty');
+const distanceBetweenBoardPositions = require('packages/game-ai/scoring/utils/utils_distanceBetweenBoardPositions');
+const BOUNTY = require('packages/game-ai/scoring/bounty');
 const _ = require('underscore');
 const ModifierProvoke = require('app/sdk/modifiers/modifierProvoke');
 const CardType = require('app/sdk/cards/cardType');

@@ -1,7 +1,7 @@
-const BOUNTY = require('server/ai/scoring/bounty');
-const getBountyForDistanceFromMyGeneral = require('server/ai/scoring/bounty_getBountyForDistanceFromGeneral');
-const distanceBetweenBoardPositions = require('server/ai/scoring/utils/utils_distanceBetweenBoardPositions');
-const isUnitEvasive = require('server/ai/scoring/utils/utils_isUnitEvasive');
+const BOUNTY = require('packages/game-ai/scoring/bounty');
+const getBountyForDistanceFromMyGeneral = require('packages/game-ai/scoring/bounty_getBountyForDistanceFromGeneral');
+const distanceBetweenBoardPositions = require('packages/game-ai/scoring/utils/utils_distanceBetweenBoardPositions');
+const isUnitEvasive = require('packages/game-ai/scoring/utils/utils_isUnitEvasive');
 
 const position_proximityToGenerals = function (gameSession, unit, position) {
   // units want to be near opponent general

@@ -6,8 +6,8 @@ const { expect } = require('chai');
 const _ = require('underscore');
 
 const UtilsSDK = require('../../../utils/utils_sdk');
-const UsableDecks = require('../../../../server/ai/decks/usable_decks');
-const StarterAI = require('../../../../server/ai/starter_ai');
+const UsableDecks = require('../../../../packages/game-ai/decks/usable_decks');
+const StarterAI = require('../../../../packages/game-ai/starter_ai');
 const CONFIG = require('../../../../app/common/config');
 const Logger = require('../../../../app/common/logger.coffee');
 const SDK = require('../../../../app/sdk.coffee');

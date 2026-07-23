@@ -1,6 +1,6 @@
-const findNearestObjective = require('server/ai/scoring/utils/utils_findNearestObjective');
-const distanceBetweenBoardPositions = require('server/ai/scoring/utils/utils_distanceBetweenBoardPositions');
-const BOUNTY = require('server/ai/scoring/bounty');
+const findNearestObjective = require('packages/game-ai/scoring/utils/utils_findNearestObjective');
+const distanceBetweenBoardPositions = require('packages/game-ai/scoring/utils/utils_distanceBetweenBoardPositions');
+const BOUNTY = require('packages/game-ai/scoring/bounty');
 const _ = require('underscore');
 const SDK = require('app/sdk');
 

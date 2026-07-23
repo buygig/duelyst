@@ -1,7 +1,7 @@
 const Artifact = require('app/sdk/artifacts/artifact');
 const Spell = require('app/sdk/spells/spell');
-const CardIntent = require('server/ai/card_intent/card_intent');
-const CardTargetType = require('server/ai/card_intent/card_target_type');
+const CardIntent = require('packages/game-ai/card_intent/card_intent');
+const CardTargetType = require('packages/game-ai/card_intent/card_target_type');
 const _ = require('underscore');
 
 /**

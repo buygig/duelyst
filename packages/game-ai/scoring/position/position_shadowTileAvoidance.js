@@ -1,5 +1,5 @@
 const ModifierStackingShadows = require('app/sdk/modifiers/modifierStackingShadows');
-const ScoreForUnitDamage = require('server/ai/scoring/base/unit_damage');
+const ScoreForUnitDamage = require('packages/game-ai/scoring/base/unit_damage');
 
 const position_shadowTileAvoidance = function (gameSession, unit, position) {
   let score = 0;

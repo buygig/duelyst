@@ -1,7 +1,7 @@
-const BOUNTY = require('server/ai/scoring/bounty');
-const filterAttackTargetsForUnit = require('server/ai/scoring/utils/utils_filterAttackTargetsForUnit');
-const ScoreForUnitDamage = require('server/ai/scoring/base/unit_damage');
-const distanceBetweenBoardPositions = require('server/ai/scoring/utils/utils_distanceBetweenBoardPositions');
+const BOUNTY = require('packages/game-ai/scoring/bounty');
+const filterAttackTargetsForUnit = require('packages/game-ai/scoring/utils/utils_filterAttackTargetsForUnit');
+const ScoreForUnitDamage = require('packages/game-ai/scoring/base/unit_damage');
+const distanceBetweenBoardPositions = require('packages/game-ai/scoring/utils/utils_distanceBetweenBoardPositions');
 const _ = require('underscore');
 const SDK = require('app/sdk');
 

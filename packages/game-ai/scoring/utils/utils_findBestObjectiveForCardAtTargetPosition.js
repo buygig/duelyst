@@ -1,5 +1,5 @@
-const findNearestObjective = require('server/ai/scoring/utils/utils_findNearestObjective');
-const findAttackObjectivesAndScoresForUnit = require('server/ai/scoring/utils/utils_findAttackObjectivesAndScoresForUnit');
+const findNearestObjective = require('packages/game-ai/scoring/utils/utils_findNearestObjective');
+const findAttackObjectivesAndScoresForUnit = require('packages/game-ai/scoring/utils/utils_findAttackObjectivesAndScoresForUnit');
 const SDK = require('app/sdk');
 
 const findBestObjectiveForCardAtTargetPosition = function (gameSession, card, targetPosition) {

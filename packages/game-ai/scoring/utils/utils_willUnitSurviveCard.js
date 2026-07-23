@@ -1,6 +1,6 @@
-const CardIntent = require('server/ai/card_intent/card_intent');
-const CardTargetType = require('server/ai/card_intent/card_target_type');
-const CardIntentType = require('server/ai/card_intent/card_intent_type');
+const CardIntent = require('packages/game-ai/card_intent/card_intent');
+const CardTargetType = require('packages/game-ai/card_intent/card_target_type');
+const CardIntentType = require('packages/game-ai/card_intent/card_intent_type');
 const _ = require('underscore');
 
 /**

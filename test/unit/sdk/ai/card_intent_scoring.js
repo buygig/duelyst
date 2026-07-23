@@ -7,9 +7,9 @@ const Logger = require('app/common/logger');
 const SDK = require('app/sdk');
 const UtilsSDK = require('test/utils/utils_sdk');
 const _ = require('underscore');
-const StarterAI = require('server/ai/starter_ai');
-const CardIntent = require('server/ai/card_intent/card_intent');
-const CardIntentType = require('server/ai/card_intent/card_intent_type');
+const StarterAI = require('packages/game-ai/starter_ai');
+const CardIntent = require('packages/game-ai/card_intent/card_intent');
+const CardIntentType = require('packages/game-ai/card_intent/card_intent_type');
 
 // disable the logger for cleaner test output
 Logger.enabled = false;
@@ -4001,7 +4001,7 @@ describe('starter ai scoring', () => {
       // TEST FOR:
       //  ScoreForIntentSummon
       // LOCATED @:
-      //  server/ai/scoring/intent/intent_summon
+      //  packages/game-ai/scoring/intent/intent_summon
       // DESCRIPTION:
       //  (ScoreForUnit/5) + ScoreForCardAtTargetPosition [+15 IF BELOW 15]
 
@@ -4135,8 +4135,8 @@ describe('starter ai scoring', () => {
       //  ScoreForIntentTeleportTarget
       //  ScoreForIntentTeleportDestination
       // LOCATED @:
-      //  server/ai/scoring/intent/intent_teleport_target
-      //  server/ai/scoring/intent/intent_teleport_destination
+      //  packages/game-ai/scoring/intent/intent_teleport_target
+      //  packages/game-ai/scoring/intent/intent_teleport_destination
       // DESCRIPTION:
       //  Target score = unit score / 10 + unit position score * -1 (if friendly) or +4 (if enemy)
 

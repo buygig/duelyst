@@ -31,7 +31,7 @@ class LocalStarterAIController
     if !@_ai?
       # Loaded lazily to avoid an app/sdk -> controller -> StarterAI -> app/sdk
       # cycle while the SDK namespace is still being assembled.
-      StarterAI = require 'server/ai/starter_ai'
+      StarterAI = require 'packages/game-ai/starter_ai'
       @_ai = new StarterAI(@_gameSession, @_playerId, @_difficulty)
     return @_ai
 

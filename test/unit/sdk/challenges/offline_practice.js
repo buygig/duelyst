@@ -8,7 +8,7 @@ const { expect } = require('chai');
 const CONFIG = require('../../../../app/common/config');
 const Logger = require('../../../../app/common/logger.coffee');
 const SDK = require('../../../../app/sdk.coffee');
-const UsableDecks = require('../../../../server/ai/decks/usable_decks');
+const UsableDecks = require('../../../../packages/game-ai/decks/usable_decks');
 
 Logger.enabled = false;
 

@@ -1,8 +1,8 @@
-const BOUNTY = require('server/ai/scoring/bounty');
+const BOUNTY = require('packages/game-ai/scoring/bounty');
 const _ = require('underscore');
 const ModifierFrenzy = require('app/sdk/modifiers/modifierFrenzy');
 const CardType = require('app/sdk/cards/cardType');
-const distanceBetweenBoardPositions = require('server/ai/scoring/utils/utils_distanceBetweenBoardPositions');
+const distanceBetweenBoardPositions = require('packages/game-ai/scoring/utils/utils_distanceBetweenBoardPositions');
 
 const position_objective_frenzy = function (gameSession, unit, position, bestObjective) {
   // rewards bounty for spaces adjacent to best target for each adjacent enemy unit

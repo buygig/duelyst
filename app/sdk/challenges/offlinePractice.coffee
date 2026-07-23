@@ -63,7 +63,7 @@ class OfflinePractice extends Sandbox
 
       # Loaded lazily so app/sdk can export OfflinePractice without creating a
       # circular SDK -> usable_decks -> SDK dependency during module bootstrap.
-      UsableDecks = require 'server/ai/decks/usable_decks'
+      UsableDecks = require 'packages/game-ai/decks/usable_decks'
       if @aiDeckId?
         @player2Deck = UsableDecks.getUsableDeckForIdentifier(aiGeneralId, @aiDeckId)
       else

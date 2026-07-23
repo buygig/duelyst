@@ -1,4 +1,4 @@
-const BOUNTY = require('server/ai/scoring/bounty');
+const BOUNTY = require('packages/game-ai/scoring/bounty');
 const _ = require('underscore');
 const SDK = require('app/sdk');
 

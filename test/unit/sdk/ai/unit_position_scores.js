@@ -5,15 +5,15 @@ require('coffeescript/register');
 const { expect } = require('chai');
 const _ = require('underscore');
 
-const positionBackstabAvoidance = require('../../../../server/ai/scoring/position/position_backstabAvoidance');
-const positionObjectiveBackstab = require('../../../../server/ai/scoring/position/position_objective_backstab');
-const positionObjectiveDistanceFromBestObjective = require('../../../../server/ai/scoring/position/position_objective_distanceFromBestObjective');
-const positionObjectiveFrenzy = require('../../../../server/ai/scoring/position/position_objective_frenzy');
-const positionObjectiveProvoke = require('../../../../server/ai/scoring/position/position_objective_provoke');
-const positionProximityToEnemies = require('../../../../server/ai/scoring/position/position_proximityToEnemies');
-const positionProximityToGenerals = require('../../../../server/ai/scoring/position/position_proximityToGenerals');
-const positionShadowTileAvoidance = require('../../../../server/ai/scoring/position/position_shadowTileAvoidance');
-const positionZeal = require('../../../../server/ai/scoring/position/position_zeal');
+const positionBackstabAvoidance = require('../../../../packages/game-ai/scoring/position/position_backstabAvoidance');
+const positionObjectiveBackstab = require('../../../../packages/game-ai/scoring/position/position_objective_backstab');
+const positionObjectiveDistanceFromBestObjective = require('../../../../packages/game-ai/scoring/position/position_objective_distanceFromBestObjective');
+const positionObjectiveFrenzy = require('../../../../packages/game-ai/scoring/position/position_objective_frenzy');
+const positionObjectiveProvoke = require('../../../../packages/game-ai/scoring/position/position_objective_provoke');
+const positionProximityToEnemies = require('../../../../packages/game-ai/scoring/position/position_proximityToEnemies');
+const positionProximityToGenerals = require('../../../../packages/game-ai/scoring/position/position_proximityToGenerals');
+const positionShadowTileAvoidance = require('../../../../packages/game-ai/scoring/position/position_shadowTileAvoidance');
+const positionZeal = require('../../../../packages/game-ai/scoring/position/position_zeal');
 const UtilsSDK = require('../../../utils/utils_sdk');
 const SDK = require('../../../../app/sdk.coffee');
 const Logger = require('../../../../app/common/logger.coffee');
@@ -44,7 +44,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionBackstabAvoidance(gameSession, unit, position, bestObjective)
       // LOCATED @:
-      //  server/ai/scoring/position/positionBackstabAvoidance
+      //  packages/game-ai/scoring/position/positionBackstabAvoidance
       // DESCRIPTION:
       //  if bestObjective is a backstabber, check if position is behind, if so penalize the position.
       //  this should cause units who are able to attack their bestObjective from a non-behind position
@@ -85,7 +85,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionObjectiveBackstab = function (gameSession, unit, position, bestObjective)
       // LOCATED @:
-      //  server/ai/scoring/position/positionObjectiveBackstab
+      //  packages/game-ai/scoring/position/positionObjectiveBackstab
       // DESCRIPTION:
       //  backstabbers prefer to be nearer to the backstab space of their primary objective
 
@@ -132,7 +132,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionObjectiveDistanceFromBestObjective (gameSession, unit, position, bestObjective, scoringMode)
       // LOCATED @:
-      //  server/ai/scoring/position/positionObjectiveDistanceFromBestObjective
+      //  packages/game-ai/scoring/position/positionObjectiveDistanceFromBestObjective
       // DESCRIPTION:
       //  evaluates a unit's distance from their best objective
       //  called by board.js
@@ -208,7 +208,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionObjectiveFrenzy (gameSession, unit, position, bestObjective)
       // LOCATED @:
-      //  server/ai/scoring/position/positionObjectiveFrenzy
+      //  packages/game-ai/scoring/position/positionObjectiveFrenzy
       // DESCRIPTION:
       //  rewards bounty for spaces adjacent to best target for each adjacent enemy unit
       //  does not award bounty if space is not adjacent to bestObjective since we don't
@@ -252,7 +252,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionObjectiveProvoke = function (gameSession, unit, position, bestObjective)
       // LOCATED @:
-      //  server/ai/scoring/position/positionObjectiveProvoke
+      //  packages/game-ai/scoring/position/positionObjectiveProvoke
       // DESCRIPTION:
       //  more enemy units around this position the better
       //  penalizes distance from best enemy target redundantly from existing distance penalty
@@ -295,7 +295,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionProximityToEnemies = function (gameSession, unit, position)
       // LOCATED @:
-      //  server/ai/scoring/position/positionProximityToEnemies
+      //  packages/game-ai/scoring/position/positionProximityToEnemies
       // DESCRIPTION:
       //  high hp units prefer to be near more units, low hp units do not.
 
@@ -362,7 +362,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionProximityToGenerals = function (gameSession, unit, position)
       // LOCATED @:
-      //  server/ai/scoring/position/positionProximityToGenerals
+      //  packages/game-ai/scoring/position/positionProximityToGenerals
       // DESCRIPTION:
       //  units want to be near opponent general
       //  exponentially increasing desire to be near own general as hp declines
@@ -425,7 +425,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionShadowTileAvoidance = function (gameSession, unit, position) {
       // LOCATED @:
-      //  server/ai/scoring/position/positionShadowTileAvoidance
+      //  packages/game-ai/scoring/position/positionShadowTileAvoidance
       // DESCRIPTION:
       //  estimates score for unit damage multiplied by -2
 
@@ -466,7 +466,7 @@ describe('unit position scoring', () => {
       // TEST FOR:
       //  positionZeal = function (gameSession, unit, position)
       // LOCATED @:
-      //  server/ai/scoring/position/positionZeal
+      //  packages/game-ai/scoring/position/positionZeal
       // DESCRIPTION:
       //  bonus for adjacency to general - either on or off, does not create desire to move into zeal range
 

@@ -1,14 +1,14 @@
 // const position_proximityToEnemies = require("./position_proximityToEnemies");
 // const position_proximityToGenerals = require("./position_proximityToGenerals");
-const position_zeal = require('server/ai/scoring/position/position_zeal');
+const position_zeal = require('packages/game-ai/scoring/position/position_zeal');
 // const position_shadowTileAvoidance = require("./position_shadowTileAvoidance");
-const position_seekManaGlobes = require('server/ai/scoring/position/position_seekManaGlobes');
-const position_objective_backstab = require('server/ai/scoring/position/position_objective_backstab');
-const position_objective_frenzy = require('server/ai/scoring/position/position_objective_frenzy');
-const position_objective_provoke = require('server/ai/scoring/position/position_objective_provoke');
-const position_objective_distanceFromBestObjective = require('server/ai/scoring/position/position_objective_distanceFromBestObjective');
-const position_backstabAvoidance = require('server/ai/scoring/position/position_backstabAvoidance');
-const findBestObjectiveForCardAtTargetPosition = require('server/ai/scoring/utils/utils_findBestObjectiveForCardAtTargetPosition');
+const position_seekManaGlobes = require('packages/game-ai/scoring/position/position_seekManaGlobes');
+const position_objective_backstab = require('packages/game-ai/scoring/position/position_objective_backstab');
+const position_objective_frenzy = require('packages/game-ai/scoring/position/position_objective_frenzy');
+const position_objective_provoke = require('packages/game-ai/scoring/position/position_objective_provoke');
+const position_objective_distanceFromBestObjective = require('packages/game-ai/scoring/position/position_objective_distanceFromBestObjective');
+const position_backstabAvoidance = require('packages/game-ai/scoring/position/position_backstabAvoidance');
+const findBestObjectiveForCardAtTargetPosition = require('packages/game-ai/scoring/utils/utils_findBestObjectiveForCardAtTargetPosition');
 const _ = require('underscore');
 const Logger = require('app/common/logger');
 
