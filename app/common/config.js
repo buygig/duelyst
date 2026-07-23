@@ -1283,9 +1283,6 @@ CONFIG.hiDPIEnabled = false;
 // set dynamically by user profile and/or local storage
 CONFIG.selectedScene = null;
 
-// idle razer chroma color set by deck select
-CONFIG.razerChromaIdleColor = null;
-
 CONFIG.getGlobalScaleForResolution = function (resolution, width, height) {
   let globalScale = 1.0;
 
@@ -1351,9 +1348,6 @@ CONFIG.reset = function () {
 
   // last selected deck data
   CONFIG.resetLastSelectedDeckData();
-
-  // razer chroma integration
-  CONFIG.razerChromaEnabled = false;
 };
 CONFIG.resetLastGameData = function () {
   // global animation speed modifier used by replay playback

@@ -15,14 +15,11 @@ const forbiddenByFile = {
   'app/ui/templates/item/utility_loading_login_menu.hbs': ['>Menu<'],
   'app/ui/views/item/change_username.js': ['3 to 18 alphanumeric characters', 'Username must be different'],
   'app/ui/views/item/select_username.js': ['3 to 18 alphanumeric characters'],
-  'app/ui/views2/collection/crafting.js': ['Oops... there was a problem crafting your card.'],
   'app/ui/views2/collection/deck_card_back_select.js': ['.text(\'Unlock\')', '.text(\'Unavailable\')', '.text(\'Save\')'],
-  'app/ui/views2/collection/templates/crafting.hbs': ['You cannot disenchant card skins.', '>Unlock<'],
   'app/ui/views2/collection/templates/deck_card_back_select.hbs': ['>Card Back<', '>Cancel<'],
   'app/ui/views2/profile/templates/profile_error_item.hbs': ['>ERROR:'],
   'app/ui/views2/profile/templates/profile_match_history_collection.hbs': ['>share<'],
   'app/ui/views2/profile/templates/profile_region_loading_item.hbs': ['>Loading<'],
-  'app/ui/views2/quests/templates/quest_log_layout.hbs': ['Complete this starter quest to get a new one!'],
 };
 
 describe('Offline-visible localized text', () => {

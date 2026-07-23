@@ -1,10 +1,7 @@
 'use strict';
 
-var Session = require('app/common/session2');
 var UtilsJavascript = require('app/common/utils/utils_javascript');
 var SDK = require('app/sdk');
-var InventoryManager = require('app/ui/managers/inventory_manager');
-var NavigationManager = require('app/ui/managers/navigation_manager');
 var ProfileManager = require('app/ui/managers/profile_manager');
 var ChangeBattleMapItemViewTempl = require('app/ui/templates/item/change_battle_map_dialog.hbs');
 var i18next = require('i18next');
@@ -33,9 +30,6 @@ var ChangeBattleMapItemView = FormPromptDialogItemView.extend({
   onShow: function () {
     FormPromptDialogItemView.prototype.onShow.apply(this, arguments);
 
-    // listen to events
-    this.listenTo(InventoryManager.getInstance().getCosmeticsCollection(), 'add remove', this.onCosmeticsCollectionChange);
-
     // show tooltip
     this.showTooltip(this.$el.find('.cosmetic:first'));
   },
@@ -56,30 +50,18 @@ var ChangeBattleMapItemView = FormPromptDialogItemView.extend({
     this.stopShowingTooltip();
   },
 
-  onCosmeticsCollectionChange: function (cosmeticModel) {
-    var cosmeticId = cosmeticModel != null && cosmeticModel.get('cosmetic_id');
-    var cosmeticData = SDK.CosmeticsFactory.cosmeticForIdentifier(cosmeticId);
-    if (cosmeticData != null && cosmeticData.typeId === SDK.CosmeticsTypeLookup.BattleMap) {
-      this._bindCosmetics();
-      this.render();
-    }
-  },
-
   _bindCosmetics: function () {
-    // get all possible profile icons
+    // All battle maps are local content and can be selected without purchasing.
     var cosmetics = SDK.CosmeticsFactory.cosmeticsForType(SDK.CosmeticsTypeLookup.BattleMap);
     var visibleCosmetics = [];
     for (var i = 0, il = cosmetics.length; i < il; i++) {
       var cosmeticData = cosmetics[i];
-      var cosmeticId = cosmeticData.id;
-      // filter for only usable cosmetics
-      if (InventoryManager.getInstance().getCanSeeCosmeticById(cosmeticId)) {
+      if (cosmeticData.enabled) {
         var cosmeticDataCopy = _.extend({}, cosmeticData);
-        // mark enabled/purchasable
-        cosmeticDataCopy._canUse = InventoryManager.getInstance().getCanUseCosmeticById(cosmeticId);
-        cosmeticDataCopy._canPurchase = InventoryManager.getInstance().getCanPurchaseCosmeticById(cosmeticId);
+        cosmeticDataCopy._canUse = true;
+        cosmeticDataCopy._canPurchase = false;
         UtilsJavascript.arraySortedInsertByComparator(visibleCosmetics, cosmeticDataCopy, function (a, b) {
-          return (Number(a._canUse) - Number(b._canUse)) || (b.id - a.id);
+          return b.id - a.id;
         });
       }
     }
@@ -94,18 +76,7 @@ var ChangeBattleMapItemView = FormPromptDialogItemView.extend({
 
   onClickSubmit: function (event) {
     var cosmeticId = $(event.currentTarget).data('cosmetic-id');
-    if (InventoryManager.getInstance().getCanPurchaseCosmeticById(cosmeticId)) {
-      // buy profile icon
-      var productData = SDK.CosmeticsFactory.cosmeticProductDataForIdentifier(cosmeticId);
-      return NavigationManager.getInstance().showDialogForConfirmPurchase(productData)
-        .bind(this)
-        .then(function () {
-          NavigationManager.getInstance().showDialogView(new ChangeBattleMapItemView({ model: new Backbone.Model() }));
-        })
-        .catch(function () {
-          NavigationManager.getInstance().showDialogView(new ChangeBattleMapItemView({ model: new Backbone.Model() }));
-        });
-    } else if (InventoryManager.getInstance().getCanUseCosmeticById(cosmeticId)) {
+    if (SDK.CosmeticsFactory.cosmeticForIdentifier(cosmeticId) != null) {
       this._cosmeticId = cosmeticId;
       FormPromptDialogItemView.prototype.onClickSubmit.apply(this, arguments);
     }
@@ -120,16 +91,8 @@ var ChangeBattleMapItemView = FormPromptDialogItemView.extend({
     FormPromptDialogItemView.prototype.onSubmit.apply(this, arguments);
 
     this.stopShowingTooltip();
-
-    Session.changeBattlemap(this._cosmeticId)
-      .bind(this)
-      .then(function (res) {
-        this.onSuccess(res);
-      })
-      .catch(function (e) {
-      // onError expects a string not an actual error
-        this.onError(e.innerMessage || e.message);
-      });
+    ProfileManager.getInstance().set('battle_map_id', this._cosmeticId);
+    this.onSuccess({ battle_map_id: this._cosmeticId });
   },
 
   showTooltip: function (element) {

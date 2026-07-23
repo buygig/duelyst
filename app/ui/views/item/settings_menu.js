@@ -3,29 +3,17 @@
 var CONFIG = require('app/common/config');
 var EventBus = require('app/common/eventbus');
 var EVENTS = require('app/common/event_types');
-var Session = require('app/common/session2');
 var generatePushID = require('app/common/generate_push_id');
 var Scene = require('app/view/Scene');
-var SDK = require('app/sdk');
-var Logger = require('app/common/logger');
 var Storage = require('app/common/storage');
 var UtilsJavascript = require('app/common/utils/utils_javascript');
 var RSX = require('app/data/resources');
 var audio_engine = require('app/audio/audio_engine');
 var Animations = require('app/ui/views/animations');
 var NavigationManager = require('app/ui/managers/navigation_manager');
-var GamesManager = require('app/ui/managers/games_manager');
 var SettingsMenuTemplate = require('app/ui/templates/item/settings_menu.hbs');
-var ProfileManager = require('app/ui/managers/profile_manager');
-var moment = require('moment');
 var i18next = require('i18next');
-var DuelystBackbone = require('app/ui/extensions/duelyst_backbone');
-var openUrl = require('app/common/openUrl');
 var ConfirmDialogItemView = require('./confirm_dialog');
-var ActivityDialogItemView = require('./activity_dialog');
-var ChangeUsernameItemView = require('./change_username');
-var AccountInventoryResetModalView = require('./account_inventory_reset_modal');
-var RedeemGiftCodeModalView = require('./redeem_gift_code_modal');
 
 function normalizeLanguageKey(languageKey) {
   var normalized = String(languageKey || '').toLowerCase();
@@ -58,25 +46,19 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
     $buttonBoardQualityLow: '#board-quality-low',
     $buttonBoardQualityHigh: '#board-quality-high',
     $bloom: '#bloom',
-    $checkboxDoNotDisturb: '#checkbox-do-not-disturb',
-    $checkboxBlockSpectators: '#checkbox-block-spectators',
     $checkboxAlwaysShowStats: '#checkbox-always-show-stats',
     $checkboxShowBattleLog: '#checkbox-show-battlelog',
     $checkboxPlayerDetails: '#checkbox-player-details',
     $checkboxStickyTargeting: '#checkbox-sticky-targeting',
     $checkboxShowInGameTips: '#checkbox-show-in-game-tips',
-    $checkboxRazerChromaEnabled: '#checkbox-razer-chroma-enabled',
     $masterVolume: '#master-volume',
     $musicVolume: '#music-volume',
     $voiceVolume: '#voice-volume',
     $effectsVolume: '#effects-volume',
-    $resetInventorySection: '#reset_inventory_section',
-    // "click .manage-data" : "onManageDataPressed"
   },
 
   /* Ui events hash */
   events: {
-    'click button.logout': 'onLogoutClicked',
     'click button.desktop-quit': 'onDesktopQuitClicked',
     'change #resolution': 'changeResolution',
     'change #language': 'changeLanguage',
@@ -90,21 +72,15 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
     'click #board-quality-low': 'changeBoardQualityLow',
     'click #board-quality-high': 'changeBoardQualityHigh',
     'change #bloom': 'changeBloom',
-    'change #checkbox-do-not-disturb': 'changeDoNotDisturb',
-    'change #checkbox-block-spectators': 'changeBlockSpectators',
     'change #checkbox-always-show-stats': 'changeAlwaysShowStats',
     'change #checkbox-show-battlelog': 'changeShowBattleLog',
     'change #checkbox-player-details': 'changeShowPlayerDetails',
     'change #checkbox-sticky-targeting': 'changeStickyTargeting',
     'change #checkbox-show-in-game-tips': 'changeShowInGameTips',
-    'change #checkbox-razer-chroma-enabled': 'changeRazerChromaEnabled',
     'change #master-volume': 'changeMasterVolume',
     'change #music-volume': 'changeMusicVolume',
     'change #voice-volume': 'changeVoiceVolume',
     'change #effects-volume': 'changeEffectsVolume',
-    'click .change-username': 'onChangeUsernameClicked',
-    'click .reset-inventory': 'onResetAccountInventoryPressed',
-    'click .redeem-gift-code': 'onRedeemGiftCodePressed',
   },
 
   animateIn: Animations.fadeIn,
@@ -162,14 +138,11 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
     this.ui.$language.val(currentLanguageKey);
     this.ui.$checkboxHiDPIEnabled.prop('checked', CONFIG.hiDPIEnabled);
     this.ui.$bloom.val(parseFloat(this.model.get('bloom')));
-    this.ui.$checkboxDoNotDisturb.prop('checked', this.model.get('doNotDisturb'));
-    this.ui.$checkboxBlockSpectators.prop('checked', this.model.get('blockSpectators'));
     this.ui.$checkboxAlwaysShowStats.prop('checked', this.model.get('alwaysShowStats'));
     this.ui.$checkboxShowBattleLog.prop('checked', this.model.get('showBattleLog'));
     this.ui.$checkboxPlayerDetails.prop('checked', this.model.get('showPlayerDetails'));
     this.ui.$checkboxStickyTargeting.prop('checked', this.model.get('stickyTargeting'));
     this.ui.$checkboxShowInGameTips.prop('checked', this.model.get('showInGameTips'));
-    this.ui.$checkboxRazerChromaEnabled.prop('checked', this.model.get('razerChromaEnabled'));
     this.ui.$masterVolume.val(parseFloat(this.model.get('masterVolume')));
     this.ui.$musicVolume.val(parseFloat(this.model.get('musicVolume')));
     this.ui.$voiceVolume.val(parseFloat(this.model.get('voiceVolume')));
@@ -181,11 +154,6 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
 
     if (!window.isDesktop) {
       this.$el.find('.desktop-quit').remove();
-      this.$el.find('#razer-chroma-setting').remove();
-    }
-
-    if (moment().utc().isAfter(moment.utc('2016-04-20'))) {
-      this.ui.$resetInventorySection.hide();
     }
 
     this.ui.$versionTag.text('v' + process.env.VERSION);
@@ -194,9 +162,6 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
   },
 
   onShow: function () {
-    // show ZENDSEK widget
-    window.zE && window.zE.show && window.zE.show();
-
     // listen to global events
     this.listenTo(EventBus.getInstance(), EVENTS.resize, this.onResize);
 
@@ -216,9 +181,6 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
   },
 
   onPrepareForDestroy: function () {
-    // hide ZENDESK widget
-    window.zE && window.zE.hide && window.zE.hide();
-
     // reset gradient color mapping
     Scene.getInstance().getFX().clearGradientColorMap(this._requestId, CONFIG.ANIMATE_MEDIUM_DURATION);
   },
@@ -229,29 +191,6 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
   },
 
   /* event handlers */
-
-  onChangeUsernameClicked: function (e) {
-    NavigationManager.getInstance().showDialogView(new ChangeUsernameItemView({ model: ProfileManager.getInstance().profile }));
-  },
-
-  onResetAccountInventoryPressed: function () {
-    NavigationManager.getInstance().showModalView(new AccountInventoryResetModalView());
-  },
-
-  onRedeemGiftCodePressed: function () {
-    NavigationManager.getInstance().showModalView(new RedeemGiftCodeModalView());
-  },
-
-  onLogoutClicked: function () {
-    var confirmDialogItemView = new ConfirmDialogItemView({ title: i18next.t('settings.logout_confirm_message') });
-    this.listenToOnce(confirmDialogItemView, 'confirm', function () {
-      Session.logout();
-    }.bind(this));
-    this.listenToOnce(confirmDialogItemView, 'cancel', function () {
-      this.stopListening(confirmDialogItemView);
-    }.bind(this));
-    NavigationManager.getInstance().showDialogView(confirmDialogItemView);
-  },
 
   onDesktopQuitClicked: function () {
     if (window.isDesktop) {
@@ -329,14 +268,6 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
     this.model.set('bloom', this.ui.$bloom.val());
   },
 
-  changeDoNotDisturb: function () {
-    this.model.set('doNotDisturb', this.ui.$checkboxDoNotDisturb.prop('checked'));
-  },
-
-  changeBlockSpectators: function () {
-    this.model.set('blockSpectators', this.ui.$checkboxBlockSpectators.prop('checked'));
-  },
-
   changeAlwaysShowStats: function () {
     this.model.set('alwaysShowStats', this.ui.$checkboxAlwaysShowStats.prop('checked'));
   },
@@ -351,10 +282,6 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
 
   changeStickyTargeting: function () {
     this.model.set('stickyTargeting', this.ui.$checkboxStickyTargeting.prop('checked'));
-  },
-
-  changeRazerChromaEnabled: function () {
-    this.model.set('razerChromaEnabled', this.ui.$checkboxRazerChromaEnabled.prop('checked'));
   },
 
   changeShowInGameTips: function () {

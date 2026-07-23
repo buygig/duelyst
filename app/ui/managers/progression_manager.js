@@ -18,22 +18,12 @@ var EventBus = require('app/common/eventbus');
 var EVENTS = require('app/common/event_types');
 var Logger = require('app/common/logger');
 var SDK = require('app/sdk');
-var NotificationModel = require('app/ui/models/notification');
 var DuelystFirebase = require('app/ui/extensions/duelyst_firebase');
 var DuelystBackbone = require('app/ui/extensions/duelyst_backbone');
 var Analytics = require('app/common/analytics');
-var ReferralDialogView = require('app/ui/views2/referrals/referral_dialog');
 var moment = require('moment');
-var ErrorDialogItemView = require('app/ui/views/item/error_dialog');
 
-var i18next = require('i18next');
-
-var QuestBeginnerCompleteSoloChallenges = require('app/sdk/quests/questBeginnerCompleteSoloChallenges');
 var InventoryManager = require('./inventory_manager');
-var QuestsManager = require('./quests_manager');
-var NavigationManager = require('./navigation_manager');
-var NotificationsManager = require('./notifications_manager');
-var NewPlayerManager = require('./new_player_manager');
 var Manager = require('./manager');
 
 var ChallengeModel = DuelystBackbone.Model.extend({
@@ -60,8 +50,6 @@ var ProgressionManager = Manager.extend({
     ProfileManager.getInstance().onReady()
       .bind(this)
       .then(function () {
-        this.checkForReferralRewards();
-
         var userId = ProfileManager.getInstance().get('id');
         var neededToBeReady = [];
 
@@ -130,29 +118,6 @@ var ProgressionManager = Manager.extend({
 
         this._markAsReadyWhenModelsAndCollectionsSynced(neededToBeReady);
       });
-  },
-
-  checkForReferralRewards: function () {
-    var rewardsClaimedAt = moment.utc(ProfileManager.getInstance().get('referral_rewards_claimed_at') || 0);
-    var rewardsUpdatedAt = moment.utc(ProfileManager.getInstance().get('referral_rewards_updated_at') || 0);
-    if (rewardsClaimedAt.isBefore(rewardsUpdatedAt)) {
-      var notification = new NotificationModel({
-        message: i18next.t('rewards.referral_rewards_available_message'),
-        type: NotificationsManager.NOTIFICATION_BUDDY_INVITE,
-        ctaTitle: i18next.t('common.claim_label'),
-      });
-      this.listenTo(notification, 'cta_accept', function (model) {
-        var model = new DuelystBackbone.Model();
-        model.url = process.env.API_URL + '/api/me/referrals/summary';
-        model.fetch();
-        NavigationManager.getInstance().showModalView(new ReferralDialogView({ model: model }));
-        this.stopListening(notification);
-      }, this);
-      this.listenTo(notification, 'dismiss', function (model) {
-        this.stopListening(notification);
-      }, this);
-      NotificationsManager.getInstance().showNotification(notification);
-    }
   },
 
   getFactionProgressionStatsModel: function (factionId) {
@@ -251,15 +216,8 @@ var ProgressionManager = Manager.extend({
     return new Promise(function (resolve, reject) {
       var challengePreviouslyCompleted = this.hasCompletedChallengeOfType(challengeType);
 
-      var processQuests = false;
-      QuestsManager.getInstance().dailyQuestsCollection.each(function (questModel) {
-        if (SDK.QuestFactory.questForIdentifier(questModel.get('quest_type_id')) instanceof QuestBeginnerCompleteSoloChallenges) {
-          processQuests = true;
-        }
-      });
-
       var request = $.ajax({
-        data: JSON.stringify({ completed_at: moment().utc().valueOf(), process_quests: processQuests }),
+        data: JSON.stringify({ completed_at: moment().utc().valueOf(), process_quests: false }),
         url: process.env.API_URL + '/api/me/challenges/gated/' + challengeType + '/completed_at',
         type: 'PUT',
         contentType: 'application/json',
@@ -362,11 +320,6 @@ var ProgressionManager = Manager.extend({
         resolve({});
       });
     }.bind(this));
-
-    // This doesn't need to be directly part of the daily challenge completion promise chain
-    completeDailyChallengePromise.then(function () {
-      return QuestsManager.getInstance().updateDailyChallengeLastCompletedAt();
-    });
 
     return completeDailyChallengePromise;
   },

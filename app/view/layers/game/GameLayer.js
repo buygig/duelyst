@@ -56,7 +56,6 @@ const audio_engine = require('app/audio/audio_engine');
 const PackageManager = require('app/ui/managers/package_manager');
 const NavigationManager = require('app/ui/managers/navigation_manager');
 const i18next = require('i18next');
-const Chroma = require('app/common/chroma');
 const BattleLog = require('./BattleLog');
 const BattleMap = require('./BattleMap');
 const Player2Layer = require('./Player2Layer');
@@ -3843,54 +3842,14 @@ var GameLayer = FXCompositeLayer.extend({
       // handle action by type
       if (targetSdkCard instanceof SDK.Entity) {
         if (action instanceof SDK.DamageAction) {
-          if (CONFIG.razerChromaEnabled) {
-            Chroma.flashActionThrottled(new Chroma.Color('FF0000'), 100, action.getTotalDamageAmount())
-              .then(() => {
-                if (this.getIsMyTurn()) {
-                  Chroma.setAll(CONFIG.razerChromaIdleColor);
-                } else {
-                  Chroma.setAll(new Chroma.Color('FFFFFF'));
-                }
-              });
-          }
           targetNode.showAttackedState(action);
         } else if (action instanceof SDK.DieAction) {
-          if (CONFIG.razerChromaEnabled) {
-            Chroma.flashActionThrottled(new Chroma.Color('FF0000'), 1000, 1)
-              .then(() => {
-                if (this.getIsMyTurn()) {
-                  Chroma.setAll(CONFIG.razerChromaIdleColor);
-                } else {
-                  Chroma.setAll(new Chroma.Color('FFFFFF'));
-                }
-              });
-          }
           targetNode.showDeathState(action);
         } else if (action.type === SDK.HealAction.type) {
-          if (CONFIG.razerChromaEnabled) {
-            Chroma.flashActionThrottled(new Chroma.Color('00FF00'), 100, action.getTotalHealAmount())
-              .then(() => {
-                if (this.getIsMyTurn()) {
-                  Chroma.setAll(CONFIG.razerChromaIdleColor);
-                } else {
-                  Chroma.setAll(new Chroma.Color('FFFFFF'));
-                }
-              });
-          }
           targetNode.showHealedState(action);
         } else if (action instanceof SDK.RemoveAction) {
           targetNode.showDisappearState(action);
         } else if (action instanceof SDK.KillAction) {
-          if (CONFIG.razerChromaEnabled) {
-            Chroma.flashActionThrottled(new Chroma.Color('FF0000'), 1000, 1)
-              .then(() => {
-                if (this.getIsMyTurn()) {
-                  Chroma.setAll(CONFIG.razerChromaIdleColor);
-                } else {
-                  Chroma.setAll(new Chroma.Color('FFFFFF'));
-                }
-              });
-          }
           targetNode.showDestroyedState(action);
         } else if (action.type === SDK.RefreshExhaustionAction.type) {
           targetNode.showRefreshExhaustionState(action);

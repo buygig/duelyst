@@ -25,8 +25,11 @@ function sourceWithoutComments(filename) {
 
 function literalValues(source, pattern) {
   const values = [];
-  let match;
-  while ((match = pattern.exec(source)) !== null) values.push(match[2]);
+  let match = pattern.exec(source);
+  while (match !== null) {
+    values.push(match[2]);
+    match = pattern.exec(source);
+  }
   return values;
 }
 
@@ -48,14 +51,16 @@ describe('Card factory localization', () => {
       const references = [];
       const translatedReferencePattern = /(?:i18next\.t\(\s*|card\.name\s*=\s*)(["'])([a-z0-9_-]+)\.([^"']+)\1/g;
       const rawCardOrModifierKeyPattern = /(["'])((?:cards|modifiers)\.([a-z0-9_.-]+))\1/gi;
-      let match;
-
-      while ((match = translatedReferencePattern.exec(source)) !== null) {
+      let match = translatedReferencePattern.exec(source);
+      while (match !== null) {
         references.push({ namespace: match[2], key: match[3], index: match.index });
+        match = translatedReferencePattern.exec(source);
       }
-      while ((match = rawCardOrModifierKeyPattern.exec(source)) !== null) {
+      match = rawCardOrModifierKeyPattern.exec(source);
+      while (match !== null) {
         const separator = match[2].indexOf('.');
         references.push({ namespace: match[2].slice(0, separator), key: match[2].slice(separator + 1), index: match.index });
+        match = rawCardOrModifierKeyPattern.exec(source);
       }
 
       references.forEach(({ namespace, key, index }) => {

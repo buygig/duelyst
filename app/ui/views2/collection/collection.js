@@ -21,7 +21,6 @@ var InventoryManager = require('app/ui/managers/inventory_manager');
 var NavigationManager = require('app/ui/managers/navigation_manager');
 var NewPlayerManager = require('app/ui/managers/new_player_manager');
 var ProfileManager = require('app/ui/managers/profile_manager');
-var GamesManager = require('app/ui/managers/games_manager');
 var ConfirmDialogItemView = require('app/ui/views/item/confirm_dialog');
 var ErrorDialogItemView = require('app/ui/views/item/error_dialog');
 var ActivityDialogItemView = require('app/ui/views/item/activity_dialog');
@@ -31,7 +30,6 @@ var CollectionTmpl = require('./templates/collection.hbs');
 var DeckLayout = require('./deck');
 var CardsCollectionCompositeView = require('./cards_collection');
 var DecksCollectionCompositeView = require('./decks_collection');
-var CraftingCompositeView = require('./crafting');
 var DeckCardBackSelectView = require('./deck_card_back_select');
 var SelectedCardLayout = require('./selected_card');
 
@@ -55,14 +53,11 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
   /* ui selector cache */
   ui: {
     $cardsList: '.collection-cards .cards-list',
-    $startCraftingModeButton: '.crafting-mode-start',
-    $stopCraftingModeButton: '.crafting-mode-stop',
     $searchSubmit: '.search-submit',
     $searchClear: '.search-clear',
     $searchInput: '.search input[type=\'search\']',
     $dismissNew: '.dismiss-new',
     $togglePrismatics: '.toggle-prismatics',
-    $togglePrismaticsCrafting: '.toggle-prismatics-crafting',
     $toggleSkins: '.toggle-skins',
     $toggleLoreNotifications: '.toggle-lore-notifications',
   },
@@ -76,14 +71,11 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
     'click .faction-tab': 'onFactionSelected',
     'click .previous-page': 'onPreviousPage',
     'click .next-page': 'onNextPage',
-    'click .crafting-mode-start': 'onStartCraftingMode',
-    'click .crafting-mode-stop': 'onStopCraftingMode',
     'click .browsing-mode': 'onBrowsingMode',
     'click .search-clear': 'onSearchClear',
     'input .search input[type=\'search\']': 'onSearch',
     'click .dismiss-new': 'onDismissNew',
     'click .toggle-prismatics': 'onToggleShowPrismatics',
-    'click .toggle-prismatics-crafting': 'onToggleShowPrismaticsCrafting',
     'click .toggle-skins': 'onToggleShowSkins',
     'click .toggle-lore-notifications': 'onToggleShowLoreNotifications',
     'click .toggle-card-set': 'onToggleFilterCollectionCardSet',
@@ -146,7 +138,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
     this.bindToggles();
 
     this.listenTo(ProfileManager.getInstance().profile, 'change:showPrismaticsInCollection', this.onShowPrismaticsInCollectionChanged);
-    this.listenTo(ProfileManager.getInstance().profile, 'change:showPrismaticsWhileCrafting', this.onShowPrismaticsWhileCraftingChanged);
     this.listenTo(ProfileManager.getInstance().profile, 'change:showSkinsInCollection', this.onShowSkinsInCollectionChanged);
     this.listenTo(ProfileManager.getInstance().profile, 'change:showLoreNotifications', this.onShowLoreNotificationsChanged);
     this.listenTo(ProfileManager.getInstance().profile, 'change:filterCollectionCardSet', this.onFilterCollectionCardSetChanged);
@@ -270,7 +261,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
 
   bindToggles: function () {
     this.bindTogglePrismaticsInCollection();
-    this.bindTogglePrismaticsWhileCrafting();
     this.bindToggleSkinsInCollection();
     this.bindToggleLoreNotifications();
     this.bindFilterCollectionCardSet();
@@ -281,15 +271,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
       this.ui.$togglePrismatics.addClass('active');
     } else {
       this.ui.$togglePrismatics.removeClass('active');
-    }
-  },
-
-  bindTogglePrismaticsWhileCrafting: function () {
-    if (ProfileManager.getInstance().profile.get('showPrismaticsWhileCrafting')
-      && (!this._browsingMode && this._deck == null)) {
-      this.ui.$togglePrismaticsCrafting.addClass('active');
-    } else {
-      this.ui.$togglePrismaticsCrafting.removeClass('active');
     }
   },
 
@@ -382,10 +363,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
     this.bindTogglePrismaticsInCollection();
   },
 
-  onShowPrismaticsWhileCraftingChanged: function () {
-    this.bindTogglePrismaticsWhileCrafting();
-  },
-
   onShowSkinsInCollectionChanged: function () {
     this.bindToggleSkinsInCollection();
   },
@@ -396,10 +373,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
 
   onToggleShowPrismatics: function (event) {
     ProfileManager.getInstance().profile.set('showPrismaticsInCollection', !ProfileManager.getInstance().profile.get('showPrismaticsInCollection'));
-  },
-
-  onToggleShowPrismaticsCrafting: function (event) {
-    ProfileManager.getInstance().profile.set('showPrismaticsWhileCrafting', !ProfileManager.getInstance().profile.get('showPrismaticsWhileCrafting'));
   },
 
   onToggleShowSkins: function (event) {
@@ -651,14 +624,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
 
   /* MODES */
 
-  onStartCraftingMode: function (event) {
-    this.startCraftingMode();
-  },
-
-  onStopCraftingMode: function (event) {
-    NavigationManager.getInstance().showLastRoute();
-  },
-
   _cleanupCurrentDeck: function () {
     if (this._deck) {
       // delete current deck if it has no general
@@ -684,22 +649,11 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
     }
 
     // toggle classes
-    this.$el.removeClass('deck-building crafting deck-card-back-selecting');
-    this.ui.$startCraftingModeButton.removeClass('hidden disabled');
-    this.ui.$stopCraftingModeButton.addClass('hidden disabled');
+    this.$el.removeClass('deck-building deck-card-back-selecting');
 
     // mode flags
     this._browsingMode = false;
     this._deckCardBackSelectingMode = false;
-
-    // clear popover
-    if (this._craftingDuplicatesTimeout != null) {
-      clearTimeout(this._craftingDuplicatesTimeout);
-      this._craftingDuplicatesTimeout = null;
-    }
-    if (this.ui.$startCraftingModeButton.popover) {
-      this.ui.$startCraftingModeButton.popover('destroy');
-    }
   },
 
   /**
@@ -719,29 +673,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
 
     // change cards mode
     this.cardsCollectionCompositeView.startBrowsingMode();
-
-    if (InventoryManager.getInstance().hasCollectionDuplicates()) {
-      this.ui.$startCraftingModeButton.addClass('highlight');
-      // show a popover 1 sec in
-      this._craftingDuplicatesTimeout = setTimeout(function () {
-        if (this.ui.$startCraftingModeButton.popover)
-          this.ui.$startCraftingModeButton.popover({
-            animation: true,
-            content: i18next.t('collection.duplicate_cards_msg'),
-            template: '<div class="popover disenchant-duplicates-popover" role="tooltip"><div class="arrow"></div><div class="popover-content"></div></div>',
-          }).popover('show');
-
-        // hide popover after 4
-        this._craftingDuplicatesTimeout = setTimeout(function () {
-          if (this.ui.$startCraftingModeButton.popover) {
-            this.ui.$startCraftingModeButton.popover('destroy');
-          }
-        }.bind(this), 4000);
-      }.bind(this), 1000);
-    } else {
-      this.ui.$startCraftingModeButton.removeClass('highlight');
-      this.ui.$startCraftingModeButton.popover('destroy');
-    }
 
     // show decks list in sidebar
     var decksCollectionCompositeView = new DecksCollectionCompositeView({ collection: this._decks });
@@ -783,34 +714,6 @@ var CollectionLayout = Backbone.Marionette.LayoutView.extend({
       // focus search
       this.ui.$searchInput.focus();
     }
-  },
-
-  /**
-   * Starts crafting mode, changing card states to show craftable status and showing crafting view in sidebar.
-   */
-  startCraftingMode: function () {
-    // cleanup current mode
-    this._cleanupCurrentMode();
-
-    // add mode to route
-    NavigationManager.getInstance().addMinorRoute('crafting', this.startCraftingMode, this);
-
-    // toggle buttons
-    this.ui.$startCraftingModeButton.addClass('hidden disabled');
-    this.ui.$stopCraftingModeButton.removeClass('hidden disabled');
-
-    // start crafting in the collection
-    this.cardsCollectionCompositeView.startCraftingMode();
-
-    // show crafting in sidebar
-    var walletDataClone = _.clone(InventoryManager.getInstance().walletModel.attributes);
-    var craftingCompositeView = new CraftingCompositeView({ model: new Backbone.Model(walletDataClone), collection: new Backbone.Collection() });
-    this.sidebarRegion.show(craftingCompositeView);
-
-    this.$el.addClass('crafting');
-
-    // focus search
-    this.ui.$searchInput.focus();
   },
 
   /**

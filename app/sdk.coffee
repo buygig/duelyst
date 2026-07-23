@@ -141,21 +141,16 @@ SDK.FactionProgression = require 'app/sdk/progression/factionProgression'
 SDK.RankFactory = require 'app/sdk/rank/rankFactory'
 SDK.RankDivisionLookup = require 'app/sdk/rank/rankDivisionLookup'
 
-SDK.QuestFactory = require 'app/sdk/quests/questFactory'
-
 SDK.RibbonFactory = require 'app/sdk/ribbons/ribbonFactory'
 SDK.Ribbons = require 'app/sdk/ribbons/ribbonLookup'
 
 SDK.ChallengeFactory = require 'app/sdk/challenges/challengeFactory'
 SDK.Challenge = require 'app/sdk/challenges/challenge'
-SDK.ChallengeRemote = require 'app/sdk/challenges/challengeRemote'
 SDK.ChallengeCategory = require 'app/sdk/challenges/challengeCategory'
 SDK.Sandbox = require 'app/sdk/challenges/sandbox'
 SDK.SandboxDeveloper = require 'app/sdk/challenges/sandboxDeveloper'
 SDK.OfflinePractice = require 'app/sdk/challenges/offlinePractice'
 SDK.LocalStarterAIController = require 'app/sdk/ai/localStarterAIController'
-
-SDK.AchievementsFactory = require 'app/sdk/achievements/achievementsFactory'
 
 SDK.Codex = require 'app/sdk/codex/codex'
 SDK.CodexChapters = require 'app/sdk/codex/codexChapterLookup'

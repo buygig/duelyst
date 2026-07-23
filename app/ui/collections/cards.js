@@ -6,7 +6,6 @@ var OfflineMode = require('app/common/offline_mode');
 var SDK = require('app/sdk');
 var CardModel = require('app/ui/models/card');
 var InventoryManager = require('app/ui/managers/inventory_manager');
-var AchievementsManager = require('app/ui/managers/achievements_manager');
 var ProgressionManager = require('app/ui/managers/progression_manager');
 var i18next = require('i18next');
 
@@ -128,10 +127,6 @@ var CardsCollection = Backbone.Collection.extend({
         unlocksWithFactionName = SDK.FactionFactory.factionForIdentifier(unlocksWithFaction).name;
       } else {
         unlocksAtLevel = 0;
-      }
-
-      if (unlockedWithAchievementId != null) {
-        unlockMessage = AchievementsManager.getInstance().getUnlockMessageForAchievementId(unlockedWithAchievementId);
       }
 
       var modelData = {
@@ -337,26 +332,13 @@ var CardsCollection = Backbone.Collection.extend({
           if (baseInventoryCardModel != null && baseInventoryCardModel.get('count') > 0) {
             isUnlocked = true;
           }
-        // TODO: this is where 3rd general prism unlock will probably go
-        // } else if (cardModel.get("unlockedWithAchievementId") != null) {
-        //  var baseInventoryCardModel = InventoryManager.getInstance().cardsCollection.get(baseCardId);
-        //  if (baseInventoryCardModel != null && baseInventoryCardModel.get("count") > 0) {
-        //    isUnlocked = true;
-        //  } else {
-        //    achievementUnlockMessage = AchievementsManager.getInstance().getUnlockMessageForAchievementId(cardModel.get("unlockedWithAchievementId"));
-        //  }
+        // TODO: this is where a future local third-general unlock can go.
         }
       } else {
         isUnlocked = true;
       }
 
       if (isOfflineBaseCard) isUnlocked = true;
-
-      // update any achievement unlock messages
-      var achievementUnlockMessage;
-      if (cardModel.get('unlockedWithAchievementId') != null) {
-        achievementUnlockMessage = AchievementsManager.getInstance().getUnlockMessageForAchievementId(cardModel.get('unlockedWithAchievementId'));
-      }
 
       // set new values
       cardModel.set({
@@ -371,7 +353,7 @@ var CardsCollection = Backbone.Collection.extend({
             || cardModel.get('isUnlockablePrismaticWithAchievement'))
           && (!cardModel.get('isUnlockableWithSpiritOrbs')
             || cardModel.get('isUnlockablePrismaticWithSpiritOrbs')),
-        unlockMessage: achievementUnlockMessage || cardModel.get('unlockMessage'),
+        unlockMessage: cardModel.get('unlockMessage'),
       });
     }
   },

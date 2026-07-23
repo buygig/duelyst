@@ -5,7 +5,6 @@ Scene = require('app/view/Scene')
 DuelystFirebase = require('app/ui/extensions/duelyst_firebase')
 CONFIG = require('app/common/config')
 audio_engine = require('app/audio/audio_engine')
-NotificationsManager = require('app/ui/managers/notifications_manager')
 Analytics = require('app/common/analytics')
 Storage = require('app/common/storage')
 moment = require('moment')
@@ -28,7 +27,6 @@ Profile = DuelystFirebase.Model.extend
     @on("change:showBattleLog", @onShowBattleLogChange, @)
     @on("change:stickyTargeting", @onStickyTargetingChange, @)
     @on("change:showInGameTips", @onShowInGameTipsChange, @)
-    @on("change:razerChromaEnabled", @onRazerChromaEnabled, @)
     @on("change:masterVolume", @onMasterVolumeChange, @)
     @on("change:musicVolume", @onMusicVolumeChange, @)
     @on("change:voiceVolume", @onVoiceVolumeChange, @)
@@ -70,7 +68,6 @@ Profile = DuelystFirebase.Model.extend
     showPlayerDetails: false
     stickyTargeting: false
     showInGameTips: true
-    razerChromaEnabled: false
     showPrismaticsInCollection: true
     showPrismaticsWhileCrafting: false
     showSkinsInCollection: true
@@ -120,9 +117,6 @@ Profile = DuelystFirebase.Model.extend
 
   onShowInGameTipsChange: () ->
     @setShowInGameTips(@get('showInGameTips'))
-
-  onRazerChromaEnabled: () ->
-    @setRazerChromaEnabled(@get('razerChromaEnabled'))
 
   onMasterVolumeChange: () ->
     @setMasterVolume(@get('masterVolume'))
@@ -188,9 +182,6 @@ Profile = DuelystFirebase.Model.extend
   setShowInGameTips: (val) ->
     CONFIG.showInGameTips = val
 
-  setRazerChromaEnabled: (val) ->
-    CONFIG.razerChromaEnabled = window.isDesktop && val
-
   setMasterVolume: (val) ->
     audio_engine.current().set_master_volume(val)
 
@@ -207,8 +198,7 @@ Profile = DuelystFirebase.Model.extend
     audio_engine.current().set_sfx_volume(val)
 
   setDoNotDisturb: (val) ->
-    if val
-      NotificationsManager.getInstance().dismissNotificationsThatCantBeShown()
+    Storage.set('doNotDisturb', !!val)
 
   setSelectedScene: (scene) ->
     if scene? and CONFIG.selectedScene != scene

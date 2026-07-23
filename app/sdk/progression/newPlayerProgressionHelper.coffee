@@ -3,18 +3,6 @@
 NewPlayerProgressionStageEnum = require './newPlayerProgressionStageEnum'
 NewPlayerFeatureLookup = require './newPlayerProgressionFeatureLookup'
 
-# quests
-QuestBeginnerWinPracticeGames = require 'app/sdk/quests/questBeginnerWinPracticeGames'
-QuestBeginnerPlayPracticeGames = require 'app/sdk/quests/questBeginnerPlayPracticeGames'
-QuestBeginnerCompleteSoloChallenges = require 'app/sdk/quests/questBeginnerCompleteSoloChallenges'
-QuestBeginnerPlayOneQuickMatch = require 'app/sdk/quests/questBeginnerPlayOneQuickMatch'
-QuestBeginnerFactionLevel = require 'app/sdk/quests/questBeginnerFactionLevel'
-QuestBeginnerWinFourPracticeGames = require 'app/sdk/quests/questBeginnerWinFourPracticeGames'
-QuestBeginnerWinThreeQuickMatches = require 'app/sdk/quests/questBeginnerWinThreeQuickMatches'
-QuestBeginnerWinThreeRankedMatches = require 'app/sdk/quests/questBeginnerWinThreeRankedMatches'
-QuestBeginnerWinTwoPracticeGames = require 'app/sdk/quests/questBeginnerWinTwoPracticeGames'
-QuestBeginnerWinOneSeasonGame = require 'app/sdk/quests/questBeginnerWinOneSeasonGame'
-
 class NewPlayerProgression
 
   @featureToCoreStageMapping:{}
@@ -39,22 +27,6 @@ class NewPlayerProgression
 
     # return if the current stage is greater or equal to the stage when this feature becomes available
     return stage.value >= stageWhenFeatureIsAvailable.value
-
-  ###*
-  # Get quests for the current stage in new user guided progression.
-  # @returns     Array    array of quest object instances.
-  ###
-  @questsForStage: (stage)->
-    stage = NewPlayerProgressionStageEnum[stage]
-    switch stage
-      when NewPlayerProgressionStageEnum.TutorialDone
-        return [ new QuestBeginnerWinPracticeGames() ]
-      when NewPlayerProgressionStageEnum.FirstPracticeDuelDone
-        return [ new QuestBeginnerWinTwoPracticeGames() ]
-      when NewPlayerProgressionStageEnum.ExtendedPracticeDone
-        return [ new QuestBeginnerWinOneSeasonGame() ]
-      when NewPlayerProgressionStageEnum.FirstGameDone
-        return [ new QuestBeginnerCompleteSoloChallenges(), new QuestBeginnerFactionLevel() ]
 
 # feature to stage mapping
 fMap = NewPlayerProgression.featureToCoreStageMapping

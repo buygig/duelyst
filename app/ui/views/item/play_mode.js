@@ -3,16 +3,10 @@
 'use strict';
 
 var _ = require('underscore');
-var SDK = require('app/sdk');
 var RSX = require('app/data/resources');
 var PlayModeTmpl = require('app/ui/templates/item/play_mode.hbs');
 var moment = require('moment');
 var UtilsEnv = require('app/common/utils/utils_env');
-var NewPlayerManager = require('app/ui/managers/new_player_manager');
-var ProgressionManager = require('app/ui/managers/progression_manager');
-var QuestsManager = require('app/ui/managers/quests_manager');
-var QuestBeginnerCompleteSoloChallenges = require('app/sdk/quests/questBeginnerCompleteSoloChallenges');
-var i18next = require('i18next');
 var SlidingPanelItemView = require('./sliding_panel');
 
 var PlayModeItemView = SlidingPanelItemView.extend({
@@ -28,7 +22,6 @@ var PlayModeItemView = SlidingPanelItemView.extend({
     background: '.background',
   },
 
-  _showNewPlayerStylingTimeout: null,
   timeUntilAvailableInterval: null,
   timeAvailableForInterval: null,
 
@@ -51,33 +44,12 @@ var PlayModeItemView = SlidingPanelItemView.extend({
 
   },
 
-  /* region INITIALIZE */
-
-  initialize: function () {
-    // Add unlock message
-    if (!this.model.get('enabled') || !this.isModeAvailableToday()) {
-      // leave default message
-    } else if (!NewPlayerManager.getInstance().canPlayPlayMode(this.model.get('id'))) {
-      // Show a more specific message if player has completed practice up until the point of unlocking Gauntlet
-      if (this.model.get('id') == SDK.PlayModes.Gauntlet && NewPlayerManager.getInstance().getCurrentCoreStage().value == SDK.NewPlayerProgressionStageEnum.FirstGameDone.value) {
-        this.model.set('unlockMessage', i18next.t('new_player_experience.play_mode_gauntlet_unlock_message'));
-      } else {
-        this.model.set('unlockMessage', i18next.t('new_player_experience.play_mode_unlock_message'));
-      }
-    } else if (!this.hasPlayedEnoughGames()) {
-      var gamesRequiredToUnlock = this.model.get('gamesRequiredToUnlock');
-      this.model.set('unlockMessage', i18next.t('new_player_experience.play_mode_unlock_game_count_message', { game_count: (gamesRequiredToUnlock - ProgressionManager.getInstance().getGameCount()) }));
-    }
-  },
-
-  /* endregion INITIALIZE */
-
   /* region EVENTS */
 
   onRender: function () {
     SlidingPanelItemView.prototype.onRender.call(this);
 
-    if (!this.model.get('enabled') || !this.isModeAvailableToday() || !NewPlayerManager.getInstance().canPlayPlayMode(this.model.get('id')) || !this.hasPlayedEnoughGames()) {
+    if (!this.model.get('enabled') || !this.isModeAvailableToday()) {
       this.$el.addClass('disabled');
     } else {
       this.$el.removeClass('disabled');
@@ -90,17 +62,7 @@ var PlayModeItemView = SlidingPanelItemView.extend({
     }
   },
 
-  onShow: function () {
-    this._showNewPlayerStylingTimeout = setTimeout(function () {
-      this._showNewPlayerUI();
-    }.bind(this), 1000);
-  },
-
   onDestroy: function () {
-    if (this._showNewPlayerStylingTimeout != null) {
-      clearTimeout(this._showNewPlayerStylingTimeout);
-      this._showNewPlayerStylingTimeout = null;
-    }
     if (this.timeUntilAvailableInterval) {
       clearInterval(this.timeUntilAvailableInterval);
       this.timeUntilAvailableInterval = null;
@@ -172,56 +134,6 @@ var PlayModeItemView = SlidingPanelItemView.extend({
     } else if (this.model.get('softAvailableOnDate')) {
       var nextAvailable = moment.utc(this.model.get('softAvailableOnDate'));
       return nextAvailable;
-    }
-  },
-
-  hasPlayedEnoughGames: function () {
-    var gamesRequiredToUnlock = this.model.get('gamesRequiredToUnlock');
-    return gamesRequiredToUnlock == null || gamesRequiredToUnlock <= ProgressionManager.getInstance().getGameCount();
-  },
-
-  _showNewPlayerUI: function () {
-    var newPlayerManager = NewPlayerManager.getInstance();
-
-    if (this.model.get('id') == SDK.PlayModes.Practice && newPlayerManager.getCurrentCoreStage() == SDK.NewPlayerProgressionStageEnum.TutorialDone) {
-      var popoverContainer = this.$el;
-      popoverContainer.popover({
-        content: i18next.t('new_player_experience.highlight_practice_game_popover'),
-        container: popoverContainer,
-        placement: 'top',
-        animation: true,
-      });
-      popoverContainer.popover('show');
-      this.$el.addClass('emphasize');
-    }
-
-    if (this.model.get('id') == SDK.PlayModes.Ranked && newPlayerManager.getCurrentCoreStage() == SDK.NewPlayerProgressionStageEnum.ExtendedPracticeDone) {
-      var popoverContainer = this.$el;
-      popoverContainer.popover({
-        content: i18next.t('new_player_experience.highlight_ladder_popover'),
-        container: popoverContainer,
-        placement: 'top',
-        animation: true,
-      });
-      popoverContainer.popover('show');
-      this.$el.addClass('emphasize');
-    }
-
-    if (this.model.get('id') == SDK.PlayModes.Challenges) {
-      var soloChallengeQuest = QuestsManager.getInstance().dailyQuestsCollection.find(function (q) {
-        return q.get('quest_type_id') == QuestBeginnerCompleteSoloChallenges.Identifier;
-      });
-      if (soloChallengeQuest) {
-        var popoverContainer = this.$el;
-        popoverContainer.popover({
-          content: i18next.t('new_player_experience.highlight_solo_challenge_popover'),
-          container: popoverContainer,
-          placement: 'top',
-          animation: true,
-        });
-        popoverContainer.popover('show');
-        this.$el.addClass('emphasize');
-      }
     }
   },
 

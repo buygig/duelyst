@@ -13,7 +13,6 @@ var NavigationManager = require('app/ui/managers/navigation_manager');
 var LoginMenuTmpl = require('app/ui/templates/item/login_menu.hbs');
 var openUrl = require('app/common/openUrl');
 var i18next = require('i18next');
-var RegistrationItemView = require('./registration');
 var ErrorDialogItemView = require('./error_dialog');
 
 var LoginMenuItemView = Backbone.Marionette.ItemView.extend({
@@ -29,9 +28,6 @@ var LoginMenuItemView = Backbone.Marionette.ItemView.extend({
     $input: 'input',
     $login: '.login',
     $loginForm: '.login-form',
-    $registrationBlock: '.registration-block',
-    $registration: '.registration',
-    $forgotPassword: '.forgot-password',
     $username: '.login-username',
     $password: '.login-password',
   },
@@ -39,7 +35,6 @@ var LoginMenuItemView = Backbone.Marionette.ItemView.extend({
   /* Ui events hash */
   events: {
     'click .login': 'onLogin',
-    'click .registration': 'onShowRegistration',
   },
 
   animateIn: Animations.fadeIn,
@@ -77,11 +72,6 @@ var LoginMenuItemView = Backbone.Marionette.ItemView.extend({
       this.showBrand(brandAnimationDuration);
     }.bind(this), 120.0);
 
-    // slight delay before showing registration block to focus attention on it
-    this._registrationTimeoutId = setTimeout(function () {
-      this.ui.$registrationBlock.addClass('active');
-    }.bind(this), brandAnimationDuration * 0.5 * 1000.0);
-
     // show login immediately
     this.ui.$loginForm.addClass('active');
 
@@ -115,10 +105,6 @@ var LoginMenuItemView = Backbone.Marionette.ItemView.extend({
     if (this._brandTimeoutId != null) {
       clearTimeout(this._brandTimeoutId);
       this._brandTimeoutId = null;
-    }
-    if (this._registrationTimeoutId != null) {
-      clearTimeout(this._registrationTimeoutId);
-      this._registrationTimeoutId = null;
     }
   },
 
@@ -246,15 +232,11 @@ var LoginMenuItemView = Backbone.Marionette.ItemView.extend({
   enableForm: function () {
     this.ui.$loginForm.removeClass('disabled');
     this.ui.$login.removeClass('disabled');
-    this.ui.$registration.removeClass('disabled');
-    this.ui.$forgotPassword.removeClass('disabled');
   },
 
   disableForm: function () {
     this.ui.$loginForm.addClass('disabled');
     this.ui.$login.addClass('disabled');
-    this.ui.$registration.addClass('disabled');
-    this.ui.$forgotPassword.addClass('disabled');
   },
 
   onError: function (errorMessage) {
@@ -268,15 +250,6 @@ var LoginMenuItemView = Backbone.Marionette.ItemView.extend({
   },
 
   /* endregion LOGIN */
-
-  /* region REGISTRATION */
-
-  onShowRegistration: function () {
-    // registration will auto log in on success
-    NavigationManager.getInstance().showModalView(new RegistrationItemView());
-  },
-
-  /* endregion REGISTRATION */
 
 });
 

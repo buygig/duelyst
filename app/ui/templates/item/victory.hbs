@@ -35,15 +35,6 @@
 			<h5 id="app-game-rounds" class="game-rounds stat">turns: <strong>{{game_turn_count}}</strong></h5>
 			<h5 id="app-game-duration" class="game-duration stat">time: <strong>{{game_duration}}</strong></h5>
 		</div> -->
-		{{#if opponent_id}}
-			<div class="opponent-info">
-				<span class="opponent-label lowercase">{{localize 'battle.opponent_name_default_label'}}:</span> <span class="opponent-name">{{opponent_username}}</span>
-				{{#if show_add_buddy}}<button class="btn btn-add-opponent-to-buddies uppercase"><i class="fa fa-plus"></i> ADD</button>{{/if}}
-				{{#if show_tip}}<button class="btn btn-tip-opponent uppercase" data-toggle="tooltip" data-placement="top" title="{{localize 'battle.gold_tip_button_tooltip'}}"><i class="fa fa-circle"></i> {{localize 'battle.gold_tip_button_label'}}</button>{{/if}}
-				{{#if show_report}}<button class="btn btn-report-opponent uppercase"><i class="fa fa-exclamation-triangle"></i> {{localize 'battle.report_opponent_button_label'}}</button>{{/if}}
-				<span class="sent hide">invite sent</span>
-			</div>
-		{{/if}}
 	</div>
 	{{#if is_scored}}
 	<div class="progression-reward-counter">
@@ -72,24 +63,5 @@
 	</div>
 </div>
 
-<div id="confirm_report_dialog" class="modal fade prompt-modal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-		<div class="modal-header">
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<h4 class="modal-title">Report Player</h4>
-		</div>
-		<div class="modal-body">
-			<p id="confirm_purchase_message">What did the player do to warrant a report?</p>
-			<div id="report_form_error" class="alert alert-danger hide" role="alert"></div>
-			<textarea id="report_text" class="form-control"></textarea>
-		</div>
-		<div class="modal-footer">
-			<button type="button" class="btn btn-clean cancel btn-clean-secondary" id="cancel_confirm_report_button" data-dismiss="modal">CANCEL</button>
-			<button type="button" class="btn btn-clean btn-clean-secondary" id="confirm_report_button">REPORT</button>
-		</div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
 
 <div class="level-up-notice">{{localize 'battle.level_up_notice'}}</div>

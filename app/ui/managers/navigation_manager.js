@@ -26,15 +26,9 @@ var RSX = require('app/data/resources');
 var Scene = require('app/view/Scene');
 var Animations = require('app/ui/views/animations');
 var TransitionRegion = require('app/ui/views/regions/transition');
-var NotificationsLayout = require('app/ui/views/layouts/notifications');
 var ConfirmDialogItemView = require('app/ui/views/item/confirm_dialog');
-var ConfirmPurchaseDialogView = require('app/ui/views2/shop/confirm_purchase_dialog');
 var LoadingDialogItemView = require('app/ui/views/item/loading_dialog');
-var MaintenanceAnnouncementItemView = require('app/ui/views/item/maintenance_announcement');
 var _ = require('underscore');
-var ServerStatusManager = require('./server_status_manager');
-var ChatManager = require('./chat_manager');
-var NotificationsManager = require('./notifications_manager');
 var Manager = require('./manager');
 
 var NavigationManager = Manager.extend({
@@ -47,10 +41,8 @@ var NavigationManager = Manager.extend({
   _gamecanvasRegion: null,
   _contentRegion: null,
   _modalRegion: null,
-  _notificationsRegion: null,
   _blurringModal: false,
   _previousBlurProgramKey: null,
-  _maintenanceAnnouncementRegion: null,
   _userTriggeredNavigationLocked: false,
   _userTriggeredNavigationLockId: -1,
   _userTriggeredNavigationLockRequests: null,
@@ -77,17 +69,6 @@ var NavigationManager = Manager.extend({
     this._contentRegion = new TransitionRegion({ el: CONFIG.CONTENT_SELECTOR });
     this._modalRegion = new TransitionRegion({ el: CONFIG.MODAL_SELECTOR });
     this._utilityRegion = new TransitionRegion({ el: CONFIG.UTILITY_SELECTOR });
-    this._notificationsRegion = new TransitionRegion({ el: CONFIG.NOTIFICATIONS_SELECTOR });
-    this._maintenanceAnnouncementRegion = new Backbone.Marionette.Region({ el: CONFIG.MAINTENANCE_ANNOUNCEMENTS_SELECTOR });
-
-    // show ui
-    this._notificationsRegion.show(new NotificationsLayout());
-
-    // when server status manager connects, show the system status announcement item view that will auto-update based on system status
-    ServerStatusManager.getInstance().onReady().then(function () {
-      // add maintenance announcement
-      this._maintenanceAnnouncementRegion.show(new MaintenanceAnnouncementItemView({ model: ServerStatusManager.getInstance().serverStatusModel }));
-    }.bind(this));
 
     // attach delegate listeners to the app for special buttons
     $(CONFIG.APP_SELECTOR).on('click', '.btn-user-cancel', function (event) {
@@ -246,9 +227,6 @@ var NavigationManager = Manager.extend({
   },
 
   showContentView: function (contentView) {
-    // dismiss notifications
-    NotificationsManager.getInstance().dismissNotificationsThatCantBeShown();
-
     // temporarily disable user navigation
     this.requestUserTriggeredNavigationLocked(this._userNavLockIdContent);
 
@@ -259,9 +237,6 @@ var NavigationManager = Manager.extend({
     ]).then(function () {
       // unlock user navigation
       this.requestUserTriggeredNavigationUnlocked(this._userNavLockIdContent);
-
-      // show notifications
-      NotificationsManager.getInstance().showQueuedNotificationsThatCanBeShown();
     }.bind(this));
   },
 
@@ -325,9 +300,6 @@ var NavigationManager = Manager.extend({
   },
 
   showModalView: function (modalView) {
-    // dismiss notifications
-    NotificationsManager.getInstance().dismissNotificationsThatCantBeShown();
-
     // temporarily disable user navigation
     this.requestUserTriggeredNavigationLocked(this._userNavLockIdModal);
 
@@ -338,9 +310,6 @@ var NavigationManager = Manager.extend({
     return this._modalRegion.show(modalView).then(function () {
       // unlock user navigation
       this.requestUserTriggeredNavigationUnlocked(this._userNavLockIdModal);
-
-      // show notifications
-      NotificationsManager.getInstance().showQueuedNotificationsThatCanBeShown();
     }.bind(this));
   },
 
@@ -431,16 +400,11 @@ var NavigationManager = Manager.extend({
   },
 
   showDialogView: function (dialogView) {
-    // dismiss all notifications
-    NotificationsManager.getInstance().dismissNotificationsThatCantBeShown();
-
     // disable all user triggered navigation while dialog is enabled
     this.requestUserTriggeredNavigationLocked(this._userNavLockIdDialog);
 
     // show dialog and return promise
-    return this._overlayRegion.show(dialogView).then(function () {
-      NotificationsManager.getInstance().showQueuedNotificationsThatCanBeShown();
-    });
+    return this._overlayRegion.show(dialogView);
   },
 
   destroyDialogView: function () {
@@ -503,61 +467,6 @@ var NavigationManager = Manager.extend({
     }
   },
 
-  /**
-   * Special confirmation dialog to confirm a purchase. Resolves on complete, rejects on cancel or if product already purchased.
-   * @param {Object} productData
-   * @returns {Promise}
-   */
-  showDialogForConfirmPurchase: function (productData, saleData) {
-    if (productData != null && !productData.is_purchased) {
-      return new Promise(function (resolve, reject) {
-        // ask for user confirmation
-        var confirmPurchaseDialogView = new ConfirmPurchaseDialogView({ model: new Backbone.Model(), productData: productData, saleData: saleData });
-        var completedPurchase = false;
-        this.listenToOnce(confirmPurchaseDialogView, 'processing', function (purchaseData) {
-          // paypal is assumed to be successful
-          if (!completedPurchase && purchaseData && (purchaseData.paymentType === 'paypal')) {
-            completedPurchase = true;
-            this.destroyDialogForConfirmPurchase();
-            resolve(purchaseData);
-          }
-        }.bind(this));
-        this.listenToOnce(confirmPurchaseDialogView, 'complete', function (purchaseData) {
-          if (!completedPurchase) {
-            completedPurchase = true;
-            resolve(purchaseData);
-          }
-        }.bind(this));
-        this.listenToOnce(confirmPurchaseDialogView, 'success', function () {
-          if (completedPurchase) {
-            this.destroyDialogForConfirmPurchase();
-          }
-        }.bind(this));
-        this.listenToOnce(confirmPurchaseDialogView, 'cancel', function () {
-          this.destroyDialogForConfirmPurchase();
-          reject();
-        }.bind(this));
-
-        // show confirm purchase
-        this.showDialogView(confirmPurchaseDialogView);
-      }.bind(this));
-    } else {
-      return Promise.reject();
-    }
-  },
-
-  /**
-   * Destroys the special confirm purchase dialog if it is currently showing.
-   * @returns {Promise}
-   */
-  destroyDialogForConfirmPurchase: function () {
-    if (this.getIsShowingDialogViewClass(ConfirmPurchaseDialogView)) {
-      return this.destroyDialogView();
-    } else {
-      return Promise.resolve();
-    }
-  },
-
   /* endregion CONFIRM */
 
   /* region LOADING */
@@ -569,17 +478,10 @@ var NavigationManager = Manager.extend({
    */
   showDialogForLoad: function (dontDestroy) {
     if (!this.getIsShowingDialogViewClass(LoadingDialogItemView)) {
-      // set user status temporarily to loading
-      var previousStatus = ChatManager.getInstance().getStatus();
-      ChatManager.getInstance().setStatus(ChatManager.STATUS_LOADING);
-
       return Promise.all([
         this.destroyAllViewsAndLayers(dontDestroy),
         this.showDialogViewByClass(LoadingDialogItemView),
-      ]).then(function () {
-        // restore previous status
-        ChatManager.getInstance().setStatus(previousStatus);
-      });
+      ]);
     } else {
       return Promise.resolve();
     }

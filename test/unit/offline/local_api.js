@@ -251,4 +251,43 @@ describe('offline local API', () => {
     assert.equal(request.status, 0);
     assert.equal(networkAttempts, 0);
   });
+
+  it('rejects unknown ajax routes with an explicit unsupported error', async () => {
+    const request = global.$.ajax({
+      url: '/api/me/shop/products',
+      type: 'GET',
+    });
+    const rejection = await new Promise((resolve) => {
+      request.fail((xhr, status, error) => resolve({ xhr, status, error }));
+    });
+
+    assert.equal(rejection.xhr, request);
+    assert.equal(rejection.status, 'unsupported');
+    assert.equal(request.status, 501);
+    assert.equal(request.statusText, 'unsupported');
+    assert.equal(request.responseJSON.code, 'OFFLINE_UNSUPPORTED_ROUTE');
+    assert.equal(rejection.error.name, 'OfflineUnsupportedRouteError');
+    assert.equal(rejection.error.code, 'OFFLINE_UNSUPPORTED_ROUTE');
+    assert(/Unsupported offline GET route: \/api\/me\/shop\/products/.test(rejection.error.message));
+    assert.equal(networkAttempts, 0);
+  });
+
+  it('rejects unknown Backbone reads instead of returning empty placeholder data', async () => {
+    const UnknownCollection = DuelystBackbone.Collection.extend({
+      url: '/api/me/unknown-state',
+    });
+
+    let error;
+    try {
+      await waitForRequest(new UnknownCollection().fetch());
+    } catch (requestError) {
+      error = requestError;
+    }
+
+    assert(error);
+    assert.equal(error.name, 'OfflineUnsupportedRouteError');
+    assert.equal(error.code, 'OFFLINE_UNSUPPORTED_ROUTE');
+    assert(/Unsupported offline READ route: \/api\/me\/unknown-state/.test(error.message));
+    assert.equal(networkAttempts, 0);
+  });
 });

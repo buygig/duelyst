@@ -2,7 +2,6 @@
 
 'use strict';
 
-var Logger = require('app/common/logger');
 var RSX = require('app/data/resources');
 var CONFIG = require('app/common/config');
 var UtilsJavascript = require('app/common/utils/utils_javascript');
@@ -12,30 +11,21 @@ var SDK = require('app/sdk');
 var Scene = require('app/view/Scene');
 var Analytics = require('app/common/analytics');
 var Animations = require('app/ui/views/animations');
-var GamesManager = require('app/ui/managers/games_manager');
 var GameDataManager = require('app/ui/managers/game_data_manager');
 var InventoryManager = require('app/ui/managers/inventory_manager');
 var NewPlayerManager = require('app/ui/managers/new_player_manager');
 var ProgressionManager = require('app/ui/managers/progression_manager');
 var ProfileManager = require('app/ui/managers/profile_manager');
-var DecksCollection = require('app/ui/collections/decks');
 var DeckModel = require('app/ui/models/deck');
 var DeckSlidingPanelItemView = require('app/ui/views/item/deck_sliding_panel');
 var DeckSelectTmpl = require('app/ui/templates/composite/deck_select.hbs');
 var DeckSelectEmptyTmpl = require('app/ui/templates/item/deck_select_empty.hbs');
 var DeckSelectEmptyStandardTmpl = require('app/ui/templates/item/deck_select_empty_standard.hbs');
-var RiftDeckSelectEmptyTmpl = require('app/ui/templates/item/rift_deck_select_empty.hbs');
-var ArenaDeckSelectEmptyTmpl = require('app/ui/templates/item/arena_deck_select_empty.hbs');
 var NavigationManager = require('app/ui/managers/navigation_manager');
-var ActivityDialogItemView = require('app/ui/views/item/activity_dialog');
 var VirtualCollection = require('backbone-virtual-collection');
 var PlayLayer = require('app/view/layers/pregame/PlayLayer');
 var ChangeBattleMapItemView = require('app/ui/views/item/change_battle_map_dialog');
-var DuelystBackbone = require('app/ui/extensions/duelyst_backbone');
-var RiftRunDeckView = require('app/ui/views2/rift/rift_run_deck');
 var i18next = require('i18next');
-var ArenaRunDeckView = require('app/ui/views2/arena/arena_run_deck');
-const Chroma = require('app/common/chroma');
 var SlidingPanelSelectCompositeView = require('./sliding_panel_select');
 
 var DeckSelectEmptyView = Backbone.Marionette.ItemView.extend({
@@ -48,16 +38,6 @@ var DeckSelectEmptyViewStandard = Backbone.Marionette.ItemView.extend({
   template: DeckSelectEmptyStandardTmpl,
 });
 
-var RiftDeckSelectEmptyView = Backbone.Marionette.ItemView.extend({
-  tagName: 'li',
-  template: RiftDeckSelectEmptyTmpl,
-});
-
-var ArenaDeckSelectEmptyView = Backbone.Marionette.ItemView.extend({
-  tagName: 'li',
-  template: ArenaDeckSelectEmptyTmpl,
-});
-
 var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
 
   className: 'sliding-panel-select deck-select',
@@ -67,7 +47,6 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
   ui: {
     $decks: '.sliding-panel-select-choices',
     $deckSelectConfirm: '.deck-select-confirm',
-    $deckSelectConfirmCasual: '.deck-select-confirm-casual',
     $deckGroups: '.deck-groups',
     $searchSubmit: '.search-submit',
     $searchClear: '.search-clear',
@@ -77,7 +56,6 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
 
   events: {
     'click .deck-select-confirm': 'onConfirmSelection',
-    'click .deck-select-confirm-casual': 'onConfirmCasualSelection',
     'click .deck-groups li': 'onDeckGroupChanged',
     'click .search-clear': 'onSearchClear',
     'input .search input[type=\'search\']': 'onSearch',
@@ -99,8 +77,6 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
   _popoverItem: null,
   _dismissSelectDeckWarningPopover: null,
   _dismissSelectDeckWarningTimeoutId: null,
-  _showRiftDecks: false,
-  _showGauntletDecks: false,
 
   slidingPanelsShowDuration: 150.0,
   slidingPanelsShowDelay: 100.0,
@@ -108,8 +84,6 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
   slidingPanelsShowStaggerRandom: 10.0,
   slidingPanelShowAnimation: Animations.fadeZoomFlashUpIn,
   slidingPanelsStickySelection: true,
-
-  runsCollection: null,
 
   _requestId: null,
 
@@ -167,22 +141,12 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
       }.bind(this));
   },
 
-  getChildView: function (item) {
-    if (item.get('isRift')) {
-      return RiftRunDeckView;
-    } else if (item.get('isGauntlet')) {
-      return ArenaRunDeckView;
-    } else {
-      return DeckSlidingPanelItemView;
-    }
+  getChildView: function () {
+    return DeckSlidingPanelItemView;
   },
 
   getEmptyView: function () {
-    if (this.selectedDeckGroup == 'rift') {
-      return RiftDeckSelectEmptyView;
-    } else if (this.selectedDeckGroup == 'gauntlet') {
-      return ArenaDeckSelectEmptyView;
-    } else if (this.filterLegacy) {
+    if (this.filterLegacy) {
       return DeckSelectEmptyViewStandard;
     } else {
       return DeckSelectEmptyView;
@@ -230,47 +194,7 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
     // add all custom user decks
     decks = decks.concat(InventoryManager.getInstance().getDecksCollection().slice(0));
 
-    var gatherDecksPromises = [];
-
-    if (this._showRiftDecks) {
-      this.runsCollection = new DuelystBackbone.Collection();
-      this.runsCollection.url = process.env.API_URL + '/api/me/rift/runs';
-      this.runsCollection.fetch();
-
-      var riftDecksPromise = this.runsCollection.onSyncOrReady().then(function () {
-        _.each(this.runsCollection.models, function (runModel) {
-          runModel.set('isRift', true);
-          runModel.set('id', runModel.get('ticket_id'));
-          decks.push(runModel);
-        });
-
-        return Promise.resolve(decks);
-      }.bind(this));
-
-      gatherDecksPromises.push(riftDecksPromise);
-    }
-
-    if (this._showGauntletDecks) {
-      this.gauntletDecksCollection = new DuelystBackbone.Collection();
-      this.gauntletDecksCollection.url = process.env.API_URL + '/api/me/gauntlet/runs/decks';
-      this.gauntletDecksCollection.fetch();
-
-      var gauntletDecksPromise = this.gauntletDecksCollection.onSyncOrReady().then(function () {
-        _.each(this.gauntletDecksCollection.models, function (runModel) {
-          runModel.set('isGauntlet', true);
-          decks.push(runModel);
-        });
-
-        return Promise.resolve(decks);
-      }.bind(this));
-
-      gatherDecksPromises.push(gauntletDecksPromise);
-    }
-
-    return Promise.all(gatherDecksPromises)
-      .then(function () {
-        return Promise.resolve(decks);
-      });
+    return Promise.resolve(decks);
   },
 
   /* endregion INITIALIZE */
@@ -533,13 +457,9 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
     var isInSelectedGroup = true;
 
     if (this.selectedDeckGroup === 'custom') {
-      isInSelectedGroup = !deckModel.get('isStarter') && !deckModel.get('isRift') && !deckModel.get('isGauntlet');
+      isInSelectedGroup = !deckModel.get('isStarter');
     } else if (this.selectedDeckGroup === 'starter') {
       isInSelectedGroup = deckModel.get('isStarter');
-    } else if (this.selectedDeckGroup === 'rift') {
-      isInSelectedGroup = deckModel.get('isRift');
-    } else if (this.selectedDeckGroup === 'gauntlet') {
-      isInSelectedGroup = deckModel.get('isGauntlet');
     }
 
     if (isInSelectedGroup && this._currentSearchPattern != null) {
@@ -624,43 +544,6 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
     }
   },
 
-  onConfirmSelection: function (event) {
-    if (this._selectedDeckModel != null) {
-      this.ui.$deckSelectConfirm.addClass('disabled');
-      this.ui.$deckSelectConfirmCasual.addClass('disabled');
-      audio_engine.current().play_effect_for_interaction(RSX.sfx_ui_confirm.audio, CONFIG.CONFIRM_SFX_PRIORITY);
-      GamesManager.getInstance().findNewGame(
-        UtilsJavascript.deepCopy(this._selectedDeckModel.get('cards')),
-        this._selectedDeckModel.get('faction_id'),
-        SDK.GameType.Ranked,
-        this._selectedDeckModel.get('cards')[0].id,
-        this._selectedDeckModel.get('card_back_id'),
-        ProfileManager.getInstance().get('battle_map_id'),
-      );
-    } else {
-      audio_engine.current().play_effect_for_interaction(RSX.sfx_ui_error.audio, CONFIG.ERROR_SFX_PRIORITY);
-      this._showSelectDeckWarningPopover(this.ui.$deckSelectConfirm);
-    }
-  },
-
-  onConfirmCasualSelection: function (event) {
-    if (this._selectedDeckModel != null) {
-      this.ui.$deckSelectConfirm.addClass('disabled');
-      this.ui.$deckSelectConfirmCasual.addClass('disabled');
-      GamesManager.getInstance().findNewGame(
-        UtilsJavascript.deepCopy(this._selectedDeckModel.get('cards')),
-        this._selectedDeckModel.get('faction_id'),
-        SDK.GameType.Casual,
-        this._selectedDeckModel.get('cards')[0].id,
-        this._selectedDeckModel.get('card_back_id'),
-        ProfileManager.getInstance().get('battle_map_id'),
-      );
-    } else {
-      // show select deck warning
-      this._showSelectDeckWarningPopover(this.ui.$deckSelectConfirmCasual);
-    }
-  },
-
   onChangeBattleMapPressed: function (e) {
     var dialog = new ChangeBattleMapItemView({ model: new Backbone.Model() });
     this.listenToOnce(dialog, 'success', this.updateSelectedBattlemapIcon);
@@ -706,15 +589,6 @@ var DeckSelectCompositeView = SlidingPanelSelectCompositeView.extend({
   _updateBackgroundForDeck: function (deckModel) {
     if (deckModel != null) {
       var factionData = SDK.FactionFactory.factionForIdentifier(deckModel.get('faction_id'));
-      if (CONFIG.razerChromaEnabled) {
-        // CONFIG.razerChromaIdleColor = new Chroma.Color(
-        //   (factionData.gradientColorMapWhite.r + factionData.gradientColorMapBlack.r)/2,
-        //   (factionData.gradientColorMapWhite.g + factionData.gradientColorMapBlack.g)/2,
-        //   (factionData.gradientColorMapWhite.b + factionData.gradientColorMapBlack.b)/2
-        // )
-        CONFIG.razerChromaIdleColor = new Chroma.Color(factionData.gradientColorMapWhite.r, factionData.gradientColorMapWhite.g, factionData.gradientColorMapWhite.b);
-        Chroma.setAll(CONFIG.razerChromaIdleColor);
-      }
       Scene.getInstance().getFX().showGradientColorMap(this._requestId, CONFIG.ANIMATE_FAST_DURATION, factionData.gradientColorMapWhite, factionData.gradientColorMapBlack);
     } else {
       Scene.getInstance().getFX().showGradientColorMap(this._requestId, CONFIG.ANIMATE_FAST_DURATION, {

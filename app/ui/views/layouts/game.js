@@ -23,7 +23,6 @@ var ProgressionManager = require('app/ui/managers/progression_manager');
 var NavigationManager = require('app/ui/managers/navigation_manager');
 var NetworkManager = require('app/sdk/networkManager');
 var ProfileManager = require('app/ui/managers/profile_manager');
-var NotificationModel = require('app/ui/models/notification');
 var GameTopBarCompositeView = require('app/ui/views/composite/game_top_bar');
 var GameBottomBarCompositeView = require('app/ui/views/composite/game_bottom_bar');
 var GameChooseHandItemView = require('app/ui/views/item/game_choose_hand');
@@ -34,7 +33,6 @@ var Analytics = require('app/common/analytics');
 var moment = require('moment');
 var DuelystFirebase = require('app/ui/extensions/duelyst_firebase');
 var i18next = require('i18next');
-const Chroma = require('app/common/chroma');
 var GamePlayer2Layout = require('./game_player2');
 var GamePlayer1Layout = require('./game_player1');
 
@@ -286,21 +284,6 @@ var GameLayout = Backbone.Marionette.LayoutView.extend({
   },
 
   onAfterShowStartTurn: function () {
-    if (CONFIG.razerChromaEnabled) {
-      if (Scene.getInstance().getGameLayer().getIsMyTurn()) {
-        Chroma.flashActionThrottled(CONFIG.razerChromaIdleColor, 50, 2)
-          .then(() => {
-            Chroma.setAll(CONFIG.razerChromaIdleColor);
-          });
-      } else {
-        // enemy color just white, we might want to make this dynamic based on enemy faction
-        const color = new Chroma.Color('FFFFFF');
-        Chroma.flashActionThrottled(color, 50, 2)
-          .then(() => {
-            Chroma.setAll(color);
-          });
-      }
-    }
     if (CONFIG.showInGameTips
       && !SDK.GameSession.getInstance().getIsSpectateMode()
       && !SDK.GameSession.getInstance().isChallenge()
@@ -396,7 +379,7 @@ var GameLayout = Backbone.Marionette.LayoutView.extend({
             }
 
             // assemble text
-            var text = 'This is a [Battle Pet]. At the start of' + (battlePetNode.getSdkCard().isOwnedByMyPlayer() ? ' your' : ' its owner\'s') + ' turn, it will act on its own!';
+            var text = i18next.t('modifiers.battle_pet_def');
 
             // show instruction
             var direction;
@@ -419,7 +402,7 @@ var GameLayout = Backbone.Marionette.LayoutView.extend({
             NewPlayerManager.getInstance().setHasSeenBattlePetActionNotification();
 
             // assemble text
-            var text = 'Remember, a [Battle Pet] will act on its own!';
+            var text = i18next.t('modifiers.battle_pet_error');
 
             // show instruction
             var direction;
@@ -744,14 +727,6 @@ var GameLayout = Backbone.Marionette.LayoutView.extend({
       } else {
         this.ui.$turnTimerBar.css('transform', 'translateX(100%) scaleX(-' + timePct + ')');
         audio_engine.current().play_effect(RSX.sfx_ui_turn_time.audio, false);
-        if (CONFIG.razerChromaEnabled) {
-          // see game.scss .timer-bar for color definitions
-          if (isOpponentTurn) {
-            Chroma.flashTurnTimer(timePct, new Chroma.Color('E22A00'));
-          } else {
-            Chroma.flashTurnTimer(timePct, new Chroma.Color('00AAFD'));
-          }
-        }
       }
     } else {
       this.hideTurnTimerBar();

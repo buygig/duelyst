@@ -119,6 +119,16 @@ function isDeckUrl(url) {
   return /\/api\/me\/decks(?:\/[^/?#]+)?(?:[?#].*)?$/.test(url);
 }
 
+function unsupportedRoute(method, url) {
+  const normalizedMethod = String(method || 'request').toUpperCase();
+  const normalizedUrl = url || '<empty>';
+  const error = new Error(`Unsupported offline ${normalizedMethod} route: ${normalizedUrl}`);
+  error.name = 'OfflineUnsupportedRouteError';
+  error.code = 'OFFLINE_UNSUPPORTED_ROUTE';
+  error.status = 501;
+  return error;
+}
+
 function deckResponse(method, model) {
   let decks = loadDecks();
   let id = model && model.id != null ? String(model.id) : null;
@@ -155,20 +165,14 @@ function readResponse(model, url) {
   if (/\/api\/me\/new_player_progression(?:[/?#]|$)/.test(url)) {
     return [{ module_name: 'core', stage: 'Skipped' }];
   }
-  if (/\/api\/me\/shop\/products(?:[/?#]|$)/.test(url)) {
-    return { earned_specials: {}, products: [] };
-  }
-  if (/\/api\/me\/shop\/premium_pack_products(?:[/?#]|$)/.test(url)) {
-    return { products: [] };
-  }
-  return isCollection(model) ? [] : {};
+  throw unsupportedRoute('read', url);
 }
 
 function responseFor(method, model) {
   const url = urlFor(model);
   if (isDeckUrl(url)) return deckResponse(method, model);
   if (method === 'read') return readResponse(model, url);
-  return model && typeof model.toJSON === 'function' ? clone(model.toJSON()) : {};
+  throw unsupportedRoute(method, url);
 }
 
 function makeRequest(responseFactory, options, status) {
@@ -201,12 +205,12 @@ function makeRequest(responseFactory, options, status) {
     } catch (error) {
       settled = true;
       request.readyState = 4;
-      request.status = 500;
-      request.statusText = 'error';
-      request.responseJSON = { message: error.message };
-      if (options && typeof options.error === 'function') options.error(request, 'error', error);
-      deferred.reject(request, 'error', error);
-      if (options && typeof options.complete === 'function') options.complete(request, 'error');
+      request.status = error.status || 500;
+      request.statusText = error.code === 'OFFLINE_UNSUPPORTED_ROUTE' ? 'unsupported' : 'error';
+      request.responseJSON = { message: error.message, code: error.code };
+      if (options && typeof options.error === 'function') options.error(request, request.statusText, error);
+      deferred.reject(request, request.statusText, error);
+      if (options && typeof options.complete === 'function') options.complete(request, request.statusText);
       return;
     }
 
@@ -232,15 +236,16 @@ function localSync(method, model, options) {
 }
 
 function ajaxResponse(url, settings) {
-  const challengeResponse = updateChallenge(url, settings);
-  if (challengeResponse) return challengeResponse;
-  if (/\/api\/me\/challenges\/gated\/?(?:[?#].*)?$/.test(url)) return loadChallenges();
-  if (/\/api\/me\/new_player_progression(?:[/?#]|$)/.test(url)) {
+  const method = String((settings && (settings.type || settings.method)) || 'GET').toUpperCase();
+  if (method === 'PUT') {
+    const challengeResponse = updateChallenge(url, settings);
+    if (challengeResponse) return challengeResponse;
+  }
+  if (method === 'GET' && /\/api\/me\/challenges\/gated\/?(?:[?#].*)?$/.test(url)) return loadChallenges();
+  if (method === 'GET' && /\/api\/me\/new_player_progression(?:[/?#]|$)/.test(url)) {
     return [{ module_name: 'core', stage: 'Skipped' }];
   }
-  if (/\/api\/me\/rewards\/twitch_rewards\/unread(?:[/?#]|$)/.test(url)) return [];
-  if (/\/api\/me\/shop\/sales(?:[/?#]|$)/.test(url)) return [];
-  return {};
+  throw unsupportedRoute(method, url);
 }
 
 function install() {

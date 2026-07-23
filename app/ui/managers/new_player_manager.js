@@ -12,27 +12,15 @@ _NewPlayerManager.current = _NewPlayerManager.getInstance;
 
 module.exports = _NewPlayerManager;
 
-var CONFIG = require('app/common/config');
-var EventBus = require('app/common/eventbus');
 var EVENTS = require('app/common/event_types');
-var Logger = require('app/common/logger');
 var SDK = require('app/sdk');
-var NotificationModel = require('app/ui/models/notification');
-var DuelystFirebase = require('app/ui/extensions/duelyst_firebase');
 var DuelystBackbone = require('app/ui/extensions/duelyst_backbone');
 var Analytics = require('app/common/analytics');
-var moment = require('moment'); // WHY WONT THIS WORK
 var Promise = require('bluebird');
-var ErrorDialogItemView = require('app/ui/views/item/error_dialog');
 var NewPlayerFeatureLookup = require('app/sdk/progression/newPlayerProgressionFeatureLookup');
 var NewPlayerProgressionStageEnum = require('app/sdk/progression/newPlayerProgressionStageEnum');
 var NewPlayerProgressionModuleLookup = require('app/sdk/progression/newPlayerProgressionModuleLookup');
 var NewPlayerProgressionHelper = require('app/sdk/progression/newPlayerProgressionHelper');
-var i18next = require('i18next');
-var ProfileManager = require('./profile_manager');
-var NavigationManager = require('./navigation_manager');
-var NotificationsManager = require('./notifications_manager');
-var InventoryManager = require('./inventory_manager');
 var ProgressionManager = require('./progression_manager');
 var Manager = require('./manager');
 
@@ -64,7 +52,6 @@ var NewPlayerManager = Manager.extend({
       // listen to changes immediately so we don't miss anything
       this.listenTo(ProgressionManager.getInstance(), EVENTS.challenge_completed, this._onChallengeCompleted);
       this.listenTo(ProgressionManager.getInstance(), EVENTS.challenge_attempted, this._onChallengeAttempted);
-      this.listenTo(InventoryManager.getInstance(), EVENTS.wallet_change, this._onWalletChange);
 
       // just in case of data migrations, issue an update on login / ready if we're past the tutorial
       if (this.getCurrentCoreStage() != NewPlayerProgressionStageEnum.Tutorial) {
@@ -219,20 +206,6 @@ var NewPlayerManager = Manager.extend({
 
   isDoneWithTutorial: function () {
     return this.getCurrentCoreStage().value > NewPlayerProgressionStageEnum.Tutorial.value;
-  },
-
-  getEmphasizeBoosterUnlock: function () {
-    // return false;//TODO HOTFIX: this popover is working unreliably https://trello.com/c/AZJKZgfY/3370-fix-armory-emphasis-popover
-    // return this.getModuleStage(NewPlayerProgressionModuleLookup.BoosterUnlock) == this._moduleStages.unread;
-    // return this.getModuleStage(NewPlayerProgressionModuleLookup.BoosterUnlock) != this._moduleStages.read;
-    return InventoryManager.getInstance().walletModel.get('gold_amount') >= 100 && this.getCurrentCoreStage().value < NewPlayerProgressionHelper.FinalStage.value;
-  },
-
-  setHasPurchasedBoosterPack: function () {
-    // If user buys a booster advance booster unlock module
-    if (this.getModuleStage(NewPlayerProgressionModuleLookup.BoosterUnlock) == this._moduleStages.unread) {
-      this.setModuleStage(NewPlayerProgressionModuleLookup.BoosterUnlock, this._moduleStages.read);
-    }
   },
 
   getHasUsedRiftUpgrade: function () {
@@ -468,15 +441,6 @@ var NewPlayerManager = Manager.extend({
 
   /* region EVENT HANDLERS */
 
-  _onWalletChange: function () {
-    // Check if advancement needed for booster unlock module
-    if (this.getModuleStage(NewPlayerProgressionModuleLookup.BoosterUnlock) == this._moduleStages.inactive) {
-      if (this.canBuyBoosters()) {
-        this.setModuleStage(NewPlayerProgressionModuleLookup.BoosterUnlock, this._moduleStages.unread);
-      }
-    }
-  },
-
   _onChallengeCompleted: function (challengeCompletedEvent) {
     // this.updateCoreState();
   },
@@ -491,62 +455,6 @@ var NewPlayerManager = Manager.extend({
       if (ProgressionManager.getInstance().hasCompletedChallengeCategory(SDK.ChallengeCategory.tutorial.type)) {
         this.setModuleStage(NewPlayerProgressionModuleLookup.Quest, this._moduleStages.unread);
         return this.setCurrentCoreStage(NewPlayerProgressionStageEnum.TutorialDone);
-      }
-    // otherwise, let's figure out if we need to move the core state forward
-    } else if (this.getCurrentCoreStage().value < NewPlayerProgressionHelper.FinalStage.value) {
-      var quests = NewPlayerProgressionHelper.questsForStage(this.getCurrentCoreStage());
-      if (quests && quests.length > 0) {
-        return Promise.resolve($.ajax({
-          url: process.env.API_URL + '/api/me/new_player_progression/core',
-          type: 'POST',
-          contentType: 'application/json',
-          dataType: 'json',
-        }))
-          .then(function (response) {
-            if (response && response.progressionData) {
-              var progressionData = response.progressionData;
-              var module = this.newPlayerModulesCollection.get(SDK.NewPlayerProgressionModuleLookup.Core);
-              if (module && module.get('stage') != progressionData.stage) {
-                module.set('stage', progressionData.stage);
-                // Analytics for core state since we're not going through setCurrentCoreStage
-                var secondsSinceRegistration = Math.floor((new Date().getTime() - ProfileManager.getInstance().profile.getRegistrationDate()) / 1000.0);
-                // TODO: Revalidate these values by stepping through
-                Analytics.track('module stage reached', {
-                  category: Analytics.EventCategory.FTUE,
-                  module_and_stage: 'core' + ':' + progressionData.stage,
-                }, {
-                  labelKey: 'module_and_stage',
-                  sendUTMData: true,
-                });
-
-                var newModuleStageIndex = _.indexOf(_.map(NewPlayerProgressionStageEnum.enums, function (val) { return val.key; }), progressionData.stage);
-                if (newModuleStageIndex > 0) {
-                  var completedModuleStage = NewPlayerProgressionStageEnum.enums[newModuleStageIndex - 1];
-                  Analytics.track('completed ftue stage', {
-                    category: Analytics.EventCategory.Marketing,
-                    stage_name: completedModuleStage.key,
-                  }, {
-                    labelKey: 'stage_name',
-                    sendUTMData: true,
-                  });
-                }
-              }
-              return response;
-            } else {
-              return { progressionData: null };
-            }
-          }.bind(this))
-          .then(function (response) {
-          // Check if this is the core stage where codex becomes available and retrieve starter chapters if so
-            var coreStageCodexUnlocks = NewPlayerProgressionHelper.featureToCoreStageMapping[NewPlayerFeatureLookup.MainMenuCodex];
-            if (this.getCurrentCoreStage().value == coreStageCodexUnlocks.value) {
-            // No need to wait up on this before progressing promise
-              InventoryManager.getInstance().checkForMissingCodexChapters();
-            }
-
-            // Maintain resolving to ajax response
-            return Promise.resolve(response);
-          }.bind(this));
       }
     }
 
