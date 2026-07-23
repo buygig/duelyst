@@ -17,9 +17,7 @@ import coffeeify from 'coffeeify';
 import glslify from 'glslify';
 import hbsfy from 'hbsfy';
 import envify from 'envify/custom';
-import babelify from 'babelify';
 import uglifyify from 'uglifyify';
-import bundleCollapser from 'bundle-collapser/plugin';
 import {
   opts, config, env, version, production, staging, development,
 } from './shared';
@@ -40,9 +38,6 @@ const bundlerOpts = {
 };
 
 const entries = ['./app/index'];
-if (config.get('datGuiEditorEnabled')) {
-  entries.push('./app/tools/editor.coffee');
-}
 
 // gutil.log(`bundler options: ${JSON.stringify(opts)}`)
 
@@ -74,13 +69,9 @@ bundler.transform(envify({
   LANDING_PAGE_URL: '/',
   REFERRER_PAGE_URLS: '',
 }));
-// bundler.transform(babelify, {
-//   compact: false
-// })
 if (opts.minify) {
   gutil.log('[BROWSERIFY] Minifying bundle');
   bundler.transform(uglifyify);
-  // bundler.plugin(bundleCollapser)
 }
 
 // Re-bundle on update

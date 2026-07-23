@@ -24,7 +24,7 @@
     "compression": "normal",
     "directories": {
       "output": "../dist/installer",
-      "buildResources": "../desktop"
+      "buildResources": "."
     },
     "files": [
       "main.js",

@@ -26,8 +26,3 @@ export function web() {
 export function locales() {
   return del('dist/src/resources/locales');
 }
-
-// Cleans out git remotes from the dist folder
-export function git() {
-  return del('dist/git-remotes');
-}

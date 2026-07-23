@@ -10,16 +10,13 @@ on:
       - .mocharc.js
       - app/**.js
       - bulk-decaffeinate.config.js
-      - cli/**.js
       - config/**.js
-      - desktop/**.js
+      - desktop-offline/**.js
       - gulp/**.js
       - gulpfile.babel.js
-      #- packages/**.js
+      - packages/game-ai/**.js
       - scripts/**.js
-      - server/**.js
       - test/**.js
-      - worker/**.js
 
 jobs:
   linting:
@@ -51,9 +48,6 @@ jobs:
 
     - name: install node dependencies
       run: yarn workspaces focus
-
-    - name: compile typescript dependencies
-      run: yarn tsc:chroma-js
 
     - name: lint javascript code
       run: yarn lint:js:all

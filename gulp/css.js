@@ -1,17 +1,12 @@
 import gulp from 'gulp';
 import notify from 'gulp-notify';
-import gutil from 'gulp-util';
 import gif from 'gulp-if';
 import rename from 'gulp-rename';
 import Sass from 'sass';
 import gsass from 'gulp-sass';
 import autoprefixer from 'gulp-autoprefixer';
-import rework from 'gulp-rework';
-import reworkUrl from 'rework-plugin-url';
 import cssmin from 'gulp-minify-css';
-import {
-  opts, config, production, staging,
-} from './shared';
+import { opts } from './shared';
 
 const sass = gsass(Sass);
 const nodeUtil = require('util');
@@ -29,18 +24,7 @@ export default function css() {
       p.basename = 'duelyst';
       return p.basename;
     }))
-  // This is where we replace our CSS urls with CDN urls
-    .pipe(gif(
-      (production || staging) && !config.get('offlineMode'),
-      rework(reworkUrl((url) => {
-        if (url.indexOf('resources') >= 0 && config.get('cdn') !== '') {
-          // gutil.log(`${config.get('cdn')}/${url}`)
-          return `${config.get('cdn')}/${url}`;
-        }
-        return url;
-      })),
-    ))
-  // This is where we minify our css
+    // Minify release builds while keeping every resource URL local.
     .pipe(gif(
       opts.minify,
       cssmin({ keepSpecialComments: 0, processImport: false }),

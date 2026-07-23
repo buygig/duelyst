@@ -18,8 +18,6 @@ const vendorFiles = [
   './app/vendor/jquery_ui/jquery-ui.min.js',
   './app/vendor/ccConfig.js',
   './app/vendor/cocos2d-html5/lib/cocos2d-js-v3.3-beta0.js',
-  './app/vendor/aws/aws-sdk.min.js',
-  './app/vendor/aws/aws-sdk-mobile-analytics.min.js',
 ];
 
 export default function vendor() {

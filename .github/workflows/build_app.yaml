@@ -8,8 +8,10 @@ on:
     paths:
       - app/**
       - config/**
+      - desktop-offline/**
       - gulp/**
       - gulpfile.babel.js
+      - packages/game-ai/**
       - package.json
       - yarn.lock
 
@@ -44,10 +46,5 @@ jobs:
     - name: install node dependencies
       run: yarn workspaces focus
 
-    - name: install typescript dependencies
-      run: yarn tsc:chroma-js
-
-    - name: build the app
-      run: yarn build
-      env:
-        FIREBASE_URL: "https://test-url.firebaseio.com/"
+    - name: build the offline app
+      run: yarn build:offline

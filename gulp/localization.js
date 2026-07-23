@@ -1,12 +1,5 @@
 import gulp from 'gulp';
-import gutil from 'gulp-util';
-import size from 'gulp-size';
-import changed from 'gulp-changed';
-import replace from 'gulp-replace';
-import _ from 'underscore';
 import fs from 'fs';
-import { exec } from 'child_process';
-import { config } from './shared';
 
 export function consolidate(locale) {
   const all = require('require-dir')(`${__dirname}/../app/localization/locales/${locale}`);

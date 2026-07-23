@@ -11,9 +11,8 @@ on:
       - gulp/**
       - gulpfile.babel.js
       - package.json
-      - server/**
+      - packages/game-ai/**
       - test/**
-      - worker/**
       - yarn.lock
 
 jobs:
@@ -48,4 +47,4 @@ jobs:
       run: yarn workspaces focus
 
     - name: run unit tests
-      run: yarn test:unit
+      run: yarn test:offline
