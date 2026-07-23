@@ -35,8 +35,11 @@ export function imageMinLossy() {
 // Used before packaging the desktop application
 export function copy() {
   const pkgsAll = require('../app/data/packages').all;
-  const pkgsFiltered = pkgsAll.filter((rsx) => !rsx.cdn);
-  gutil.log(gutil.colors.magenta(`${pkgsFiltered.length} non-cdn resources detected`));
+  const pkgsFiltered = config.get('offlineMode')
+    ? pkgsAll
+    : pkgsAll.filter((rsx) => !rsx.cdn);
+  const resourceScope = config.get('offlineMode') ? 'local' : 'non-cdn';
+  gutil.log(gutil.colors.magenta(`${pkgsFiltered.length} ${resourceScope} resources detected`));
   let paths = pkgsFiltered.reduce((paths, rsx) => {
     if (rsx.img) {
       paths.push(`app/${rsx.img}`);
@@ -58,6 +61,12 @@ export function copy() {
     }
     return paths;
   }, []);
+  paths.push(
+    'app/resources/fonts/fontawesome-webfont.eot',
+    'app/resources/fonts/fontawesome-webfont.svg',
+    'app/resources/fonts/fontawesome-webfont.ttf',
+    'app/resources/fonts/fontawesome-webfont.woff',
+  );
   paths = _.uniq(paths);
   // paths.forEach(path => gutil.log(gutil.colors.bgMagenta.white(path)))
   gutil.log(gutil.colors.magenta(`${paths.length} paths being copied for packaging`));

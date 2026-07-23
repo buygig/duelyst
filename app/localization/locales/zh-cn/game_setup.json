@@ -1,0 +1,23 @@
+{
+	"must_select_deck_message": "你必须选择一个牌组！",
+	"must_select_two_decks_message": "你必须选择两副牌组！",
+	"must_select_opponent_message": "你必须选择一个对手！",
+	"must_select_deck_and_opponent_message": "你必须选择自己的牌组和一个对手！",
+	"choose_two_decks_header": "选择两副牌组",
+	"recommended_ai_opponent_label": "（推荐）",
+	"choose_your_opponent_header": "选择对手",
+	"difficulty_label": "难度",
+	"auto_label": "自动",
+	"random_cards_label": "随机卡牌",
+	"matchmaking_wait_time_message": "平均等待时间：{{wait_time}}",
+	"matchmaking_estimated_wait_time_message": "预计平均等待时间：{{wait_time}}",
+	"find_selected_deck_msg": "可在这里找到你选中的牌组。",
+	"waiting_for_opponent_msg": "正在等待对手",
+	"opponent_choosing_hand_msg": "对手仍在选择起手牌",
+	"opponent_connecting_msg": "对手正在连接",
+	"opponent_connected_msg": "对手已连接",
+	"battle_map_choose_tooltip": "你选择的战场将在你是<strong>先手玩家</strong>时使用。",
+	"battle_map_saved_success_msg": "战场已保存！",
+	"battle_map_select_title": "设置战场",
+	"battle_map_random": "随机"
+}

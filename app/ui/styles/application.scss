@@ -72,13 +72,13 @@ strong {
 .quiet { @include quiet(); }
 
 form *{
-	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	font-family: "Open Sans", "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", Arial, Helvetica, sans-serif;
 }
 
 input, textarea{
 	background-image: none;
 	border: 0.1rem solid #ccc;
-	font-family: "Open Sans", Arial, Helvetica, sans-serif;
+	font-family: "Open Sans", "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", Arial, Helvetica, sans-serif;
 }
 
 select{

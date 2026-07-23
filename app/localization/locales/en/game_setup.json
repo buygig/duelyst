@@ -1,10 +1,15 @@
 {
 	"must_select_deck_message": "You must select a deck!",
+	"must_select_two_decks_message": "You must select two decks!",
 	"must_select_opponent_message": "You must select an opponent!",
 	"must_select_deck_and_opponent_message": "You must select your deck and an opponent!",
+	"choose_two_decks_header": "Select Two Decks",
 
 	"recommended_ai_opponent_label": "(recommended)",
 	"choose_your_opponent_header": "Choose Your Opponent",
+	"difficulty_label": "Difficulty",
+	"auto_label": "Auto",
+	"random_cards_label": "Random Cards",
 
 	"matchmaking_wait_time_message": "Average wait is {{wait_time}}",
 	"matchmaking_estimated_wait_time_message": "Average est. wait is {{wait_time}}",

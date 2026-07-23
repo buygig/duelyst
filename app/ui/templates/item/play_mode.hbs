@@ -4,25 +4,25 @@
 	{{#if isAvailableToday}}
 		{{#unless isAvailableTommorrow}}
 			<div class="availability-info">
-				<div>{{name}} is open for:</div>
+				<div>{{localize 'common.play_mode_open_for_label' name=name}}</div>
 				<div class="countdown-available-for"></div>
 			</div>
 		{{/unless}}
 	{{else}}
 		<div class="availability-info">
-			<div>Available on: <strong>{{getNextAvailableDate}}</strong></div>
+			<div>{{localize 'common.play_mode_available_on_label'}} <strong>{{getNextAvailableDate}}</strong></div>
 			<div class="countdown-until-available"></div>
 		</div>
 	{{/if}}
 	{{#if softAvailableOnDate}}
 			<div class="availability-info">
-          <div>Available on: <strong>{{getNextAvailableDate}}</strong></div>
+          <div>{{localize 'common.play_mode_available_on_label'}} <strong>{{getNextAvailableDate}}</strong></div>
           <div class="countdown-until-available"></div>
 			</div>
 	{{/if}}
 	{{#if softDisableOnDate}}
       <div class="availability-info">
-          <div>{{name}} is open for:</div>
+          <div>{{localize 'common.play_mode_open_for_label' name=name}}</div>
           <div class="countdown-available-for"></div>
       </div>
 	{{/if}}
@@ -33,7 +33,7 @@
 	</div>
 </div>
 
-<div class="locked-label"><i class="fa fa-lock"></i> {{#if unlockMessage}}{{{unlockMessage}}}{{else}}Not Available{{/if}}</div>
+<div class="locked-label"><i class="fa fa-lock"></i> {{#if unlockMessage}}{{{unlockMessage}}}{{else}}{{localize 'common.generic_not_available_message'}}{{/if}}</div>
 
 <!--
 <div class="sliding-panel-active-content"></div>

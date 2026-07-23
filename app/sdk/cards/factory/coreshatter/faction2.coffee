@@ -79,15 +79,15 @@ class CardFactory_CoreshatterSet_Faction2
       card = new Unit(gameSession)
       card.factionId = Factions.Faction2
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Hideatsu the Ebon Ox"
-      card.setDescription("Trial: Summon 7 minions from your action bar with different costs.\nDestiny: Summon friendly minions to deal their cost as damage to an enemy.")
+      card.name = i18next.t("cards.coreshatter_faction_2_dark_heart_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_dark_heart_desc"))
       card.atk = 5
       card.maxHP = 5
       card.manaCost = 0
       card.rarityId = Rarity.Mythron
       emblemContextObject = PlayerModifierEmblemSummonWatchSonghaiMeltdownQuest.createContextObject()
-      emblemContextObject.appliedName = "Storm of the Ebon Ox"
-      emblemContextObject.appliedDescription = "Whenever you summon a minion, deal damage equal to its cost to an enemy."
+      emblemContextObject.appliedName = i18next.t("modifiers.coreshatter_faction_2_dark_heart_storm_of_the_ebon_ox_name")
+      emblemContextObject.appliedDescription = i18next.t("modifiers.coreshatter_faction_2_dark_heart_storm_of_the_ebon_ox_desc")
       card.setInherentModifiersContextObjects([
         ModifierStartsInHand.createContextObject(),
         ModifierCannotBeReplaced.createContextObject(),
@@ -121,8 +121,8 @@ class CardFactory_CoreshatterSet_Faction2
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
-      card.name = "Bakezori"
-      card.setDescription("Whenever this minion is moved for any reason, draw a card.")
+      card.name = i18next.t("cards.coreshatter_faction_2_move_man_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_move_man_desc"))
       card.atk = 2
       card.maxHP = 6
       card.manaCost = 4
@@ -155,8 +155,8 @@ class CardFactory_CoreshatterSet_Faction2
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
       card.id = Cards.Spell.DejaVu
-      card.name = "Meditate"
-      card.setDescription("Shuffle five copies of the spell you cast most recently into your deck (excluding Meditate).")
+      card.name = i18next.t("cards.coreshatter_faction_2_deja_vu_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_deja_vu_desc"))
       card.rarityId = Rarity.Rare
       card.manaCost = 0
       card.spellFilterType = SpellFilterType.NeutralIndirect
@@ -174,8 +174,8 @@ class CardFactory_CoreshatterSet_Faction2
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
       card.id = Cards.Spell.Kindle
-      card.name = "Knucklestorm"
-      card.setDescription("Intensify: Deal 1 damage to an enemy.")
+      card.name = i18next.t("cards.coreshatter_faction_2_kindle_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_kindle_desc"))
       card.rarityId = Rarity.Common
       card.manaCost = 1
       card.spellFilterType = SpellFilterType.EnemyDirect
@@ -197,16 +197,16 @@ class CardFactory_CoreshatterSet_Faction2
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
       card.id = Cards.Artifact.BackstabGloves
-      card.name = "Horned Mask"
-      card.setDescription("Your General gains +1 Attack.\nAfter a friendly minion with Backstab attacks, it gains +1/+1.")
+      card.name = i18next.t("cards.coreshatter_faction_2_backstab_gloves_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_backstab_gloves_desc"))
       card.manaCost = 1
       card.rarityId = Rarity.Epic
       card.durability = 3
       attackBuffContextObject = Modifier.createContextObjectWithAttributeBuffs(1,1)
-      attackBuffContextObject.appliedName = "Growing Charge"
+      attackBuffContextObject.appliedName = i18next.t("modifiers.coreshatter_faction_2_backstab_gloves_growing_charge_name")
       auraContextObject = ModifierMyAttackWatchApplyModifiers.createContextObject([attackBuffContextObject])
-      auraContextObject.appliedName = "Poised to Strike"
-      auraContextObject.appliedDescription = "After this minion attacks, it gains +1/+1."
+      auraContextObject.appliedName = i18next.t("modifiers.coreshatter_faction_2_backstab_gloves_poised_to_strike_name")
+      auraContextObject.appliedDescription = i18next.t("modifiers.coreshatter_faction_2_backstab_gloves_poised_to_strike_desc")
       card.setTargetModifiersContextObjects([
         Modifier.createContextObjectWithAttributeBuffs(1,0),
         Modifier.createContextObjectWithAuraForAllAllies([auraContextObject], null, null, [ModifierBackstab.type])
@@ -225,8 +225,8 @@ class CardFactory_CoreshatterSet_Faction2
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
-      card.name = "Kaido Expert"
-      card.setDescription("Backstab: (1).\nWhenever this minion backstabs, summon a minion with Backstab that costs 2 or less from your deck nearby.")
+      card.name = i18next.t("cards.coreshatter_faction_2_shadow_summoner_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_shadow_summoner_desc"))
       card.atk = 2
       card.maxHP = 2
       card.manaCost = 3
@@ -256,13 +256,16 @@ class CardFactory_CoreshatterSet_Faction2
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
-      card.name = "Massacre Artist"
-      card.setDescription("Backstab: (2).\nAfter this minion attacks and backstabs, all attacks are backstabs this turn.")
+      card.name = i18next.t("cards.coreshatter_faction_2_backbreaker_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_backbreaker_desc"))
       card.atk = 2
       card.maxHP = 5
       card.manaCost = 4
       card.rarityId = Rarity.Legendary
-      teamAlwaysBackstabbedModifier = PlayerModifierTeamAlwaysBackstabbed.createContextObject("Massacred", "Backstabbed from any angle!")
+      teamAlwaysBackstabbedModifier = PlayerModifierTeamAlwaysBackstabbed.createContextObject(
+        i18next.t("modifiers.coreshatter_faction_2_backbreaker_massacred_name"),
+        i18next.t("modifiers.coreshatter_faction_2_backbreaker_massacred_desc")
+      )
       teamAlwaysBackstabbedModifier.durationEndTurn = 1
       card.setInherentModifiersContextObjects([
         ModifierBackstab.createContextObject(2),
@@ -294,8 +297,8 @@ class CardFactory_CoreshatterSet_Faction2
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
-      card.name = "Orizuru"
-      card.setDescription("Flying")
+      card.name = i18next.t("cards.coreshatter_faction_2_crane_walker_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_crane_walker_desc"))
       card.atk = 3
       card.maxHP = 4
       card.manaCost = 3
@@ -327,8 +330,8 @@ class CardFactory_CoreshatterSet_Faction2
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
-      card.name = "Xenkai Cannoneer"
-      card.setDescription("Ranged\nWhenever you summon a minion with Ranged, that minion gains Rush.")
+      card.name = i18next.t("cards.coreshatter_faction_2_flareslinger_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_flareslinger_desc"))
       card.atk = 4
       card.maxHP = 4
       card.manaCost = 5
@@ -359,14 +362,14 @@ class CardFactory_CoreshatterSet_Faction2
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
-      card.name = "Coalfist"
-      card.setDescription("Intensify: Give a random nearby friendly minion +2 Attack this turn.")
+      card.name = i18next.t("cards.coreshatter_faction_2_panda_puncher_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_panda_puncher_desc"))
       card.atk = 5
       card.maxHP = 4
       card.manaCost = 4
       card.rarityId = Rarity.Common
       card.setInherentModifiersContextObjects([
-        ModifierIntensifyTempBuffNearbyMinion.createContextObject(2, 0, "Ignition Fist"),
+        ModifierIntensifyTempBuffNearbyMinion.createContextObject(2, 0, i18next.t("modifiers.coreshatter_faction_2_panda_puncher_ignition_fist_name")),
         ModifierCounterIntensify.createContextObject()
       ])
       card.setFXResource(["FX.Cards.Neutral.DeathBlighter"])
@@ -396,14 +399,14 @@ class CardFactory_CoreshatterSet_Faction2
       card.factionId = Factions.Faction2
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.HollowVortex
-      card.name = "Kensho Vortex"
-      card.setDescription("Costs 1 less for each spell you cast this game. Whenever you cast a spell this turn, summon a minion that costs up to 2 more nearby your General.")
+      card.name = i18next.t("cards.coreshatter_faction_2_hollow_vortex_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_hollow_vortex_desc"))
       card.manaCost = 11
       card.rarityId = Rarity.Legendary
       customContextObject = PlayerModifierSpellWatchHollowVortex.createContextObject(2)
       customContextObject.durationEndTurn = 1
-      customContextObject.appliedName = "Kensho Unleashed"
-      customContextObject.appliedDescription = "Casting spells summons minions."
+      customContextObject.appliedName = i18next.t("modifiers.coreshatter_faction_2_hollow_vortex_kensho_unleashed_name")
+      customContextObject.appliedDescription = i18next.t("modifiers.coreshatter_faction_2_hollow_vortex_kensho_unleashed_desc")
       card.applyToOwnGeneral = true
       card.setTargetModifiersContextObjects([customContextObject])
       manaChangeContextObject = ModifierManaCostChange.createContextObject(-1)
@@ -424,8 +427,8 @@ class CardFactory_CoreshatterSet_Faction2
       card.factionId = Factions.Faction2
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.PandaJail
-      card.name = "Pandatentiary"
-      card.setDescription("Surround the enemy General with friendly Panddo that disappear at the start of your next turn.")
+      card.name = i18next.t("cards.coreshatter_faction_2_panda_jail_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_panda_jail_desc"))
       card.manaCost = 3
       card.rarityId = Rarity.Epic
       card.spellFilterType = SpellFilterType.None
@@ -444,8 +447,8 @@ class CardFactory_CoreshatterSet_Faction2
       card.factionId = Factions.Faction2
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.GreaterPhoenixFire
-      card.name = "Phoenix Barrage"
-      card.setDescription("Deal 3 damage to anything.\nPut a Phoenix Fire into your action bar.")
+      card.name = i18next.t("cards.coreshatter_faction_2_greater_phoenix_fire_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_greater_phoenix_fire_desc"))
       card.manaCost = 5
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.NeutralDirect
@@ -466,8 +469,8 @@ class CardFactory_CoreshatterSet_Faction2
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction2
       card.id = Cards.Spell.BootyProjection
-      card.name = "Second Self"
-      card.setDescription("Put an EXACT copy of a friendly minion into your action bar.")
+      card.name = i18next.t("cards.coreshatter_faction_2_booty_projection_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_2_booty_projection_desc"))
       card.rarityId = Rarity.Rare
       card.manaCost = 2
       card.spellFilterType = SpellFilterType.AllyDirect

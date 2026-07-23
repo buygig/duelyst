@@ -1,7 +1,30 @@
-// Use the Bootstrap CDN to serve FontAwesome fonts.
-$fa-font-path: 'https://netdna.bootstrapcdn.com/font-awesome/4.7.0/fonts';
+// Keep icons available when the offline build has no network connection.
+$fa-font-path: 'resources/fonts';
 
-@import 'font-awesome/scss/font-awesome';
+@import 'font-awesome/scss/variables';
+@import 'font-awesome/scss/mixins';
+
+@font-face {
+	font-family: 'FontAwesome';
+	src: url('#{$fa-font-path}/fontawesome-webfont.eot?v=#{$fa-version}');
+	src: url('#{$fa-font-path}/fontawesome-webfont.eot?#iefix&v=#{$fa-version}') format('embedded-opentype'),
+		url('#{$fa-font-path}/fontawesome-webfont.woff?v=#{$fa-version}') format('woff'),
+		url('#{$fa-font-path}/fontawesome-webfont.ttf?v=#{$fa-version}') format('truetype'),
+		url('#{$fa-font-path}/fontawesome-webfont.svg?v=#{$fa-version}#fontawesomeregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@import 'font-awesome/scss/core';
+@import 'font-awesome/scss/larger';
+@import 'font-awesome/scss/fixed-width';
+@import 'font-awesome/scss/list';
+@import 'font-awesome/scss/bordered-pulled';
+@import 'font-awesome/scss/animated';
+@import 'font-awesome/scss/rotated-flipped';
+@import 'font-awesome/scss/stacked';
+@import 'font-awesome/scss/icons';
+@import 'font-awesome/scss/screen-reader';
 @import 'opensans';
 @import 'lato';
 @import 'averta';

@@ -10,6 +10,7 @@ var QuestsManager = require('app/ui/managers/quests_manager');
 var NavigationManager = require('app/ui/managers/navigation_manager');
 var NewPlayerManager = require('app/ui/managers/new_player_manager');
 var ProfileManager = require('app/ui/managers/profile_manager');
+var OfflineMode = require('app/common/offline_mode');
 var RSX = require('app/data/resources');
 var Logger = require('app/common/logger');
 var UtilsJavascript = require('app/common/utils/utils_javascript');
@@ -88,7 +89,7 @@ var QuestLogLayout = Backbone.Marionette.LayoutView.extend({
       }
 
       // FCOTD
-      if (newPlayerManager.canSeeFreeCardOfTheDay()) {
+      if (!OfflineMode.isEnabled() && newPlayerManager.canSeeFreeCardOfTheDay()) {
         this.freeCardOfTheDayRegion.show(new FreeCardOfTheDayItemView({
           model: new Backbone.Model(ProfileManager.getInstance().profile.attributes),
         }));

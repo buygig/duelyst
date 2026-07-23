@@ -10,7 +10,7 @@ userAgent = uaparser.getResult()
 App = new Backbone.Marionette.Application()
 
 # require Firebase via browserify but temporarily alias it global scope
-Firebase = window.Firebase = require 'firebase'
+Firebase = window.Firebase = require 'app/common/firebase'
 Promise = require 'bluebird'
 moment = require 'moment'
 semver = require 'semver'
@@ -44,6 +44,9 @@ i18next = require('i18next')
 CardModel = require 'app/ui/models/card'
 DuelystFirebase = require 'app/ui/extensions/duelyst_firebase'
 DuelystBackbone = require 'app/ui/extensions/duelyst_backbone'
+OfflineMode = require 'app/common/offline_mode'
+OfflineLocalApi = require 'app/offline/local_api'
+OfflineLocalApi.install()
 
 # Managers / Controllers
 PackageManager = window.PackageManager = require 'app/ui/managers/package_manager'
@@ -1038,8 +1041,9 @@ App.onLogin = (data) ->
     # we're all done loading managers
     App.managersReadyDeferred.resolve()
 
-    # setup analytics
-    App.onLoginAnalyticsSetup(data)
+    # setup analytics only for online sessions
+    if !OfflineMode.isEnabled()
+      App.onLoginAnalyticsSetup(data)
     # show the main screen
     return App.main()
 
@@ -1669,6 +1673,16 @@ App._startSinglePlayerGame = (myPlayerDeck, myPlayerFactionId, myPlayerGeneralId
   # analytics call
   Analytics.page("Single Player Game",{ path: "/#single_player" })
 
+  if OfflineMode.isEnabled()
+    offlinePractice = new SDK.OfflinePractice({
+      playerDeck: myPlayerDeck
+      playerName: ProfileManager.getInstance().get('username') or OfflineMode.getUsername()
+      aiGeneralId: aiGeneralId
+      aiDifficulty: if aiDifficulty? then aiDifficulty else SDK.OfflinePractice.DEFAULT_AI_DIFFICULTY
+      aiNumRandomCards: if aiNumRandomCards? then aiNumRandomCards else SDK.OfflinePractice.DEFAULT_AI_NUM_RANDOM_CARDS
+    })
+    return App._startGameWithChallenge(offlinePractice)
+
   # set status to in game
   ChatManager.getInstance().setStatus(ChatManager.STATUS_GAME)
 
@@ -2121,6 +2135,11 @@ App._startGameWithChallenge = (challenge) ->
     ])
   .then () ->
     return App._startGame()
+  .then () ->
+    opponentAgent = challenge.getOpponentAgent?()
+    if opponentAgent?.start?
+      App._localGameAgent = opponentAgent
+      opponentAgent.start()
   .catch (errorMessage) ->
     return App._error(errorMessage)
 
@@ -2363,6 +2382,10 @@ App.onAfterShowEndTurn = () ->
 
 App.cleanupGame = () ->
   Logger.module("APPLICATION").log "App.cleanupGame"
+  if App._localGameAgent?
+    App._localGameAgent.destroy?()
+    App._localGameAgent = null
+
   # cleanup reconnect
   App.cleanupReconnectToGame()
 
@@ -3368,7 +3391,7 @@ App.bindEvents = () ->
   $(CONFIG.GAMECANVAS_SELECTOR).on("webglcontextlost", () ->
     App.onRequestReload({
       id: "webgl_context_lost",
-      message: "Your graphics hit a snag and requires a #{if window.isDesktop then "restart" else "reload"} to avoid any issues."
+      message: i18next.t(if window.isDesktop then 'settings.graphics_restart_required_message' else 'settings.graphics_reload_required_message')
     })
   )
 
@@ -3549,14 +3572,14 @@ App._updateLastResolutionValues = () ->
 
 App._confirmResolutionChange = () ->
   Logger.module("APPLICATION").log "App._confirmResolutionChange"
-  confirmData = {title: 'Do you wish to keep this viewport setting?'}
+  confirmData = {title: i18next.t('settings.viewport_keep_confirm_message')}
   if App._needsRestart
     if window.isDesktop
-      confirmData.message = 'Warning: switching from your previous viewport to this viewport will require a restart!'
+      confirmData.message = i18next.t('settings.viewport_restart_warning')
     else
-      confirmData.message = 'Warning: switching from your previous viewport to this viewport will require a reload!'
+      confirmData.message = i18next.t('settings.viewport_reload_warning')
     if ChatManager.getInstance().getStatusIsInBattle()
-      confirmData.message += " You will be able to continue your game, but you may miss your turn!"
+      confirmData.message += i18next.t('settings.viewport_battle_warning_suffix')
   confirmDialogItemView = new ConfirmDialogItemView(confirmData)
   confirmDialogItemView.listenToOnce(confirmDialogItemView, 'confirm', ()->
     # update resolution after confirm
@@ -3587,7 +3610,7 @@ App._requestReloadForResolutionChangeId = "resolution_change"
 App._requestReloadForResolutionChange = () ->
   App.onRequestReload({
     id: App._requestReloadForResolutionChangeId
-    message: "Your viewport change requires a #{if window.isDesktop then "restart" else "reload"} to avoid any issues."
+    message: i18next.t(if window.isDesktop then 'settings.viewport_restart_required_message' else 'settings.viewport_reload_required_message')
   })
 
 App._cancelReloadRequestForResolutionChange = () ->
@@ -3624,7 +3647,8 @@ App.onCancelReloadRequest = (event) ->
 
 App._reload = (message) ->
   Logger.module("APPLICATION").log "App._reload"
-  promptDialogItemView = new PromptDialogItemView({title: "Please #{if window.isDesktop then "restart" else "reload"}!", message: message})
+  titleKey = if window.isDesktop then "common.restart_prompt_title" else "common.reload_prompt_title"
+  promptDialogItemView = new PromptDialogItemView({title: i18next.t(titleKey), message: message})
   promptDialogItemView.listenTo(promptDialogItemView, 'cancel', () ->
     if window.isDesktop then window.quitDesktop() else location.reload()
   )
@@ -3770,10 +3794,18 @@ App.on "start", (options) ->
     Logger.module("APPLICATION").groupEnd()
   )
 
+  # The local session resolves synchronously. Wait until Scene.setup has bound
+  # the session listeners, otherwise the offline login event is emitted before
+  # App.onLogin can initialize the managers.
+  authenticationPromise = if OfflineMode.isEnabled()
+    App._loadingPromise.then(() -> App._authenticationPromise())
+  else
+    App._authenticationPromise()
+
   # setup start promise
   App._startPromise = Promise.all([
     App._loadingPromise,
-    App._authenticationPromise()
+    authenticationPromise
   ])
 
   # goto main screen

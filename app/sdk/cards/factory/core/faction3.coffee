@@ -801,7 +801,7 @@ class CardFactory_CoreSet_Faction3
       card.spellFilterType = SpellFilterType.None
       card.applyToOwnGeneral = true
       buffContextObject = ModifierDoubleDamageToMinions.createContextObject()
-      buffContextObject.appliedName = "Psionic Charge"
+      buffContextObject.appliedName = i18next.t("modifiers.faction_3_spell_psionic_strike_applied_name")
       buffContextObject.durationEndTurn = 1
       buffContextObject.isRemovable = false
       card.setTargetModifiersContextObjects([buffContextObject])

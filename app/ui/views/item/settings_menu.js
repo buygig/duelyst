@@ -18,6 +18,7 @@ var GamesManager = require('app/ui/managers/games_manager');
 var SettingsMenuTemplate = require('app/ui/templates/item/settings_menu.hbs');
 var ProfileManager = require('app/ui/managers/profile_manager');
 var moment = require('moment');
+var i18next = require('i18next');
 var DuelystBackbone = require('app/ui/extensions/duelyst_backbone');
 var openUrl = require('app/common/openUrl');
 var ConfirmDialogItemView = require('./confirm_dialog');
@@ -25,6 +26,13 @@ var ActivityDialogItemView = require('./activity_dialog');
 var ChangeUsernameItemView = require('./change_username');
 var AccountInventoryResetModalView = require('./account_inventory_reset_modal');
 var RedeemGiftCodeModalView = require('./redeem_gift_code_modal');
+
+function normalizeLanguageKey(languageKey) {
+  var normalized = String(languageKey || '').toLowerCase();
+  if (normalized === 'zh' || normalized.indexOf('zh-') === 0) return 'zh-cn';
+  if (normalized === 'en' || normalized.indexOf('en-') === 0) return 'en';
+  return normalized || 'en';
+}
 
 var SettingsMenuView = Backbone.Marionette.ItemView.extend({
 
@@ -150,7 +158,7 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
     this.ui.$bloom.attr('step', 0.05);
 
     this.ui.$resolution.val(parseFloat(CONFIG.resolution));
-    var currentLanguageKey = Storage.get('preferredLanguageKey') || 'en';
+    var currentLanguageKey = normalizeLanguageKey(Storage.get('preferredLanguageKey') || i18next.languages[0] || i18next.language);
     this.ui.$language.val(currentLanguageKey);
     this.ui.$checkboxHiDPIEnabled.prop('checked', CONFIG.hiDPIEnabled);
     this.ui.$bloom.val(parseFloat(this.model.get('bloom')));
@@ -235,7 +243,7 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
   },
 
   onLogoutClicked: function () {
-    var confirmDialogItemView = new ConfirmDialogItemView({ title: 'Are you sure you want to logout?' });
+    var confirmDialogItemView = new ConfirmDialogItemView({ title: i18next.t('settings.logout_confirm_message') });
     this.listenToOnce(confirmDialogItemView, 'confirm', function () {
       Session.logout();
     }.bind(this));
@@ -247,7 +255,7 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
 
   onDesktopQuitClicked: function () {
     if (window.isDesktop) {
-      var confirmDialogItemView = new ConfirmDialogItemView({ title: 'Are you sure you want to quit?' });
+      var confirmDialogItemView = new ConfirmDialogItemView({ title: i18next.t('settings.quit_confirm_message') });
       this.listenToOnce(confirmDialogItemView, 'confirm', function () {
         window.quitDesktop();
       }.bind(this));
@@ -269,10 +277,10 @@ var SettingsMenuView = Backbone.Marionette.ItemView.extend({
 
   changeLanguage: function () {
     var languageKey = this.ui.$language.val();
-    var currentLanguageKey = Storage.get('preferredLanguageKey') || 'en';
+    var currentLanguageKey = normalizeLanguageKey(Storage.get('preferredLanguageKey') || i18next.languages[0] || i18next.language);
     if (currentLanguageKey != languageKey) {
       Storage.set('preferredLanguageKey', languageKey);
-      EventBus.getInstance().trigger(EVENTS.request_reload, { id: 'language_changed', message: 'Language Changed.  Please restart.' });
+      EventBus.getInstance().trigger(EVENTS.request_reload, { id: 'language_changed', message: i18next.t('settings.language_change_requires_restart') });
     }
   },
 

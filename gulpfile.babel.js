@@ -183,6 +183,12 @@ gulp.task('default', gulp.series('build'));
 const ciTargets = ['staging', 'production'];
 
 function validateFirebase(cb) {
+  // Offline builds replace Firebase-backed client behavior, so they do not
+  // require an endpoint to be embedded in the bundle.
+  if (config.get('offlineMode')) {
+    return cb();
+  }
+
   // Ensure FIREBASE_URL is set and valid when building the app.
   if (process.env.FIREBASE_URL === undefined) {
     return cb(new Error('FIREBASE_URL must be set'));

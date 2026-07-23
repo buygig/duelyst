@@ -1,0 +1,72 @@
+{
+  "name": "duelyst-offline-desktop",
+  "productName": "Duelyst Offline",
+  "version": "1.97.13",
+  "description": "A fully local single-player build of OpenDuelyst",
+  "author": "OpenDuelyst contributors",
+  "license": "CC0-1.0",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:windows": "electron-builder --win nsis --x64",
+    "pack:windows": "electron-builder --win dir --x64"
+  },
+  "devDependencies": {
+    "electron": "43.1.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "org.openduelyst.offline",
+    "productName": "Duelyst Offline",
+    "artifactName": "Duelyst-Offline-Setup-${version}-${arch}.${ext}",
+    "asar": true,
+    "compression": "normal",
+    "directories": {
+      "output": "../dist/installer",
+      "buildResources": "../desktop"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "../dist/src",
+        "to": "game",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "icon.ico",
+      "verifyUpdateCodeSignature": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Duelyst Offline",
+      "uninstallDisplayName": "Duelyst Offline",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true,
+      "installerLanguages": [
+        "en_US",
+        "zh_CN"
+      ]
+    }
+  }
+}

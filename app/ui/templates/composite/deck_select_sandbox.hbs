@@ -1,11 +1,11 @@
 <div class="sliding-panel-select-content">
     <div class="sliding-panel-select-header">
         <ul class="nav nav-tabs deck-groups">
-            <li role="select" data-value="custom"><a>Custom Decks</a></li>
-            <li role="select" data-value="starter"><a>Starter Decks</a></li>
+            <li role="select" data-value="custom"><a>{{localize 'main_menu.deck_select_tab_custom_decks'}}</a></li>
+            <li role="select" data-value="starter"><a>{{localize 'main_menu.deck_select_tab_starters'}}</a></li>
         </ul>
         <div class="input-group search">
-            <input type="search" class="form-control" placeholder="Search">
+            <input type="search" class="form-control" placeholder="{{localize 'common.search_input_label'}}">
             <span class="input-group-addon search-submit"><span class="fa fa-search"></span></span>
             <span class="input-group-addon search-clear"><span class="fa fa-times"></span></span>
         </div>
@@ -53,8 +53,8 @@
 		</div>
     <div class="sliding-panel-select-footer">
         <div class="btn-group btn-group-centered">
-					{{#if hasAnyBattleMapCosmetics}}<button class="battlemap-select"><span class="icon"><i class="fa fa-question" /></span> Select Battle Map</button>{{/if}}
-            <button class="btn btn-clean deck-select-confirm">Play Sandbox</button>
+					{{#if hasAnyBattleMapCosmetics}}<button class="battlemap-select"><span class="icon"><i class="fa fa-question" /></span> {{localize 'main_menu.select_battle_map_button_label'}}</button>{{/if}}
+            <button class="btn btn-clean deck-select-confirm">{{localize 'main_menu.deck_select_play_sandbox_button_label'}}</button>
         </div>
     </div>
 </div>

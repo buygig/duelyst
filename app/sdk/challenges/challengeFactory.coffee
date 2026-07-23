@@ -5,6 +5,7 @@ ChallengeCategory = require './challengeCategory'
 
 Sandbox = require './sandbox'
 SandboxDeveloper = require './sandboxDeveloper'
+OfflinePractice = require './offlinePractice'
 Lesson1 = require './tutorial/lesson1'
 Lesson2 = require './tutorial/lesson2'
 Lesson4 = require './tutorial/lesson4'
@@ -63,6 +64,9 @@ class ChallengeFactory
 
     if type == SandboxDeveloper.type
       return new SandboxDeveloper()
+
+    if type == OfflinePractice.type
+      return new OfflinePractice()
 
     # Find any matching tutorial lesson
     matchingTutorialChallenge = _.find(@getAllChallenges(),(challenge) ->
@@ -149,6 +153,7 @@ class ChallengeFactory
       # sandbox
       new Sandbox()
       new SandboxDeveloper()
+      new OfflinePractice()
     ]
 
   @getAllChallengeCategories: () ->

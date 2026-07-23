@@ -189,9 +189,9 @@ class CardFactory_Bosses
       frenzyContextObject = ModifierFrenzy.createContextObject()
       frenzyContextObject.isRemovable = false
       card.addKeywordClassToInclude(ModifierStunned)
-      stunContextObject = ModifierDealDamageWatchModifyTarget.createContextObject([ModifierStunnedVanar.createContextObject()], "it is STUNNED",{
-        name: "Winterblade"
-        description: "Enemy minions damaged by your General are Stunned"
+      stunContextObject = ModifierDealDamageWatchModifyTarget.createContextObject([ModifierStunnedVanar.createContextObject()], i18next.t("modifiers.runtime_misc_bosses_boss_1_stunned_desc"),{
+        name: i18next.t("modifiers.runtime_misc_bosses_boss_1_winterblade_name")
+        description: i18next.t("modifiers.runtime_misc_bosses_boss_1_winterblade_desc")
       })
       stunContextObject.isRemovable = false
       #startTurnCastFrostburnObject = ModifierStartTurnWatchPlaySpell.createContextObject({id: Cards.Spell.Frostburn, manaCost: 0}, "Frostburn")
@@ -236,7 +236,7 @@ class CardFactory_Bosses
       )
       card.atk = 2
       card.maxHP = 30
-      modifierSpawnClone = ModifierOpponentSummonWatchSpawn1HealthClone.createContextObject("a 1 health clone")
+      modifierSpawnClone = ModifierOpponentSummonWatchSpawn1HealthClone.createContextObject(i18next.t("modifiers.runtime_misc_bosses_boss_2_clone_desc"))
       modifierSpawnClone.isRemovable = false
       card.setInherentModifiersContextObjects([modifierSpawnClone])
       card.signatureCardData = {id: Cards.BossSpell.MoldingEarth}
@@ -297,9 +297,9 @@ class CardFactory_Bosses
       card.setIsHiddenInCollection(true)
       card.setIsGeneral(true)
       card.factionId = Factions.Boss
-      card.name = "QA-IBERO"
+      card.name = i18next.t("cards.runtime_misc_bosses_qa_boss_3_name")
       card.manaCost = 0
-      card.setBossBattleDescription("A Dev Boss for quickly testing flow.")
+      card.setBossBattleDescription(i18next.t("cards.runtime_misc_bosses_qa_boss_3_desc"))
       card.setBossBattleBattleMapIndex(7)
       card.setSpeechResource(RSX.speech_portrait_calibero)
       card.setPortraitResource(RSX.speech_portrait_calibero)
@@ -423,10 +423,10 @@ class CardFactory_Bosses
       card.speed = 0
       immunityContextObject = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetOwnPlayer([ModifierImmuneToDamage.createContextObject()], i18next.t("modifiers.boss_5_applied_desc"))
       immunityContextObject.appliedName = i18next.t("modifiers.boss_5_applied_name")
-      applyGeneralImmunityContextObject = Modifier.createContextObjectWithAuraForAllAllies([immunityContextObject], null, null, null, "Cannot be damaged while friendly minions live")
+      applyGeneralImmunityContextObject = Modifier.createContextObjectWithAuraForAllAllies([immunityContextObject], null, null, null, i18next.t("modifiers.runtime_misc_bosses_boss_5_general_immunity_desc"))
       applyGeneralImmunityContextObject.isRemovable = false
       applyGeneralImmunityContextObject.isHiddenToUI = true
-      zendoBattlePetContextObject = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([ModifierBattlePet.createContextObject()], "The enemy General moves and attacks as if they are a Battle Pet")
+      zendoBattlePetContextObject = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([ModifierBattlePet.createContextObject()], i18next.t("modifiers.runtime_misc_bosses_boss_5_battle_pet_desc"))
       #zendoBattlePetContextObject = Modifier.createContextObjectWithOnBoardAuraForAllEnemies([ModifierBattlePet.createContextObject()], "All enemies move and attack as if they are Battle Pets")
       zendoBattlePetContextObject.isRemovable = false
       card.setInherentModifiersContextObjects([applyGeneralImmunityContextObject, zendoBattlePetContextObject])
@@ -468,7 +468,7 @@ class CardFactory_Bosses
       card.setBoundingBoxHeight(50)
       card.atk = 2
       card.maxHP = 1
-      immunityContextObject = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetOwnPlayer([ModifierImmuneToDamage.createContextObject()], "Decepticle cannot be damaged while this minion lives.")
+      immunityContextObject = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetOwnPlayer([ModifierImmuneToDamage.createContextObject()], i18next.t("modifiers.runtime_misc_bosses_boss_6_immunity_desc"))
       immunityContextObject.appliedName = i18next.t("modifiers.boss_6_applied_name")
       mechs = [
         Cards.Boss.Boss6Wings,
@@ -476,7 +476,7 @@ class CardFactory_Bosses
         Cards.Boss.Boss6Sword,
         Cards.Boss.Boss6Helm
       ]
-      applyGeneralImmunityContextObject = Modifier.createContextObjectWithAuraForAllAllies([immunityContextObject], null, mechs, null, "Cannot be damaged while other D3cepticle parts live")
+      applyGeneralImmunityContextObject = Modifier.createContextObjectWithAuraForAllAllies([immunityContextObject], null, mechs, null, i18next.t("modifiers.runtime_misc_bosses_boss_6_general_immunity_desc"))
       applyGeneralImmunityContextObject.isRemovable = false
       applyGeneralImmunityContextObject.isHiddenToUI = false
       provokeObject = ModifierProvoke.createContextObject()
@@ -707,7 +707,7 @@ class CardFactory_Bosses
       ]
       equipArtifactObject = ModifierStartTurnWatchEquipArtifact.createContextObject(1, includedArtifacts)
       equipArtifactObject.isRemovable = false
-      equipArtifactFirstTurn = ModifierExpireApplyModifiers.createContextObject([equipArtifactObject], 0, 1, true, true, false, 0, true, "At the start of your second turn and every turn thereafter, equip a random artifact")
+      equipArtifactFirstTurn = ModifierExpireApplyModifiers.createContextObject([equipArtifactObject], 0, 1, true, true, false, 0, true, i18next.t("modifiers.runtime_misc_bosses_boss_7_equip_artifact_desc"))
       equipArtifactFirstTurn.isRemovable = false
       card.setInherentModifiersContextObjects([
         equipArtifactFirstTurn
@@ -723,13 +723,13 @@ class CardFactory_Bosses
       card.setDescription(i18next.t("boss_battles.boss_7_artifact_desc"))
       card.addKeywordClassToInclude(ModifierTranscendance)
       card.manaCost = 0
-      card.setBossBattleDescription("__Boss Battle Description")
+      card.setBossBattleDescription(i18next.t("cards.runtime_misc_bosses_cyclone_generator_battle_desc"))
       card.rarityId = Rarity.Epic
       card.durability = 3
       card.setTargetModifiersContextObjects([
         ModifierTranscendance.createContextObject({
           type: "ModifierTranscendance"
-          name: "Cyclone Generator"
+          name: i18next.t("modifiers.runtime_misc_bosses_cyclone_generator_name")
         })
       ])
       card.setFXResource(["FX.Cards.Artifact.IndomitableWill"])
@@ -780,7 +780,7 @@ class CardFactory_Bosses
       card.maxHP = 15
       respawnKilledEnemy = ModifierKillWatchRespawnEntity.createContextObject()
       respawnKilledEnemy.isRemovable = false
-      secondWind = ModifierSecondWind.createContextObject(2, 5, false, "Awakened", "Failure prevented. Strength renewed. Systems adapted.")
+      secondWind = ModifierSecondWind.createContextObject(2, 5, false, i18next.t("modifiers.runtime_misc_bosses_boss_8_awakened_name"), i18next.t("modifiers.runtime_misc_bosses_boss_8_awakened_desc"))
       secondWind.isRemovable = false
       secondWind.isHiddenToUI = true
       card.setInherentModifiersContextObjects([respawnKilledEnemy, secondWind])
@@ -823,7 +823,7 @@ class CardFactory_Bosses
       card.setBoundingBoxHeight(120)
       card.atk = 3
       card.maxHP = 30
-      spawnCloneObject = ModifierMyAttackOrAttackedWatchSpawnMinionNearby.createContextObject({id: Cards.Boss.Boss9Clone}, "a decoy")
+      spawnCloneObject = ModifierMyAttackOrAttackedWatchSpawnMinionNearby.createContextObject({id: Cards.Boss.Boss9Clone}, i18next.t("modifiers.runtime_misc_bosses_boss_9_decoy_desc"))
       spawnCloneObject.isRemovable = false
       flyingObject = ModifierFlying.createContextObject()
       flyingObject.isRemovable = false
@@ -1029,7 +1029,7 @@ class CardFactory_Bosses
       card.maxHP = 6
       card.speed = 0
       rushContextObject = ModifierFirstBlood.createContextObject()
-      modifierSummonNearbyRush = ModifierSummonWatchNearbyAnyPlayerApplyModifiers.createContextObject([rushContextObject], "gains Rush")
+      modifierSummonNearbyRush = ModifierSummonWatchNearbyAnyPlayerApplyModifiers.createContextObject([rushContextObject], i18next.t("modifiers.runtime_misc_bosses_boss_12_idol_rush_desc"))
       card.setInherentModifiersContextObjects([modifierSummonNearbyRush])
 
     if (identifier == Cards.Boss.Boss13)
@@ -1072,7 +1072,7 @@ class CardFactory_Bosses
       rangedModifier.isRemovable = false
       opponentDrawCardOnSummon = ModifierOpponentSummonWatchOpponentDrawCard.createContextObject()
       opponentDrawCardOnSummon.isRemovable = false
-      summonEntityOnOverdraw = ModifierOpponentDrawCardWatchOverdrawSummonEntity.createContextObject({id: Cards.Faction4.Ooz}, "a 3/3 Ooz")
+      summonEntityOnOverdraw = ModifierOpponentDrawCardWatchOverdrawSummonEntity.createContextObject({id: Cards.Faction4.Ooz}, i18next.t("modifiers.runtime_misc_bosses_boss_13_ooz_desc"))
       summonEntityOnOverdraw.isRemovable = false
       card.setInherentModifiersContextObjects([rangedModifier, opponentDrawCardOnSummon, summonEntityOnOverdraw])
       card.signatureCardData = {id: Cards.BossSpell.EntanglingShadow}
@@ -1286,9 +1286,9 @@ class CardFactory_Bosses
       )
       card.atk = 4
       card.maxHP = 40
-      spawnSerpentiEgg = ModifierDyingWishSpawnEgg.createContextObject({id: Cards.Neutral.Serpenti}, "7/4 Serpenti")
+      spawnSerpentiEgg = ModifierDyingWishSpawnEgg.createContextObject({id: Cards.Neutral.Serpenti}, i18next.t("modifiers.runtime_misc_bosses_boss_18_serpenti_desc"))
       spawnSerpentiEgg.isRemovable = false
-      applyModifierToSummonedMinions = ModifierSummonWatchFromActionBarApplyModifiers.createContextObject([spawnSerpentiEgg], "Rebirth: Serpenti")
+      applyModifierToSummonedMinions = ModifierSummonWatchFromActionBarApplyModifiers.createContextObject([spawnSerpentiEgg], i18next.t("modifiers.runtime_misc_bosses_boss_18_rebirth_serpenti_desc"))
       applyModifierToSummonedMinions.isRemovable = false
       card.setInherentModifiersContextObjects([applyModifierToSummonedMinions])
       card.signatureCardData = {id: Cards.BossSpell.AncientKnowledge}
@@ -1327,7 +1327,7 @@ class CardFactory_Bosses
       )
       card.atk = 1
       card.maxHP = 40
-      growAura = Modifier.createContextObjectWithAuraForAllAllies([ModifierGrowPermanent.createContextObject(1)], null, null, null, "Your minions have \"Grow: +1/+1.\"")
+      growAura = Modifier.createContextObjectWithAuraForAllAllies([ModifierGrowPermanent.createContextObject(1)], null, null, null, i18next.t("modifiers.runtime_misc_bosses_boss_19_grow_aura_desc"))
       growAura.isRemovable = false
       takeDamageSpawnWraithlings = ModifierTakeDamageWatchSpawnWraithlings.createContextObject()
       takeDamageSpawnWraithlings.isRemovable = false
@@ -1392,12 +1392,12 @@ class CardFactory_Bosses
       card.durability = 3
       card.setTargetModifiersContextObjects([
         ModifierAbsorbDamage.createContextObject(1, {
-          name: "Frost Armor"
-          description: "The first time your General takes damage each turn, prevent 1 of it."
+          name: i18next.t("modifiers.runtime_misc_bosses_frost_armor_name")
+          description: i18next.t("modifiers.runtime_misc_bosses_frost_armor_absorb_desc")
         }),
         ModifierTakeDamageWatchDamageAttacker.createContextObject(1, {
-          name: "Frost Armor"
-          description: "Whenever your General takes damage, deal 1 damage to the attacker."
+          name: i18next.t("modifiers.runtime_misc_bosses_frost_armor_name")
+          description: i18next.t("modifiers.runtime_misc_bosses_frost_armor_retaliate_desc")
         }),
       ])
       card.setFXResource(["FX.Cards.Artifact.ArclyteRegalia"])
@@ -1443,7 +1443,7 @@ class CardFactory_Bosses
       )
       card.atk = 2
       card.maxHP = 35
-      explodeAura = Modifier.createContextObjectWithAuraForAllAllies([ModifierDyingWishDamageNearbyEnemies.createContextObject(2)], null, null, null, "Your minions have \"Dying Wish: Deal 2 damage to all nearby enemies\"")
+      explodeAura = Modifier.createContextObjectWithAuraForAllAllies([ModifierDyingWishDamageNearbyEnemies.createContextObject(2)], null, null, null, i18next.t("modifiers.runtime_misc_bosses_boss_21_dying_wish_aura_desc"))
       explodeAura.isRemovable = false
       startTurnTeleport = ModifierStartTurnWatchTeleportRandomSpace.createContextObject()
       startTurnTeleport.isRemovable = false
@@ -1492,7 +1492,7 @@ class CardFactory_Bosses
       maxHPNerf = -2
       followupModifierContextObject = Modifier.createContextObjectWithAttributeBuffs(attackBuff,maxHPNerf)
       followupModifierContextObject.appliedName = i18next.t("modifiers.boss_22_applied_name")
-      statModifierAura = ModifierSummonWatchFromActionBarAnyPlayerApplyModifiers.createContextObject([followupModifierContextObject], "gain +2 Attack, but -2 Health")
+      statModifierAura = ModifierSummonWatchFromActionBarAnyPlayerApplyModifiers.createContextObject([followupModifierContextObject], i18next.t("modifiers.runtime_misc_bosses_boss_22_stat_change_desc"))
       statModifierAura.isRemovable = false
       card.setInherentModifiersContextObjects([forceFieldObject, statModifierAura])
       card.signatureCardData = {id: Cards.BossSpell.RestoringLight}
@@ -1581,15 +1581,15 @@ class CardFactory_Bosses
       attackBuffContextObject.appliedName = i18next.t("modifiers.boss_24_applied_name_1")
       #rangedAura = Modifier.createContextObjectWithAuraForAllAllies([attackBuffContextObject], null, null, [ModifierRanged.type], "Your minions with Ranged gain +1/+1")
       #rangedAura.isRemovable = false
-      immunityContextObject = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetOwnPlayer([ModifierImmuneToDamage.createContextObject()], "Skurge cannot be damaged while Valiant lives")
+      immunityContextObject = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetOwnPlayer([ModifierImmuneToDamage.createContextObject()], i18next.t("modifiers.runtime_misc_bosses_boss_24_immunity_desc"))
       immunityContextObject.appliedName = i18next.t("modifiers.boss_24_applied_name_2")
       valiantProtector = [
         Cards.Boss.Boss24Valiant
       ]
-      applyGeneralImmunityContextObject = Modifier.createContextObjectWithAuraForAllAllies([immunityContextObject], null, valiantProtector, null, "Cannot be damaged while Valiant lives")
+      applyGeneralImmunityContextObject = Modifier.createContextObjectWithAuraForAllAllies([immunityContextObject], null, valiantProtector, null, i18next.t("modifiers.runtime_misc_bosses_boss_24_general_immunity_desc"))
       applyGeneralImmunityContextObject.isRemovable = false
       applyGeneralImmunityContextObject.isHiddenToUI = true
-      summonValiant = ModifierHPChangeSummonEntity.createContextObject({id: Cards.Boss.Boss24Valiant},15,"Valiant")
+      summonValiant = ModifierHPChangeSummonEntity.createContextObject({id: Cards.Boss.Boss24Valiant},15,i18next.t("modifiers.runtime_misc_bosses_boss_24_valiant_desc"))
       summonValiant.isRemovable = false
       summonValiant.isHiddenToUI = true
       damageAndBuffSelf = ModifierStartTurnWatchDamageAndBuffSelf.createContextObject(1,0,3)
@@ -1669,11 +1669,11 @@ class CardFactory_Bosses
       )
       card.atk = 3
       card.maxHP = 30
-      summonAssassinOnMove = ModifierEnemyTeamMoveWatchSummonEntityBehind.createContextObject({id: Cards.Faction2.KaidoAssassin},"Kaido Assassin")
+      summonAssassinOnMove = ModifierEnemyTeamMoveWatchSummonEntityBehind.createContextObject({id: Cards.Faction2.KaidoAssassin},i18next.t("modifiers.runtime_misc_bosses_boss_25_kaido_assassin_desc"))
       summonAssassinOnMove.isRemovable = false
       modContextObject = Modifier.createContextObjectWithAttributeBuffs(1,1)
       modContextObject.appliedName = i18next.t("modifiers.boss_25_applied_name")
-      allyMinionMoveBuff = ModifierMyTeamMoveWatchBuffTarget.createContextObject([modContextObject], "give it +1/+1")
+      allyMinionMoveBuff = ModifierMyTeamMoveWatchBuffTarget.createContextObject([modContextObject], i18next.t("modifiers.runtime_misc_bosses_boss_25_move_buff_desc"))
       allyMinionMoveBuff.isRemovable = false
       card.setInherentModifiersContextObjects([summonAssassinOnMove, allyMinionMoveBuff])
       card.signatureCardData = {id: Cards.BossSpell.LivingFlame}
@@ -1795,7 +1795,7 @@ class CardFactory_Bosses
       card.speed = 0
       battlePetModifier = ModifierBattlePet.createContextObject()
       battlePetModifier.isRemovable = false
-      summonWatchApplyBattlepet = ModifierSummonWatchAnyPlayerApplyModifiers.createContextObject([battlePetModifier], "act like Battle Pets")
+      summonWatchApplyBattlepet = ModifierSummonWatchAnyPlayerApplyModifiers.createContextObject([battlePetModifier], i18next.t("modifiers.runtime_misc_bosses_boss_27_battle_pet_desc"))
       summonWatchApplyBattlepet.isRemovable = false
       speedBuffContextObject = Modifier.createContextObjectOnBoard()
       speedBuffContextObject.attributeBuffs = {"speed": 0}
@@ -1803,7 +1803,7 @@ class CardFactory_Bosses
       speedBuffContextObject.attributeBuffsFixed = ["speed"]
       speedBuffContextObject.appliedName = i18next.t("modifiers.faction_3_spell_sand_trap_1")
       speedBuffContextObject.isRemovable = false
-      speed0Modifier = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([speedBuffContextObject], "The enemy General cannot move")
+      speed0Modifier = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([speedBuffContextObject], i18next.t("modifiers.runtime_misc_bosses_boss_27_general_cannot_move_desc"))
       speed0Modifier.isRemovable = false
       immuneToSpellTargeting = ModifierImmuneToSpellsByEnemy.createContextObject()
       immuneToSpellTargeting.isRemovable = false
@@ -1885,7 +1885,7 @@ class CardFactory_Bosses
       )
       card.atk = 2
       card.maxHP = 40
-      spawnSandTile = ModifierStartTurnWatchSpawnTile.createContextObject({id: Cards.Tile.SandPortal}, "Exhuming Sands", 1, CONFIG.PATTERN_WHOLE_BOARD)
+      spawnSandTile = ModifierStartTurnWatchSpawnTile.createContextObject({id: Cards.Tile.SandPortal}, i18next.t("modifiers.runtime_misc_bosses_boss_29_exhuming_sands_desc"), 1, CONFIG.PATTERN_WHOLE_BOARD)
       spawnSandTile.isRemovable = false
       card.setInherentModifiersContextObjects([spawnSandTile])
       card.signatureCardData = {id: Cards.BossSpell.EtherealWind}
@@ -2009,7 +2009,7 @@ class CardFactory_Bosses
       cannotAttackGenerals.isRemovable = false
       sentinelData = {id: Cards.Faction2.SonghaiSentinel}
       sentinelData.additionalModifiersContextObjects ?= []
-      sentinelData.additionalModifiersContextObjects.push(ModifierSentinelOpponentGeneralAttackHealEnemyGeneralDrawCard.createContextObject("transform.", {id: Cards.Boss.Boss31Treat1}))
+      sentinelData.additionalModifiersContextObjects.push(ModifierSentinelOpponentGeneralAttackHealEnemyGeneralDrawCard.createContextObject(i18next.t("modifiers.runtime_misc_bosses_boss_31_treat_1_transform_desc"), {id: Cards.Boss.Boss31Treat1}))
       card.setInherentModifiersContextObjects([ModifierSentinelSetup.createContextObject(sentinelData), cannotAttackGenerals])
       card.addKeywordClassToInclude(ModifierSentinel)
 
@@ -2048,7 +2048,7 @@ class CardFactory_Bosses
       cannotAttackGenerals.isRemovable = false
       sentinelData = {id: Cards.Faction4.AbyssSentinel}
       sentinelData.additionalModifiersContextObjects ?= []
-      sentinelData.additionalModifiersContextObjects.push(ModifierSentinelOpponentSummonBuffItDrawCard.createContextObject("transform.", {id: Cards.Boss.Boss31Treat2}))
+      sentinelData.additionalModifiersContextObjects.push(ModifierSentinelOpponentSummonBuffItDrawCard.createContextObject(i18next.t("modifiers.runtime_misc_bosses_boss_31_treat_2_transform_desc"), {id: Cards.Boss.Boss31Treat2}))
       card.setInherentModifiersContextObjects([ModifierSentinelSetup.createContextObject(sentinelData), cannotAttackGenerals])
       card.addKeywordClassToInclude(ModifierSentinel)
 
@@ -2087,7 +2087,7 @@ class CardFactory_Bosses
       cannotAttackGenerals.isRemovable = false
       sentinelData = {id: Cards.Faction6.VanarSentinel}
       sentinelData.additionalModifiersContextObjects ?= []
-      sentinelData.additionalModifiersContextObjects.push(ModifierSentinelOpponentSpellCastRefundManaDrawCard.createContextObject("transform.", {id: Cards.Boss.Boss31Treat3}))
+      sentinelData.additionalModifiersContextObjects.push(ModifierSentinelOpponentSpellCastRefundManaDrawCard.createContextObject(i18next.t("modifiers.runtime_misc_bosses_boss_31_treat_3_transform_desc"), {id: Cards.Boss.Boss31Treat3}))
       card.setInherentModifiersContextObjects([ModifierSentinelSetup.createContextObject(sentinelData), cannotAttackGenerals])
       card.addKeywordClassToInclude(ModifierSentinel)
 
@@ -2126,7 +2126,7 @@ class CardFactory_Bosses
       contextObject = PlayerModifierManaModifier.createCostChangeContextObject(1, CardType.Unit)
       contextObject.activeInHand = contextObject.activeInDeck = contextObject.activeInSignatureCards = false
       contextObject.activeOnBoard = true
-      increasedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([contextObject], "Your opponent's minions cost 1 more to play")
+      increasedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([contextObject], i18next.t("modifiers.runtime_misc_bosses_boss_31_haunt_1_cost_desc"))
       card.setInherentModifiersContextObjects([dyingWishDrawCards, increasedManaCost])
 
     if (identifier == Cards.Boss.Boss31Haunt2)
@@ -2164,7 +2164,7 @@ class CardFactory_Bosses
       contextObject = PlayerModifierManaModifier.createCostChangeContextObject(1, CardType.Spell)
       contextObject.activeInHand = contextObject.activeInDeck = contextObject.activeInSignatureCards = false
       contextObject.activeOnBoard = true
-      increasedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([contextObject], "Your opponent's non-Bloodbound spells cost 1 more to cast")
+      increasedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([contextObject], i18next.t("modifiers.runtime_misc_bosses_boss_31_haunt_2_cost_desc"))
       card.setInherentModifiersContextObjects([dyingWishDrawCards, increasedManaCost])
 
     if (identifier == Cards.Boss.Boss31Haunt3)
@@ -2202,7 +2202,7 @@ class CardFactory_Bosses
       contextObject = PlayerModifierManaModifier.createCostChangeContextObject(1, CardType.Artifact)
       contextObject.activeInHand = contextObject.activeInDeck = false
       contextObject.activeOnBoard = true
-      increasedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([contextObject], "Your opponent's artifacts cost 1 more to cast")
+      increasedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetEnemyPlayer([contextObject], i18next.t("modifiers.runtime_misc_bosses_boss_31_haunt_3_cost_desc"))
       card.setInherentModifiersContextObjects([dyingWishDrawCards, increasedManaCost])
 
     if (identifier == Cards.Boss.Boss32)
@@ -2355,7 +2355,7 @@ class CardFactory_Bosses
       minionContextObject.activeInHand = minionContextObject.activeInDeck = false
       minionContextObject.activeOnBoard = true
       card.setTargetModifiersContextObjects([
-        ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetOwnPlayer([artifactContextObject,spellContextObject,minionContextObject], "Cards in your hand cost 1 less to play.")
+        ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetOwnPlayer([artifactContextObject,spellContextObject,minionContextObject], i18next.t("modifiers.runtime_misc_bosses_cost_reducer_desc"))
       ])
       card.setFXResource(["FX.Cards.Artifact.SoulGrimwar"])
       card.setBaseAnimResource(
@@ -2401,8 +2401,8 @@ class CardFactory_Bosses
           name: i18next.t("boss_battles.boss_32_gift_4_name")
         }),
         Modifier.createContextObjectWithAttributeBuffs(-1,undefined, {
-          name: "Snowball"
-          description: "-1 Attack."
+          name: i18next.t("modifiers.runtime_misc_bosses_snowball_name")
+          description: i18next.t("modifiers.runtime_misc_bosses_snowball_desc")
         })
       ])
       card.setFXResource(["FX.Cards.Artifact.EternalHeart"])
@@ -2460,7 +2460,7 @@ class CardFactory_Bosses
         Cards.Boss.Boss33_4,
         Cards.Boss.Boss33
       ]
-      healAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([healObject], null, legion, null, "Heals for 3 at end of turn")
+      healAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([healObject], null, legion, null, i18next.t("modifiers.runtime_misc_bosses_boss_33_heal_aura_desc"))
       healAura.isRemovable = false
       backupGeneral = ModifierBackupGeneral.createContextObject()
       backupGeneral.activeInHand = backupGeneral.activeInDeck = backupGeneral.activeInSignatureCards = false
@@ -2512,7 +2512,7 @@ class CardFactory_Bosses
         Cards.Boss.Boss33_4,
         Cards.Boss.Boss33
       ]
-      healAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([healObject], null, legion, null, "Heals for 3 at end of turn")
+      healAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([healObject], null, legion, null, i18next.t("modifiers.runtime_misc_bosses_boss_33_1_heal_aura_desc"))
       healAura.isRemovable = false
       backupGeneral = ModifierBackupGeneral.createContextObject()
       backupGeneral.activeInHand = backupGeneral.activeInDeck = backupGeneral.activeInSignatureCards = false
@@ -2555,8 +2555,8 @@ class CardFactory_Bosses
       card.maxHP = 8
       card.speed = 1
       attackObject = Modifier.createContextObjectWithAttributeBuffs(2,undefined, {
-        name: "Legion's Strength"
-        description: "+2 Attack."
+        name: i18next.t("modifiers.runtime_misc_bosses_boss_33_2_legions_strength_name")
+        description: i18next.t("modifiers.runtime_misc_bosses_boss_33_2_legions_strength_desc")
       })
       attackObject.isRemovable = false
       legion = [
@@ -2566,7 +2566,7 @@ class CardFactory_Bosses
         Cards.Boss.Boss33_4,
         Cards.Boss.Boss33
       ]
-      attackAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([attackObject], null, legion, null, "Gains +2 Attack")
+      attackAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([attackObject], null, legion, null, i18next.t("modifiers.runtime_misc_bosses_boss_33_2_attack_aura_desc"))
       attackAura.isRemovable = false
       attackAura.appliedName = i18next.t("modifiers.boss_33_applied_name_2")
       backupGeneral = ModifierBackupGeneral.createContextObject()
@@ -2622,7 +2622,7 @@ class CardFactory_Bosses
         Cards.Boss.Boss33_4,
         Cards.Boss.Boss33
       ]
-      speedAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([speedBuffContextObject], null, legion, null, "Can move 2 extra spaces")
+      speedAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([speedBuffContextObject], null, legion, null, i18next.t("modifiers.runtime_misc_bosses_boss_33_3_speed_aura_desc"))
       speedAura.isRemovable = false
       speedAura.appliedName = i18next.t("modifiers.boss_33_applied_name")
       backupGeneral = ModifierBackupGeneral.createContextObject()
@@ -2674,7 +2674,7 @@ class CardFactory_Bosses
         Cards.Boss.Boss33_4,
         Cards.Boss.Boss33
       ]
-      spellImmuneAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([immuneToSpellTargeting], null, legion, null, "Cannot be targeted by enemy spells")
+      spellImmuneAura = Modifier.createContextObjectWithOnBoardAuraForAllAlliesAndSelfAndGeneral([immuneToSpellTargeting], null, legion, null, i18next.t("modifiers.runtime_misc_bosses_boss_33_4_spell_immunity_aura_desc"))
       spellImmuneAura.isRemovable = false
       backupGeneral = ModifierBackupGeneral.createContextObject()
       backupGeneral.activeInHand = backupGeneral.activeInDeck = backupGeneral.activeInSignatureCards = false
@@ -2723,7 +2723,7 @@ class CardFactory_Bosses
       contextObject = PlayerModifierManaModifier.createCostChangeContextObject(-25, CardType.Unit)
       contextObject.activeInHand = contextObject.activeInDeck = contextObject.activeInSignatureCards = false
       contextObject.activeOnBoard = true
-      reducedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetBothPlayers([contextObject], "Minions cost 0 mana")
+      reducedManaCost = ModifierCardControlledPlayerModifiers.createContextObjectOnBoardToTargetBothPlayers([contextObject], i18next.t("modifiers.runtime_misc_bosses_boss_34_zero_cost_desc"))
       reducedManaCost.isRemovable = false
       spawnDissonance = ModifierDieSpawnNewGeneral.createContextObject({id: Cards.Boss.Boss34_2})
       spawnDissonance.isRemovable = false
@@ -3117,8 +3117,8 @@ class CardFactory_Bosses
       card.factionId = Factions.Boss
       card.setIsHiddenInCollection(true)
       card.id = Cards.BossSpell.LaceratingFrost
-      card.name = "Lacerating Frost"
-      card.setDescription("Deal 2 damage to the enemy General and stun all nearby enemy minions.")
+      card.name = i18next.t("cards.runtime_misc_bosses_lacerating_frost_name")
+      card.setDescription(i18next.t("cards.runtime_misc_bosses_lacerating_frost_desc"))
       card.spellFilterType = SpellFilterType.None
       card.manaCost = 1
       card.damageAmount = 2
@@ -3136,8 +3136,8 @@ class CardFactory_Bosses
       card.factionId = Factions.Boss
       card.setIsHiddenInCollection(true)
       card.id = Cards.BossSpell.EntanglingShadow
-      card.name = "Entangling Shadow"
-      card.setDescription("Summon Wraithlings and Shadow Creep in a 2x2 area.")
+      card.name = i18next.t("cards.runtime_misc_bosses_entangling_shadow_name")
+      card.setDescription(i18next.t("cards.runtime_misc_bosses_entangling_shadow_desc"))
       card.spellFilterType = SpellFilterType.None
       card.manaCost = 1
       card.setAffectPattern(CONFIG.PATTERN_2X2)
@@ -3156,8 +3156,8 @@ class CardFactory_Bosses
       card.factionId = Factions.Boss
       card.setIsHiddenInCollection(true)
       card.id = Cards.BossSpell.LivingFlame
-      card.name = "Living Flame"
-      card.setDescription("Deal 2 damage to an enemy and summon two Spellsparks nearby your General.")
+      card.name = i18next.t("cards.runtime_misc_bosses_living_flame_name")
+      card.setDescription(i18next.t("cards.runtime_misc_bosses_living_flame_desc"))
       card.spellFilterType = SpellFilterType.EnemyDirect
       card.manaCost = 1
       card.damageAmount = 2
@@ -3177,8 +3177,8 @@ class CardFactory_Bosses
       card.factionId = Factions.Boss
       card.setIsHiddenInCollection(true)
       card.id = Cards.BossSpell.MoldingEarth
-      card.name = "Molding Earth"
-      card.setDescription("Summon 3 Magmas with random keywords nearby your General.")
+      card.name = i18next.t("cards.runtime_misc_bosses_molding_earth_name")
+      card.setDescription(i18next.t("cards.runtime_misc_bosses_molding_earth_desc"))
       card.spellFilterType = SpellFilterType.None
       card.manaCost = 1
       card.cardDataOrIndexToSpawn = {id: Cards.Faction5.MiniMagmar}
@@ -3196,8 +3196,8 @@ class CardFactory_Bosses
       card.factionId = Factions.Boss
       card.setIsHiddenInCollection(true)
       card.id = Cards.BossSpell.EtherealWind
-      card.name = "Ethereal Wind"
-      card.setDescription("Dispel an enemy and summon a Wind Dervish nearby.")
+      card.name = i18next.t("cards.runtime_misc_bosses_ethereal_wind_name")
+      card.setDescription(i18next.t("cards.runtime_misc_bosses_ethereal_wind_desc"))
       card.spellFilterType = SpellFilterType.EnemyDirect
       card.manaCost = 1
       card.canTargetGeneral = true
@@ -3216,12 +3216,12 @@ class CardFactory_Bosses
       card.factionId = Factions.Boss
       card.setIsHiddenInCollection(true)
       card.id = Cards.BossSpell.RestoringLight
-      card.name = "Restoring Light"
-      card.setDescription("Restore 3 Health to your General. Give your friendly minions +1 Health.")
+      card.name = i18next.t("cards.runtime_misc_bosses_restoring_light_name")
+      card.setDescription(i18next.t("cards.runtime_misc_bosses_restoring_light_desc"))
       card.spellFilterType = SpellFilterType.None
       card.manaCost = 1
       buffContextObject = Modifier.createContextObjectWithAttributeBuffs(0,1)
-      buffContextObject.appliedName = "Restored Light"
+      buffContextObject.appliedName = i18next.t("modifiers.runtime_misc_bosses_restoring_light_name")
       card.setTargetModifiersContextObjects([
         buffContextObject
       ])
@@ -3239,8 +3239,8 @@ class CardFactory_Bosses
       card.factionId = Factions.Boss
       card.setIsHiddenInCollection(true)
       card.id = Cards.BossSpell.AncientKnowledge
-      card.name = "Ancient Knowledge"
-      card.setDescription("Draw 2 cards.")
+      card.name = i18next.t("cards.runtime_misc_bosses_ancient_knowledge_name")
+      card.setDescription(i18next.t("cards.runtime_misc_bosses_ancient_knowledge_desc"))
       card.spellFilterType = SpellFilterType.None
       card.manaCost = 1
       card.drawCardsPostPlay = 2

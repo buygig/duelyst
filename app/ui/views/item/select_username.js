@@ -5,6 +5,7 @@ var validator = require('validator');
 var Logger = require('app/common/logger');
 var Animations = require('app/ui/views/animations');
 var SelectUsernameTmpl = require('app/ui/templates/item/select_username.hbs');
+var i18next = require('i18next');
 var moment = require('moment');
 var FormPromptDialogItemView = require('./form_prompt_dialog');
 
@@ -72,7 +73,7 @@ var SelectUsernameItemView = FormPromptDialogItemView.extend({
     // check username
     if (this._hasModifiedUsername) {
       if (!validator.isLength(username, 3, 18) || !validator.isAlphanumeric(username)) {
-        this.showInvalidFormControl(this.ui.$username, '3 to 18 alphanumeric characters');
+        this.showInvalidFormControl(this.ui.$username, i18next.t('registration.registration_validation_username_instructions'));
         isValid = false;
       } else {
         this.showValidFormControl(this.ui.$username);

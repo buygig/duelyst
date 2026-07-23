@@ -1,4 +1,5 @@
 {
+	"challenge_begins_title": "The Challenge Begins!",
 	"challenge_label": "Challenge",
 	"challenge_label_plural": "Challenges",
 	"retry_challenge_title": "Replay Challenge",
@@ -12,6 +13,11 @@
 	"challenge_label_start":"Start!",
 
 	"challenge_locked_label": "Attempt previous challenge to unlock.",
+	"unlock_complete_tutorial_message": "Complete the Tutorial Gate.",
+	"unlock_play_more_matches_message": "Play {{count}} more match to unlock.",
+	"unlock_play_more_matches_message_plural": "Play {{count}} more matches to unlock.",
+	"unlock_complete_tutorial_and_play_more_matches_message": "Complete the Tutorial Gate and play {{count}} more match to unlock.",
+	"unlock_complete_tutorial_and_play_more_matches_message_plural": "Complete the Tutorial Gate and play {{count}} more matches to unlock.",
 
 	"challenge_gate_0_title":"0: Training",
 	"challenge_gate_0_desc":"Learn the basics of DUELYST.",

@@ -11,16 +11,16 @@
 						<div class="settings-category">
 							<h1 class="modal-title"><i class="fa fa-image"></i> {{localize 'settings.category_visual_label'}}</h1>
 							<div class="setting setting-single-line">
-								<label for="resolution">Viewport</label>
+								<label for="resolution">{{localize 'settings.viewport_label'}}</label>
 								{{#if _resolutionsThatFit}}
 									<select id="resolution">
 										{{#if _resolutionsThatDontFit}}
-											<optgroup label="Supported by your window size">
+										<optgroup label="{{localize 'settings.viewport_supported_group_label'}}">
 												{{#_resolutionsThatFit}}
 													<option value="{{value}}" {{#if selected}} selected {{/if}}>{{localize description}}</option>
 												{{/_resolutionsThatFit}}
 											</optgroup>
-											<optgroup label="Bigger than your window size">
+										<optgroup label="{{localize 'settings.viewport_oversized_group_label'}}">
 												{{#_resolutionsThatDontFit}}
 													<option value="{{value}}" {{#if selected}} selected {{/if}}>{{localize description}}</option>
 												{{/_resolutionsThatDontFit}}
@@ -36,10 +36,10 @@
 								{{/if}}
 							</div>
 							<div class="setting setting-single-line">
-								<label for="language">Language</label>
+								<label for="language">{{localize 'settings.language_label'}}</label>
 									<select id="language">
-                      <option value="en" {{#if selected}} selected {{/if}}>English</option>
-											{{!-- <option value="de" {{#if selected}} selected {{/if}}>Deutsch (Beta)</option> --}}
+										<option value="en">{{localize 'settings.language_english'}}</option>
+										<option value="zh-cn">{{localize 'settings.language_simplified_chinese'}}</option>
 									</select>
 							</div>
 							<div class="setting setting-single-line" data-toggle="tooltip" data-placement="left" title="{{localize 'settings.hiDPI_tooltip'}}">

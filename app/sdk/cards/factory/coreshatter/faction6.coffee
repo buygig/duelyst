@@ -84,17 +84,17 @@ class CardFactory_CoreshatterSet_Faction6
       card = new Unit(gameSession)
       card.factionId = Factions.Faction6
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Oak in the Nemeton"
-      card.setDescription("Trial: Have 5 token minions with different names.\nDestiny: Friendly token minions have +4/+4.")
+      card.name = "cards.coreshatter_faction_6_vanar_quest_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_vanar_quest_desc"))
       card.atk = 6
       card.maxHP = 6
       card.manaCost = 6
       card.rarityId = Rarity.Mythron
       statContextObject = ModifierQuestBuffVanar.createContextObjectWithAttributeBuffs(4,4)
-      statContextObject.appliedName = "Might of the Oak"
+      statContextObject.appliedName = "modifiers.coreshatter_faction_6_vanar_quest_buff_applied_name"
       emblemModifier = PlayerModifierEmblemSummonWatchVanarTokenQuest.createContextObject([statContextObject])
-      emblemModifier.appliedName = "Nemeton's Protection"
-      emblemModifier.appliedDescription = "Your token minions have +4/+4."
+      emblemModifier.appliedName = "modifiers.coreshatter_faction_6_vanar_quest_destiny_applied_name"
+      emblemModifier.appliedDescription = "modifiers.coreshatter_faction_6_vanar_quest_destiny_applied_desc"
       card.setInherentModifiersContextObjects([
         ModifierStartsInHand.createContextObject(),
         ModifierCannotBeReplaced.createContextObject(),
@@ -128,8 +128,8 @@ class CardFactory_CoreshatterSet_Faction6
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
-      card.name = "Cloudcaller"
-      card.setDescription("Opening Gambit: Your Bloodbound Spell refreshes and is Lesser Waterball this turn.")
+      card.name = "cards.coreshatter_faction_6_snowballer_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_snowballer_desc"))
       card.atk = 4
       card.maxHP = 5
       card.manaCost = 5
@@ -165,8 +165,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.factionId = Factions.Faction6
       card.id = Cards.Spell.SnowballBBS
       card.setIsHiddenInCollection(true)
-      card.name = "Lesser Waterball"
-      card.setDescription("Deal 4 damage to an enemy minion.")
+      card.name = "cards.coreshatter_faction_6_snowball_bbs_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_snowball_bbs_desc"))
       card.manaCost = 1
       card.damageAmount = 4
       card.rarityId = Rarity.Fixed
@@ -185,8 +185,8 @@ class CardFactory_CoreshatterSet_Faction6
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
-      card.name = "Malicious Wisp"
-      card.setDescription("Opening Gambit: Take a mana crystal from your opponent.\nDying Wish: Give back the mana crystal.")
+      card.name = "cards.coreshatter_faction_6_mana_thief_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_mana_thief_desc"))
       card.atk = 4
       card.maxHP = 3
       card.manaCost = 4
@@ -222,8 +222,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.factionId = Factions.Faction6
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.EnterThunderdome
-      card.name = "Ice Age"
-      card.setDescription("Summon Blazing Spines along the outside of the battlefield.")
+      card.name = "cards.coreshatter_faction_6_enter_thunderdome_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_enter_thunderdome_desc"))
       card.cardDataOrIndexToSpawn = {id: Cards.Faction6.BlazingSpines}
       card.manaCost = 8
       card.rarityId = Rarity.Legendary
@@ -242,8 +242,8 @@ class CardFactory_CoreshatterSet_Faction6
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
-      card.name = "Thicket Augur"
-      card.setDescription("Intensify: Summon 1 Treant with Provoke nearby.")
+      card.name = "cards.coreshatter_faction_6_rootmancer_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_rootmancer_desc"))
       card.atk = 1
       card.maxHP = 1
       card.manaCost = 2
@@ -278,8 +278,8 @@ class CardFactory_CoreshatterSet_Faction6
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
-      card.name = "Fenrir Berserker"
-      card.setDescription("Dying Wish: Summon a Fenrir Warmaster on this space.")
+      card.name = "cards.coreshatter_faction_6_super_fenrir_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_super_fenrir_desc"))
       card.atk = 4
       card.maxHP = 3
       card.manaCost = 5
@@ -310,8 +310,8 @@ class CardFactory_CoreshatterSet_Faction6
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
-      card.name = "Meltwater Moose"
-      card.setDescription("When this minion is summoned, Stun it.")
+      card.name = "cards.coreshatter_faction_6_snow_winkle_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_snow_winkle_desc"))
       card.atk = 6
       card.maxHP = 7
       card.manaCost = 4
@@ -348,14 +348,14 @@ class CardFactory_CoreshatterSet_Faction6
       card.factionId = Factions.Faction6
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.IceCapsule
-      card.name = "Cryonic Potential"
-      card.setDescription("Give an exhausted friendly minion +6/+6.")
+      card.name = "cards.coreshatter_faction_6_ice_capsule_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_ice_capsule_desc"))
       card.manaCost = 3
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.AllyDirect
       card.canTargetGeneral = false
       buffContextObject = Modifier.createContextObjectWithAttributeBuffs(6,6)
-      buffContextObject.appliedName = "Potential Realized"
+      buffContextObject.appliedName = "modifiers.coreshatter_faction_6_ice_capsule_applied_name"
       card.setTargetModifiersContextObjects([
         buffContextObject
       ])
@@ -373,8 +373,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.factionId = Factions.Faction6
       card.id = Cards.Spell.OwnSideTeleport
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Wanderlust"
-      card.setDescription("Intensify: Teleport 1 random enemy minion to a space on your starting side of the battlefield.")
+      card.name = "cards.coreshatter_faction_6_own_side_teleport_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_own_side_teleport_desc"))
       card.spellFilterType = SpellFilterType.None
       card.manaCost = 1
       card.rarityId = Rarity.Common
@@ -393,8 +393,8 @@ class CardFactory_CoreshatterSet_Faction6
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
-      card.name = "Disciple of Yggdra"
-      card.setDescription("When an enemy is Stunned, transform this minion into Yggdra's Voracity.")
+      card.name = "cards.coreshatter_faction_6_stun_warlock_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_stun_warlock_desc"))
       card.atk = 2
       card.maxHP = 3
       card.manaCost = 3
@@ -431,8 +431,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
       card.setIsHiddenInCollection(true)
-      card.name = "Yggdra's Voracity"
-      card.setDescription("Whenever an enemy is Stunned, fully heal this minion.")
+      card.name = "cards.coreshatter_faction_6_stun_beast_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_stun_beast_desc"))
       card.atk = 5
       card.maxHP = 5
       card.manaCost = 3
@@ -469,8 +469,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.factionId = Factions.Faction6
       card.id = Cards.Spell.InfiniteHowlers
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Endless Hunt"
-      card.setDescription("Summon a 3/3 Vespyr Night Howler.\nPut an Endless Hunt into your action bar.")
+      card.name = "cards.coreshatter_faction_6_infinite_howlers_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_infinite_howlers_desc"))
       card.manaCost = 4
       card.spellFilterType = SpellFilterType.SpawnSource
       card.rarityId = Rarity.Rare
@@ -490,8 +490,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction6
       card.id = Cards.Artifact.SnowChipper
-      card.name = "Resonance Scythe"
-      card.setDescription("Your General has +1 Attack.\nReactivate your General whenever they destroy a Stunned enemy.")
+      card.name = "cards.coreshatter_faction_6_snow_chipper_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_snow_chipper_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Epic
       card.durability = 3
@@ -514,8 +514,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.factionId = Factions.Faction6
       card.id = Cards.Spell.AspectOfIdentity
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Aspect of Ego"
-      card.setDescription("Transform ANY minion into a random minion of the same cost.")
+      card.name = "cards.coreshatter_faction_6_aspect_of_identity_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_aspect_of_identity_desc"))
       card.manaCost = 1
       card.spellFilterType = SpellFilterType.NeutralDirect
       card.canTargetGeneral = false
@@ -534,8 +534,8 @@ class CardFactory_CoreshatterSet_Faction6
       card.factionId = Factions.Faction6
       card.id = Cards.Spell.CreepingFrost
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Permafrost"
-      card.setDescription("Stun an enemy minion.\nStunned enemy minions Stun a nearby enemy.")
+      card.name = "cards.coreshatter_faction_6_creeping_frost_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_6_creeping_frost_desc"))
       card.manaCost = 3
       card.spellFilterType = SpellFilterType.EnemyDirect
       card.canTargetGeneral = false

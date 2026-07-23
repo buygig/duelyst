@@ -79,10 +79,10 @@
         {{else}}
 					{{#if isSkinned}}
 						{{#if isUnlocked}}
-                <div class="crafting-warning">You cannot disenchant card skins.</div>
+				<div class="crafting-warning">{{localize 'collection.cannot_disenchant_card_skins_msg'}}</div>
 						{{else}}
                 <div class="btn-group btn-group-centered crafting-options-controls">
-                    <button class="btn btn-clean btn-clean-primary skin-unlock">Unlock</button>
+                    <button class="btn btn-clean btn-clean-primary skin-unlock">{{localize 'collection.unlock_card_skin_button_label'}}</button>
                 </div>
 						{{/if}}
 					{{else}}

@@ -1,0 +1,21 @@
+{
+	"rank": "段位",
+	"division": "分组",
+	"season": "赛季",
+	"loot_crate_instructions": "晋升至下一分组可升级赛季奖励宝箱",
+	"loot_crate_max_reached": "奖励宝箱已升至最高级！",
+	"win_streak_message": "已连胜 {{win_count}} 场！额外获得 1 枚军衔标记",
+	"next_division_message": "达到 {{rank}} 级时将晋升至{{division_name}}",
+	"bronze_division_name": "青铜",
+	"silver_division_name": "白银",
+	"gold_division_name": "黄金",
+	"diamond_division_name": "钻石",
+	"elite_division_name": "S 级",
+	"end_of_ranked_season_title": "排位赛季奖励",
+	"current_rank_message": "段位 {{rank}}",
+	"current_division_message": "{{division}}分组",
+	"month_year_season_message": "{{year}}年{{month}}",
+	"last_season_ranked_earned_message": "根据上赛季段位，你获得了",
+	"bonus_chevrons_message": "额外军衔标记",
+	"season_has_begun_message": "{{year}}年{{month}}赛季已经开始！"
+}

@@ -1,4 +1,5 @@
 {
+	"daily_quest_title":"Daily Quest",
 	"quest_log_title":"Daily Quests",
 	"first_win_of_the_day_active":"First Win of the Day (+{{first_win_gold_amount}} Gold): ACTIVE",
 	"first_win_of_the_day_available_in":"First win of the day available in:",
@@ -22,6 +23,7 @@
 
 	"replace_button_label": "Replace",
 	"replace_button_starter_label": "Starter",
+	"complete_starter_quest_instructions": "Complete this starter quest to get a new one!",
 
 	"daily_challenge_title": "Daily Challenge",
 	"daily_challenge_instructions": "Complete the Daily Challenge",

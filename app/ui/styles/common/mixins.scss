@@ -86,21 +86,21 @@
 }
 
 @mixin bodyFont() {
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", Arial, Helvetica, sans-serif;
   font-weight: 400;
 }
 @mixin headerFont($letterSpacing:0.0em) {
-  font-family: "Lato", sans-serif;
+  font-family: "Lato", "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", sans-serif;
   letter-spacing: $letterSpacing;
 }
 @mixin headerFullStyle($letterSpacing:0.0em) {
-  font-family: "Lato", sans-serif;
+  font-family: "Lato", "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", sans-serif;
   letter-spacing: $letterSpacing;
   text-transform: uppercase;
   font-weight: bold;
 }
 @mixin altHeaderFont($letterSpacing:0.0em) {
-  font-family: "Open Sans", Arial, Helvetica, sans-serif;
+  font-family: "Open Sans", "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", Arial, Helvetica, sans-serif;
   letter-spacing: $letterSpacing;
 }
 @mixin quiet() {
@@ -131,7 +131,7 @@
 }
 
 @mixin overlayPanel() {
-  font-family: 'Open Sans', Arial, Helvetica, sans-serif;
+  font-family: 'Open Sans', "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", Arial, Helvetica, sans-serif;
   font-size: 1.2rem;
   color: #fff;
   background-color: rgba(0,0,0, 0.5);

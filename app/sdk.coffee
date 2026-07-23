@@ -152,6 +152,8 @@ SDK.ChallengeRemote = require 'app/sdk/challenges/challengeRemote'
 SDK.ChallengeCategory = require 'app/sdk/challenges/challengeCategory'
 SDK.Sandbox = require 'app/sdk/challenges/sandbox'
 SDK.SandboxDeveloper = require 'app/sdk/challenges/sandboxDeveloper'
+SDK.OfflinePractice = require 'app/sdk/challenges/offlinePractice'
+SDK.LocalStarterAIController = require 'app/sdk/ai/localStarterAIController'
 
 SDK.AchievementsFactory = require 'app/sdk/achievements/achievementsFactory'
 

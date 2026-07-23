@@ -2,14 +2,14 @@
     <div class="modal-content">
         <div class="modal-header">
             <h4 class="header-dashed-text modal-title">{{description}}</h4>
-            <p class="modal-subtitle">Click a highlighted space to complete</p>
+            <p class="modal-subtitle">{{localize 'battle.followup_click_highlighted_space'}}</p>
         </div>
         <div class="modal-body game-choose-hand">
         </div>
         <div class="modal-footer">
             <div class="btn-group">
-                <button class="btn btn-clean btn-clean-primary btn-user-cancel"><i class="fa fa-angle-double-left"></i> CANCEL</button>
-                <button class="btn btn-clean btn-clean-primary btn-user-skip">SKIP <i class="fa fa-angle-double-right"></i></button>
+                <button class="btn btn-clean btn-clean-primary btn-user-cancel"><i class="fa fa-angle-double-left"></i> {{localize 'common.default_confirm_dialog_button_cancel_label'}}</button>
+                <button class="btn btn-clean btn-clean-primary btn-user-skip">{{localize 'tutorial.skip_button_label'}} <i class="fa fa-angle-double-right"></i></button>
             </div>
         </div>
     </div>

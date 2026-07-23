@@ -9,6 +9,12 @@ const path = require('path');
 const url = require('url');
 const convict = require('convict');
 
+const isEnabledFlag = (value) => ['1', 'true'].includes(String(value).trim().toLowerCase());
+const isOfflineArg = (value) => value === '--offline'
+  || (value.startsWith('--offline=') && isEnabledFlag(value.slice('--offline='.length)));
+const offlineMode = isEnabledFlag(process.env.OFFLINE_MODE)
+  || process.argv.some(isOfflineArg);
+
 const config = convict({
   env: {
     doc: 'The applicaton environment.',
@@ -16,6 +22,11 @@ const config = convict({
     default: 'development',
     env: 'NODE_ENV',
     arg: 'env',
+  },
+  offlineMode: {
+    doc: 'Build and run without requiring online service configuration.',
+    format: Boolean,
+    default: offlineMode,
   },
   port: {
     doc: 'The api port to bind.',
@@ -379,6 +390,11 @@ try {
   // config.loadFile(process.env.CONFIG_FILES.split(','));
 } catch (error) {
   // console.log("No configuration files found. Using default config.");
+}
+
+if (offlineMode) {
+  config.set('datGuiEditorEnabled', false);
+  config.set('aiToolsEnabled', false);
 }
 
 // validates configuration against formats specified in schema above

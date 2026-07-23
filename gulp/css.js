@@ -14,6 +14,10 @@ import {
 } from './shared';
 
 const sass = gsass(Sass);
+const nodeUtil = require('util');
+
+// clean-css v3 still calls this API, which was removed in Node.js 24.
+if (nodeUtil.isRegExp == null) nodeUtil.isRegExp = (value) => value instanceof RegExp;
 
 export default function css() {
   return gulp.src('./app/ui/styles/application.scss')
@@ -27,7 +31,7 @@ export default function css() {
     }))
   // This is where we replace our CSS urls with CDN urls
     .pipe(gif(
-      production || staging,
+      (production || staging) && !config.get('offlineMode'),
       rework(reworkUrl((url) => {
         if (url.indexOf('resources') >= 0 && config.get('cdn') !== '') {
           // gutil.log(`${config.get('cdn')}/${url}`)

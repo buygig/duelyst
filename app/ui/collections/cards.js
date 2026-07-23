@@ -2,6 +2,7 @@
 
 var Logger = require('app/common/logger');
 var CONFIG = require('app/common/config');
+var OfflineMode = require('app/common/offline_mode');
 var SDK = require('app/sdk');
 var CardModel = require('app/ui/models/card');
 var InventoryManager = require('app/ui/managers/inventory_manager');
@@ -246,7 +247,14 @@ var CardsCollection = Backbone.Collection.extend({
       // inventory count should always be the actual count
       var inventoryCount = 0;
       var canShowSkin = false;
-      if (skinNum > 0) {
+      var isOfflineBaseCard = OfflineMode.isEnabled()
+        && skinNum === 0
+        && !cardModel.get('isPrismatic')
+        && cardModel.get('isAvailable')
+        && !cardModel.get('isHiddenInCollection');
+      if (isOfflineBaseCard) {
+        inventoryCount = cardModel.get('isGeneral') ? 1 : CONFIG.MAX_DECK_DUPLICATES;
+      } else if (skinNum > 0) {
         var skinId = SDK.Cards.getCardSkinIdForCardId(cardId);
         // must own skin to see it
         if (InventoryManager.getInstance().hasCosmeticById(skinId) || InventoryManager.getInstance().getCanAlwaysUseCosmeticById(skinId)) {
@@ -341,6 +349,8 @@ var CardsCollection = Backbone.Collection.extend({
       } else {
         isUnlocked = true;
       }
+
+      if (isOfflineBaseCard) isUnlocked = true;
 
       // update any achievement unlock messages
       var achievementUnlockMessage;

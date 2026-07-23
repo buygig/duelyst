@@ -3,6 +3,10 @@
 
 _ = require 'underscore'
 moment = require 'moment'
+i18next = require 'i18next'
+if i18next.t() is undefined
+  i18next.t = (text) ->
+    return text
 
 Logger = require 'app/common/logger'
 
@@ -79,8 +83,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.Enslave
-      card.name = "Mind Control"
-      card.setDescription("Take control of an enemy minion")
+      card.name = i18next.t("cards.runtime_misc_generic_mind_control_by_attack_value_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_mind_control_by_attack_value_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Cards.Spell.MindControlByAttackValue"])
       card.setBaseSoundResource(
@@ -92,8 +96,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.Repulsion
-      card.name = "Repulsion"
-      card.setDescription("Move a nearby enemy minion to any other space on the battlefield.")
+      card.name = i18next.t("cards.runtime_misc_generic_repulsion_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_repulsion_desc"))
       card.manaCost = 0
       card.targetType = CardType.Unit
       card.setFollowups([{
@@ -109,8 +113,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupTeleport
-      card.name = "Teleport"
-      card.setDescription("Move target to any unoccupied space on the battlefield.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_teleport_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_teleport_desc"))
       card.setFollowupConditions([SpellFollowupTeleport.followupConditionTargetToTeleport])
       card.setFXResource(["FX.Cards.Spell.FollowupTeleport"])
       card.setBaseSoundResource(
@@ -122,8 +126,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupTeleportEnemyToMe
-      card.name = "Teleport Enemy To Me"
-      card.setDescription("Move an enemy unit in front of the caster.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_teleport_enemy_to_me_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_teleport_enemy_to_me_desc"))
       card.setFollowupConditions([SpellFollowupTeleportToMe.followupConditionCanTeleportToMe])
       card.spellFilterType = SpellFilterType.EnemyDirect
       card.setFXResource(["FX.Cards.Spell.FollowupTeleportEnemyToMe"])
@@ -136,8 +140,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupTeleportMyGeneral
-      card.name = "Teleport General"
-      card.setDescription("Move your General.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_teleport_my_general_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_teleport_my_general_desc"))
       card.setFXResource(["FX.Cards.Spell.FollowupTeleportMyGeneral"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_martyrdom.audio
@@ -148,8 +152,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.KillTarget
-      card.name = "Kill Target"
-      card.setDescription("Kill target unit")
+      card.name = i18next.t("cards.runtime_misc_generic_kill_target_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_kill_target_desc"))
       card.setFXResource(["FX.Cards.Spell.KillTarget"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_daemoniclure.audio
@@ -160,8 +164,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.KillTarget
-      card.name = "Kill Target"
-      card.setDescription("Kill target unit with Ranged")
+      card.name = i18next.t("cards.runtime_misc_generic_kill_target_with_ranged_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_kill_target_with_ranged_desc"))
       card.setFXResource(["FX.Cards.Spell.KillTargetWithRanged"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_voidwalk.audio
@@ -172,8 +176,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.SpawnEntity
-      card.name = "Spawn Entity"
-      card.setDescription("Spawn an entity.")
+      card.name = i18next.t("cards.runtime_misc_generic_spawn_entity_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_spawn_entity_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Factions.Neutral.UnitSpawnFX","FX.Cards.Spell.SpawnEntity"])
       card.setBaseSoundResource(
@@ -185,8 +189,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.SpawnNeutralEntity
-      card.name = "Spawn Neutral Entity"
-      card.setDescription("Spawn an entity.")
+      card.name = i18next.t("cards.runtime_misc_generic_spawn_neutral_entity_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_spawn_neutral_entity_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Factions.Neutral.UnitSpawnFX","FX.Cards.Spell.SpawnNeutralEntity"])
       card.setBaseSoundResource(
@@ -198,8 +202,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.DeployMechaz0r
-      card.name = "Deploy MECHAZ0R"
-      card.setDescription("AWWWW YISSS!")
+      card.name = i18next.t("cards.runtime_misc_generic_deploy_mechaz0r_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_deploy_mechaz0r_desc"))
       card.applyToOwnGeneral = true
       card.targetModifiersContextObjects = [PlayerModifierMechazorSummoned.createContextObject()]
       card.manaCost = 0
@@ -215,8 +219,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.CloneTargetEntity
-      card.name = "Clone Entity"
-      card.setDescription("Clone another entity and replace self.")
+      card.name = i18next.t("cards.runtime_misc_generic_clone_target_entity_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_clone_target_entity_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Factions.Neutral.UnitSpawnFX","FX.Cards.Spell.CloneTargetEntity"])
       card.setBaseSoundResource(
@@ -228,8 +232,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.CloneSourceEntity
-      card.name = "Clone Self"
-      card.setDescription("Clone self into a nearby space.")
+      card.name = i18next.t("cards.runtime_misc_generic_clone_source_entity_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_clone_source_entity_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Factions.Neutral.UnitSpawnFX","FX.Cards.Spell.CloneSourceEntity"])
       card.setBaseSoundResource(
@@ -241,8 +245,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.CloneSourceEntity2X
-      card.name = "Clone Self"
-      card.setDescription("Clone self into a nearby space.")
+      card.name = i18next.t("cards.runtime_misc_generic_clone_source_entity_2_x_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_clone_source_entity_2_x_desc"))
       card.manaCost = 0
       card.setFollowups([{
         id: Cards.Spell.CloneSourceEntity
@@ -257,8 +261,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.CloneSourceEntity3X
-      card.name = "Clone Self"
-      card.setDescription("Clone self into a nearby space.")
+      card.name = i18next.t("cards.runtime_misc_generic_clone_source_entity_3_x_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_clone_source_entity_3_x_desc"))
       card.manaCost = 0
       card.setFollowups([{
         id: Cards.Spell.CloneSourceEntity2X
@@ -273,8 +277,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.CloneSourceEntity4X
-      card.name = "Clone Self"
-      card.setDescription("Clone self into a nearby space.")
+      card.name = i18next.t("cards.runtime_misc_generic_clone_source_entity_4_x_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_clone_source_entity_4_x_desc"))
       card.manaCost = 0
       card.setFollowups([{
         id: Cards.Spell.CloneSourceEntity3X
@@ -289,8 +293,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.CloneSourceEntityNearbyGeneral
-      card.name = "Clone Self"
-      card.setDescription("Clone self nearby general.")
+      card.name = i18next.t("cards.runtime_misc_generic_clone_source_entity_nearby_general_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_clone_source_entity_nearby_general_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Factions.Neutral.UnitSpawnFX","FX.Cards.Spell.CloneSourceEntity"])
       card.setBaseSoundResource(
@@ -302,8 +306,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.CloneSourceEntityNearbyGeneral2X
-      card.name = "Clone Self"
-      card.setDescription("Clone self nearby general.")
+      card.name = i18next.t("cards.runtime_misc_generic_clone_source_entity_nearby_general_2_x_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_clone_source_entity_nearby_general_2_x_desc"))
       card.manaCost = 0
       card.setFollowups([{
         id: Cards.Spell.CloneSourceEntityNearbyGeneral
@@ -318,8 +322,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.SpellDamage
-      card.name = "Spell Damge"
-      card.setDescription("Deal Damage")
+      card.name = i18next.t("cards.runtime_misc_generic_spell_damage_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_spell_damage_desc"))
       card.spellFilterType = SpellFilterType.NeutralDirect
       card.setFXResource(["FX.Cards.Spell.SpellDamage"])
       card.setBaseSoundResource(
@@ -331,8 +335,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupDamage
-      card.name = "Deal Damage"
-      card.setDescription("Deal Damage")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_damage_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_damage_desc"))
       card.spellFilterType = SpellFilterType.NeutralDirect
       card.setFXResource(["FX.Cards.Spell.FollowupDamage"])
       card.setBaseSoundResource(
@@ -344,8 +348,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupHeal
-      card.name = "Heal Damge"
-      card.setDescription("Heal Damage")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_heal_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_heal_desc"))
       card.spellFilterType = SpellFilterType.NeutralDirect
       card.setFXResource(["FX.Cards.Spell.FollowupHeal"])
       card.setBaseSoundResource(
@@ -357,7 +361,7 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.ApplyModifiers
-      card.name = "Apply Modifiers"
+      card.name = i18next.t("cards.runtime_misc_generic_apply_modifiers_name")
       card.setFXResource(["FX.Cards.Spell.ApplyModifiers"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_tranquility.audio
@@ -368,7 +372,7 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.DunecasterFollowup
-      card.name = "Dunecaster Followup"
+      card.name = i18next.t("cards.runtime_misc_generic_dunecaster_followup_name")
       card.setFXResource(["FX.Cards.Spell.ApplyModifiers"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_tranquility.audio
@@ -379,8 +383,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.Dispel
-      card.name = "Dispel"
-      card.setDescription("Dispel target area")
+      card.name = i18next.t("cards.runtime_misc_generic_dispel_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_dispel_desc"))
       card.manaCost = 0
       card.spellFilterType = SpellFilterType.None
       card.setFXResource(["FX.Cards.Spell.Dispel"])
@@ -393,8 +397,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.Juxtaposition
-      card.name = "Juxtaposition"
-      card.setDescription("Switch positions between ANY two minions.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_swap_positions_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_swap_positions_desc"))
       card.spellFilterType = SpellFilterType.NeutralDirect
       card.manaCost = 0
       card.setFXResource(["FX.Cards.Spell.Juxtaposition"])
@@ -407,8 +411,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupRandomTeleport
-      card.name = "Random Teleport"
-      card.setDescription("Move target to a random space on the battlefield.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_random_teleport_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_random_teleport_desc"))
       card.setFXResource(["FX.Cards.Spell.FollowupRandomTeleport"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_naturalselection.audio
@@ -419,8 +423,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollwupKeeper
-      card.name = "Revive Dead minion"
-      card.setDescription("Revive a dead minion in a nearby space.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_keeper_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_keeper_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Factions.Neutral.UnitSpawnFX","FX.Cards.Spell.FollowupKeeper"])
       card.setBaseSoundResource(
@@ -432,8 +436,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.KillTarget
-      card.name = "Kill Target"
-      card.setDescription("Kill target unit with Provoke or Frenzy")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_hollow_grove_keeper_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_hollow_grove_keeper_desc"))
       card.setFXResource(["FX.Cards.Spell.FollowupHollowGroveKeeper"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_voidwalk.audio
@@ -444,8 +448,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupKillTargetByAttack
-      card.name = "Assassinate"
-      card.setDescription("Kill target minion.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_kill_target_by_attack_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_kill_target_by_attack_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Factions.Neutral.UnitSpawnFX","FX.Cards.Spell.FollowupKillTargetByAttack"])
       card.setBaseSoundResource(
@@ -457,7 +461,7 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.DoubleAttackAndHealth
-      card.name = "Double Attack And Health"
+      card.name = i18next.t("cards.runtime_misc_generic_double_attack_and_health_name")
       card.setFXResource(["FX.Cards.Spell.ApplyModifiers"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_tranquility.audio
@@ -468,8 +472,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.HatchAnEgg
-      card.name = "Hatch an egg"
-      card.setDescription("Hatch an Egg.")
+      card.name = i18next.t("cards.runtime_misc_generic_hatch_an_egg_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_hatch_an_egg_desc"))
       card.manaCost = 0
       card.setFXResource(["FX.Cards.Spell.HatchAnEgg"])
       card.setBaseSoundResource(
@@ -485,7 +489,7 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupActivateBattlepet
-      card.name = "Activate Battlepet"
+      card.name = i18next.t("cards.runtime_misc_generic_followup_activate_battlepet_name")
       card.setFXResource(["FX.Cards.Spell.ApplyModifiers"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_tranquility.audio
@@ -496,8 +500,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupTeleportMyGeneralBehindEnemy
-      card.name = "Teleport"
-      card.setDescription("Move target to any unoccupied space behind an enemy.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_teleport_my_general_behind_enemy_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_teleport_my_general_behind_enemy_desc"))
       card.setFXResource(["FX.Cards.Spell.FollowupTeleportMyGeneralBehindEnemy"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_naturalselection.audio
@@ -508,8 +512,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupTeleportInFrontOfAnyGeneral
-      card.name = "Teleport"
-      card.setDescription("Move target to any unoccupied space in front of a General.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_teleport_in_front_of_any_general_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_teleport_in_front_of_any_general_desc"))
       card.setFXResource(["FX.Cards.Spell.FollowupTeleportInFrontOfAnyGeneral"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_naturalselection.audio
@@ -520,8 +524,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupFight
-      card.name = "Fight!"
-      card.setDescription("Choose a minion to fight.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_fight_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_fight_desc"))
       card.setFXResource(["FX.Cards.Spell.FollowupFight"])
       card.setBaseSoundResource(
         apply : RSX.sfx_singe2.audio
@@ -546,8 +550,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.BounceMinionSpawnEntity
-      card.name = "Bounce Minion Spawn Entity"
-      card.setDescription("Return a minion its action bar. Summon an entity on that space.")
+      card.name = i18next.t("cards.runtime_misc_generic_bounce_minion_spawn_entity_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_bounce_minion_spawn_entity_desc"))
       card.manaCost = 0
       card.spellFilterType = SpellFilterType.NeutralDirect
       card.setFXResource(["FX.Cards.Spell.BounceMinionSpawnEntity"])
@@ -564,8 +568,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupTeleportToFriendlyShadowCreep
-      card.name = "Teleport To Shadow Creep"
-      card.setDescription("Move target to any unoccupied friendly Shadow Creep.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_teleport_to_friendly_creep_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_teleport_to_friendly_creep_desc"))
       card.setFollowupConditions([SpellFollowupTeleport.followupConditionTargetToTeleport])
       card.setFXResource(["FX.Cards.Spell.FollowupTeleport"])
       card.setBaseSoundResource(
@@ -577,8 +581,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupTeleportNearMyGeneral
-      card.name = "Teleport Near Your General"
-      card.setDescription("Move target to any unoccupied space near your General.")
+      card.name = i18next.t("cards.runtime_misc_generic_followup_teleport_near_my_general_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_followup_teleport_near_my_general_desc"))
       card.setFollowupConditions([SpellFollowupTeleport.followupConditionTargetToTeleport])
       card.setFXResource(["FX.Cards.Spell.FollowupTeleport"])
       card.setBaseSoundResource(
@@ -590,7 +594,7 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.SpellDuplicator
-      card.name = "Shuffle 3 copies of a minion into your deck"
+      card.name = i18next.t("cards.runtime_misc_generic_spell_duplicator_name")
       card.manaCost = 0
       card.setFXResource(["FX.Cards.Spell.ApplyModifiers"])
       card.setBaseSoundResource(
@@ -602,8 +606,8 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FestiveSpirit
-      card.name = "Festive Spirit"
-      card.setDescription("Snowchasers are on their way with Frostfire gifts!")
+      card.name = i18next.t("cards.runtime_misc_generic_festive_spirit_name")
+      card.setDescription(i18next.t("cards.runtime_misc_generic_festive_spirit_desc"))
       card.applyToOwnGeneral = true
       card.setTargetModifiersContextObjects([GameSessionModifierFestiveSpirit.createContextObject()])
       card.setFXResource(["FX.Cards.Spell.FestiveSpirit"])
@@ -617,7 +621,7 @@ class CardFactory_Generic
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.FollowupSpawnEntityFromDeck
       card.spellFilterType = SpellFilterType.SpawnSource
-      card.name = "Spawn a minion from your deck"
+      card.name = i18next.t("cards.runtime_misc_generic_followup_spawn_entity_from_deck_name")
       card.manaCost = 0
       card.setFXResource(["FX.Cards.Spell.ApplyModifiers"])
       card.setBaseSoundResource(
@@ -629,7 +633,7 @@ class CardFactory_Generic
       card.factionId = Factions.Neutral
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.SpellDamageOrHeal
-      card.name = "Deal 2 damage to an enemy or heal 2 to an ally"
+      card.name = i18next.t("cards.runtime_misc_generic_spell_damage_or_heal_name")
       card.manaCost = 0
       card.setFXResource(["FX.Cards.Spell.ApplyModifiers"])
       card.setBaseSoundResource(

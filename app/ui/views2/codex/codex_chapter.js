@@ -42,8 +42,8 @@ var CodexChapterItemView = Backbone.Marionette.ItemView.extend({
 
   serializeModel: function (model) {
     var data = model.toJSON.apply(model, _.rest(arguments));
-    data.description = model.get('description').replace(/\n|\r/g, '<br/>');
-    data.text = model.get('text').replace(/\n|\r/g, '<br/>');
+    data.description = String(model.get('description') || '').replace(/\n|\r/g, '<br/>');
+    data.text = String(model.get('text') || '').replace(/\n|\r/g, '<br/>');
     return data;
   },
 

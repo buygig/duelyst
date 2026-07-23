@@ -3,6 +3,7 @@ GameSetup = require './../gameSetup'
 GameType = require 'app/sdk/gameType'
 PlayModeFactory = require './../playModes/playModeFactory'
 PlayModes = require './../playModes/playModesLookup'
+i18next = require 'i18next'
 
 class Sandbox extends Challenge
 
@@ -34,10 +35,10 @@ class Sandbox extends Challenge
   setupSession:(gameSession)->
     return super(gameSession, {
       userId: gameSession.getUserId()
-      name: "Player 1"
+      name: i18next.t('common.offline_sandbox_player_one_name')
     }, {
       userId: gameSession.getUserId() + "test"
-      name: "Player 2"
+      name: i18next.t('common.offline_sandbox_player_two_name')
     })
 
   setupSessionModes: (gameSession) ->

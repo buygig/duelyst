@@ -77,17 +77,17 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.factionId = Factions.Neutral
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Mythron Wanderer"
-      card.setDescription("Trial: Have no duplicate cards in your deck.\nDestiny: Your minions have +1/+1.")
+      card.name = "cards.coreshatter_neutral_singleton_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_singleton_desc"))
       card.atk = 6
       card.maxHP = 6
       card.manaCost = 6
       card.rarityId = Rarity.Mythron
       buffContextObject = ModifierQuestBuffNeutral.createContextObjectWithAttributeBuffs(1,1)
-      buffContextObject.appliedName = "Those Who Wander"
+      buffContextObject.appliedName = "modifiers.coreshatter_neutral_singleton_buff_applied_name"
       emblemModifier = PlayerModifierEmblemSummonWatchSingletonQuest.createContextObject([buffContextObject])
-      emblemModifier.appliedName = "Roads of Mythron"
-      emblemModifier.appliedDescription = "Your minions have +1/+1."
+      emblemModifier.appliedName = "modifiers.coreshatter_neutral_singleton_destiny_applied_name"
+      emblemModifier.appliedDescription = "modifiers.coreshatter_neutral_singleton_destiny_applied_desc"
       card.setInherentModifiersContextObjects([
         ModifierStartsInHand.createContextObject(),
         ModifierCannotBeReplaced.createContextObject(),
@@ -121,8 +121,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Mirrorrim"
-      card.setDescription("Opening Gambit: Shuffle three copies of a friendly minion into your deck.")
+      card.name = "cards.coreshatter_neutral_duplicator_shuffler_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_duplicator_shuffler_desc"))
       card.atk = 2
       card.maxHP = 1
       card.manaCost = 1
@@ -164,8 +164,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Aer Pridebeak"
-      card.setDescription("Whenever your opponent casts a spell, restore 1 Health to your General.")
+      card.name = "cards.coreshatter_neutral_aer_owlblade_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_aer_owlblade_desc"))
       card.atk = 3
       card.maxHP = 4
       card.manaCost = 3
@@ -197,8 +197,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Saberspine Alpha"
-      card.setDescription("Rush")
+      card.name = "cards.coreshatter_neutral_big_rush_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_big_rush_desc"))
       card.atk = 5
       card.maxHP = 5
       card.manaCost = 7
@@ -228,8 +228,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Alcuin Fugitive"
-      card.setDescription("At the end of any turn you cast a spell, put a copy of the most recently cast spell into your action bar.")
+      card.name = "cards.coreshatter_neutral_moonlight_sorcerer_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_moonlight_sorcerer_desc"))
       card.atk = 2
       card.maxHP = 5
       card.manaCost = 5
@@ -262,8 +262,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Sellsoul"
-      card.setDescription("Dying Wish: Deal 4 damage to YOUR General.")
+      card.name = "cards.coreshatter_neutral_value_mc_downside_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_value_mc_downside_desc"))
       card.atk = 4
       card.maxHP = 5
       card.manaCost = 3
@@ -299,7 +299,7 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Worldcore Golem"
+      card.name = "cards.coreshatter_neutral_biggest_giant_golem_name"
       card.atk = 25
       card.maxHP = 25
       card.manaCost = 9
@@ -331,8 +331,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Prongbok"
-      card.setDescription("May move an additional space.")
+      card.name = "cards.coreshatter_neutral_blueblack_prongbok_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_blueblack_prongbok_desc"))
       card.atk = 2
       card.maxHP = 5
       card.manaCost = 3
@@ -369,8 +369,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Riftwalker"
-      card.setDescription("Airdrop\nIntensify: Deal 1 damage to everything around it.")
+      card.name = "cards.coreshatter_neutral_void_exploder_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_void_exploder_desc"))
       card.atk = 3
       card.maxHP = 3
       card.manaCost = 4
@@ -404,8 +404,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Fizzling Mystic"
-      card.setDescription("Opening Gambit: Deal 2 damage to an enemy OR restore 2 Health to a friendly minion or General.")
+      card.name = "cards.coreshatter_neutral_frizzling_mystic_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_frizzling_mystic_desc"))
       card.atk = 3
       card.maxHP = 3
       card.manaCost = 4
@@ -445,8 +445,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Araras Prophet"
-      card.setDescription("Whenever you replace a card, shuffle a Brilliant Plume into your deck.")
+      card.name = "cards.coreshatter_neutral_araras_shuffler_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_araras_shuffler_desc"))
       card.atk = 1
       card.maxHP = 3
       card.manaCost = 2
@@ -483,8 +483,8 @@ class CardFactory_CoreshatterSet_Neutral
       card.id = Cards.Spell.BrilliantPlume
       card.setCardSetId(CardSet.Coreshatter)
       card.setIsHiddenInCollection(true)
-      card.name = "Brilliant Plume"
-      card.setDescription("Restore 1 Health to your General.\nDraw a card.")
+      card.name = "cards.coreshatter_neutral_brilliant_plume_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_brilliant_plume_desc"))
       card.spellFilterType = SpellFilterType.AllyIndirect
       card.radius = CONFIG.WHOLE_BOARD_RADIUS
       card.canTargetGeneral = true
@@ -505,8 +505,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Lodestar"
-      card.setDescription("Airdrop, Forcefield\nAt the end of BOTH players' turns, pull some things to this minion.")
+      card.name = "cards.coreshatter_neutral_graboctopus_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_graboctopus_desc"))
       card.atk = 4
       card.maxHP = 4
       card.manaCost = 6
@@ -542,8 +542,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Chirpuka"
-      card.setDescription("Whenever your opponent summons a minion, summon a 2/1 Puka with Provoke in front of it.")
+      card.name = "cards.coreshatter_neutral_super_doxx_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_super_doxx_desc"))
       card.atk = 3
       card.maxHP = 6
       card.manaCost = 5
@@ -577,8 +577,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Puka"
-      card.setDescription("Provoke")
+      card.name = "cards.coreshatter_neutral_doxx_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_doxx_desc"))
       card.atk = 2
       card.maxHP = 1
       card.manaCost = 1
@@ -612,8 +612,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Mnemovore"
-      card.setDescription("Whenever you summon a minion, burn three cards from your opponent's deck.")
+      card.name = "cards.coreshatter_neutral_incindy_dindy_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_incindy_dindy_desc"))
       card.atk = 7
       card.maxHP = 7
       card.manaCost = 7
@@ -647,8 +647,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Scarzig"
-      card.setDescription("If this minion destroys an enemy and survives, friendly Scarzig ANYWHERE transform into Feather Knights.")
+      card.name = "cards.coreshatter_neutral_scarzig_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_scarzig_desc"))
       card.atk = 1
       card.maxHP = 2
       card.manaCost = 3
@@ -683,15 +683,15 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Scarzig, Feather Knight"
-      card.setDescription("Celerity\nWhenever this minion attacks, give other friendly minions +1/+1.")
+      card.name = "cards.coreshatter_neutral_big_scarzig_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_big_scarzig_desc"))
       card.atk = 4
       card.maxHP = 8
       card.manaCost = 3
       card.rarityId = Rarity.TokenUnit
       card.setIsHiddenInCollection(true)
       buffContextObject = Modifier.createContextObjectWithAttributeBuffs(1,1)
-      buffContextObject.appliedName = "Scarzig's Command"
+      buffContextObject.appliedName = "modifiers.coreshatter_neutral_big_scarzig_applied_name"
       card.setInherentModifiersContextObjects([
         ModifierTranscendance.createContextObject(),
         ModifierMyAttackWatchApplyModifiersToAllies.createContextObject([buffContextObject], false)
@@ -723,8 +723,8 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Orbo the Ostentatious"
-      card.setDescription("Opening Gambit: Transform the cards in your action bar into random prismatic legendary cards.")
+      card.name = "cards.coreshatter_neutral_penny_packer_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_penny_packer_desc"))
       card.atk = 3
       card.maxHP = 4
       card.manaCost = 3
@@ -758,13 +758,13 @@ class CardFactory_CoreshatterSet_Neutral
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Neutral
-      card.name = "Hsuku"
-      card.setDescription("At the end of any player's turn, give one of their minions a random buff and keyword (excluding Hsuku).")
+      card.name = "cards.coreshatter_neutral_hsuku_name"
+      card.setDescription(i18next.t("cards.coreshatter_neutral_hsuku_desc"))
       card.atk = 2
       card.maxHP = 6
       card.manaCost = 4
       card.rarityId = Rarity.Epic
-      hsukuModifier = ModifierEndTurnWatchAnyPlayerHsuku.createContextObject("Hsuku Buff")
+      hsukuModifier = ModifierEndTurnWatchAnyPlayerHsuku.createContextObject("modifiers.coreshatter_neutral_hsuku_applied_name")
       card.setInherentModifiersContextObjects([
         hsukuModifier
       ])

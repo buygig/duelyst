@@ -7,6 +7,7 @@ var RSX = require('app/data/resources');
 var Animations = require('app/ui/views/animations');
 var NavigationManager = require('app/ui/managers/navigation_manager');
 var InventoryManager = require('app/ui/managers/inventory_manager');
+var i18next = require('i18next');
 var DeckPreviewItemView = require('./deck_preview');
 var DeckCardBackSelectTmpl = require('./templates/deck_card_back_select.hbs');
 
@@ -97,13 +98,13 @@ var DeckCardBackSelectView = Backbone.Marionette.LayoutView.extend({
     if (this._selectedDeckCardBackModel != null) {
       if (this._selectedDeckCardBackModel.get('_canPurchase')) {
         this.ui.$cardBack.addClass('purchasable');
-        this.ui.$selectButton.removeClass('disabled').text('Unlock');
+        this.ui.$selectButton.removeClass('disabled').text(i18next.t('collection.card_back_unlock_button_label'));
       } else {
         this.ui.$cardBack.removeClass('purchasable');
         if (!this._selectedDeckCardBackModel.get('_canUse')) {
-          this.ui.$selectButton.addClass('disabled').text('Unavailable');
+          this.ui.$selectButton.addClass('disabled').text(i18next.t('collection.card_back_unavailable_button_label'));
         } else {
-          this.ui.$selectButton.removeClass('disabled').text('Save');
+          this.ui.$selectButton.removeClass('disabled').text(i18next.t('collection.deck_save_button_label'));
         }
       }
     }

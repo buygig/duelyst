@@ -35,6 +35,12 @@
 	"cannot_craft_prismatic_of_unlockable_set_msg": "You cannot craft or disenchant prismatic {{cardSetName}} cards until you've unlocked the normal version of this card.",
 	"cannot_craft_cards_of_unlockable_set_msg": "You cannot craft or disenchant the normal version of {{cardSetName}} cards.",
 	"cannot_craft_basic_cards_msg": "You cannot craft or disenchant basic cards.",
+	"cannot_disenchant_card_skins_msg": "You cannot disenchant card skins.",
+	"unlock_card_skin_button_label": "Unlock",
+	"card_back_title": "Card Back",
+	"card_back_unlock_button_label": "Unlock",
+	"card_back_unavailable_button_label": "Unavailable",
+	"crafting_error_title": "Oops... there was a problem crafting your card.",
 
 
 	"duplicate_cards_msg": "You have duplicate cards",

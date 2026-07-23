@@ -280,7 +280,7 @@ var CraftingCompositeView = Backbone.Marionette.CompositeView.extend({
           NavigationManager.getInstance().destroyDialogView();
         }.bind(this))
         .catch(function (errorMessage) {
-          NavigationManager.getInstance().showDialogViewByClass(ErrorDialogItemView, { title: 'Oops... there was a problem crafting your card.', message: errorMessage });
+          NavigationManager.getInstance().showDialogViewByClass(ErrorDialogItemView, { title: i18next.t('collection.crafting_error_title'), message: errorMessage });
         }.bind(this));
     }.bind(this));
   },

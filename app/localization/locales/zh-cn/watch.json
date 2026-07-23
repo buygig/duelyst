@@ -1,0 +1,9 @@
+{
+	"live_streams_label": "直播",
+	"replays_label": "录像",
+	"empty_division_replays_message": "这个分组暂时没有可观看的对局，请稍后再来！",
+	"watch_on_twitch_message": "在 Twitch 上观看",
+	"stream_live_message": "直播中",
+	"stream_offline_message": "未直播",
+	"opens_in_browser_tooltip": "在浏览器中打开"
+}

@@ -516,7 +516,7 @@ class CardFactory_WartechSet_Faction6
       card.spellFilterType = SpellFilterType.AllyIndirect
       card.canTargetGeneral = false
       card.radius = CONFIG.WHOLE_BOARD_RADIUS
-      card.appliedName = "Reinforced"
+      card.appliedName = i18next.t("modifiers.faction_6_spell_crystalline_reinforcement_applied_name")
       card.setFXResource(["FX.Cards.Spell.CrystalReinforce"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_scionsfirstwish.audio

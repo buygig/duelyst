@@ -163,7 +163,7 @@ class CardFactory_FirstWatchSet_Neutral
       card.setCardSetId(CardSet.FirstWatch)
       card.factionId = Factions.Neutral
       card.name = i18next.t("cards.neutral_emberwyrm_name")
-      card.setDescription("Flying")
+      card.setDescription(i18next.t("cards.neutral_emberwyrm_desc"))
       card.setFXResource(["FX.Cards.Neutral.Unseven"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_fractalreplication.audio

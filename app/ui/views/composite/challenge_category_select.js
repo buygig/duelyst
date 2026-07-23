@@ -11,7 +11,9 @@ var Analytics = require('app/common/analytics');
 var Animations = require('app/ui/views/animations');
 var ProgressionManager = require('app/ui/managers/progression_manager');
 var ChallengeCategorySelectTmpl = require('app/ui/templates/composite/challenge_category_select.hbs');
+var i18next = require('i18next');
 var UtilsEnv = require('app/common/utils/utils_env');
+var ChallengeCategoryGate = require('app/common/challenge_category_gate');
 var PlayLayer = require('app/view/layers/pregame/PlayLayer');
 var ChallengeSelectCompositeView = require('./challenge_select');
 var SlidingPanelSelectCompositeView = require('./sliding_panel_select');
@@ -42,30 +44,32 @@ var ChallengeCategorySelectCompositeView = SlidingPanelSelectCompositeView.exten
 
     // build models for each category
     var challengeCategories = SDK.ChallengeFactory.getAllChallengeCategories();
-    if (UtilsEnv.getIsInProduction()) {
+    if (!ChallengeCategoryGate.shouldIncludeTutorialCategory({ isProduction: UtilsEnv.getIsInProduction() })) {
       challengeCategories = _.without(challengeCategories, SDK.ChallengeCategory.tutorial); // remove tutorial
     }
     var categoryModels = [];
     var hasAttemptedTutorial = ProgressionManager.getInstance().hasAttemptedChallengeCategory(SDK.ChallengeCategory.tutorial.type);
+    var gameCount = ProgressionManager.getInstance().getGameCount();
     _.each(challengeCategories, function (challengeCategory) {
       var challenges = SDK.ChallengeFactory.getChallengesForCategoryType(challengeCategory.type);
       if (challenges && challenges.length) {
-        var enabled = true;
         var unlockMessage = '';
+        var lockState = ChallengeCategoryGate.getLockState({
+          isTutorialCategory: challengeCategory.type === SDK.ChallengeCategory.tutorial.type,
+          hasAttemptedTutorial: hasAttemptedTutorial,
+          gameCount: gameCount,
+          gameCountRequired: challengeCategory.gamesRequiredToUnlock,
+        });
+        var enabled = lockState.enabled;
+        var needsTutorial = lockState.needsTutorial;
+        var gamesNeeded = lockState.gamesNeeded;
 
-        // check if not tutorial category and has not attempted full tutorial
-        if (challengeCategory.type !== SDK.ChallengeCategory.tutorial.type && !hasAttemptedTutorial) {
-          unlockMessage += 'Complete the Tutorial Gate';
-          enabled = false;
-        }
-
-        // check if player has played enough games to unlock
-        var gameCount = ProgressionManager.getInstance().getGameCount();
-        var gameCountRequired = challengeCategory.gamesRequiredToUnlock;
-        if (gameCountRequired != null && gameCountRequired > 0 && gameCount < gameCountRequired) {
-          var gamesNeeded = gameCountRequired - gameCount;
-          unlockMessage += (unlockMessage.length === 0 ? '' : ' and ') + 'Play ' + gamesNeeded + ' more online matches to unlock';
-          enabled = false;
+        if (needsTutorial && gamesNeeded > 0) {
+          unlockMessage = i18next.t('challenges.unlock_complete_tutorial_and_play_more_matches_message', { count: gamesNeeded });
+        } else if (needsTutorial) {
+          unlockMessage = i18next.t('challenges.unlock_complete_tutorial_message');
+        } else if (gamesNeeded > 0) {
+          unlockMessage = i18next.t('challenges.unlock_play_more_matches_message', { count: gamesNeeded });
         }
 
         // check user attempt and completion progress
@@ -86,7 +90,7 @@ var ChallengeCategorySelectCompositeView = SlidingPanelSelectCompositeView.exten
           numChallengesAttempted: numChallengesAttempted,
           numChallengesCompleted: numChallengesCompleted,
           enabled: enabled,
-          unlockMessage: unlockMessage + '.',
+          unlockMessage: unlockMessage,
         }));
         categoryModels.push(categoryModel);
       }

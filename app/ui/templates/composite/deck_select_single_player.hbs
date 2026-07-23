@@ -71,14 +71,14 @@
 							{{/opponents}}
 					</ul>
 					<div class="setting setting-single-line setting-difficulty ai-tool">
-							<label for="difficulty" class="setting-label range">Difficulty</label>
+							<label for="difficulty" class="setting-label range">{{localize 'game_setup.difficulty_label'}}</label>
 							<input type="range" id="difficulty" class="range" min=-0.1 max=1.0 step=0.1 />
-							<output for="difficulty" class="range">Auto</output>
+							<output for="difficulty" class="range">{{localize 'game_setup.auto_label'}}</output>
 					</div>
 					<div class="setting setting-single-line setting-num-random-cards ai-tool">
-							<label for="num-random-cards" class="setting-label range">Random Cards</label>
+							<label for="num-random-cards" class="setting-label range">{{localize 'game_setup.random_cards_label'}}</label>
 							<input type="range" id="num-random-cards" class="range" min=-1 max={{maxNumRandomCards}} step=1 />
-							<output for="num-random-cards" class="range">Auto</output>
+							<output for="num-random-cards" class="range">{{localize 'game_setup.auto_label'}}</output>
 					</div>
         </div>
 		</div>

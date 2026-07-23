@@ -205,8 +205,8 @@ class CardFactory_BloodstormSet_Faction4
       card.factionId = Factions.Faction4
       card.setIsHiddenInCollection(true)
       card.id = Cards.Spell.SummonHusks
-      card.name = "Malice"
-      card.setDescription("Destroy a friendly minion to summon 4/4 Husks equal to its Attack nearby.")
+      card.name = "cards.faction_4_spell_malice_name"
+      card.setDescription(i18next.t("cards.faction_4_spell_summon_husks_desc"))
       card.rarityId = Rarity.Legendary
       card.manaCost = 3
       card.spellFilterType = SpellFilterType.AllyDirect

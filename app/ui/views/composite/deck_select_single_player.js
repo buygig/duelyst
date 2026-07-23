@@ -233,7 +233,7 @@ var DeckSelectSinglePlayerCompositeView = DeckSelectCompositeView.extend({
     if (_.isNumber(this._aiDifficulty) && this._aiDifficulty >= 0.0) {
       this.$el.find('.setting-difficulty output').text(this._aiDifficulty * 100.0 + '%');
     } else {
-      this.$el.find('.setting-difficulty output').text('auto');
+      this.$el.find('.setting-difficulty output').text(i18next.t('game_setup.auto_label'));
     }
   },
 
@@ -242,7 +242,7 @@ var DeckSelectSinglePlayerCompositeView = DeckSelectCompositeView.extend({
     if (_.isNumber(this._aiNumRandomCards) && this._aiNumRandomCards >= 0) {
       this.$el.find('.setting-num-random-cards output').text(this._aiNumRandomCards);
     } else {
-      this.$el.find('.setting-num-random-cards output').text('auto');
+      this.$el.find('.setting-num-random-cards output').text(i18next.t('game_setup.auto_label'));
     }
   },
 

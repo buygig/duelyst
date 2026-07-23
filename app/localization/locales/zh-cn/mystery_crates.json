@@ -1,0 +1,22 @@
+{
+	"crate_type_label": "{{crate_type}}宝箱",
+	"mystery_crate_label": "神秘宝箱",
+	"mystery_crate_name_plural": "神秘宝箱",
+	"mystery_crate_screen_instructions": "选择一个宝箱即可开始",
+	"unlock_button_label": "解锁",
+	"continue_button_label": "开启",
+	"buy_button_label": "购买",
+	"get_keys_label": "获取钥匙",
+	"no_crates_of_type_warning": "你没有任何{{crate_type}}宝箱！",
+	"key_count_label": "你有 {{count}} 把{{crate_type}}钥匙",
+	"key_count_label_plural": "你有 {{count}} 把{{crate_type}}钥匙",
+	"gift_crate_adjective": "礼品",
+	"boss_crate_adjective": "首领",
+	"crate_expires_in_label": "将在以下时间后到期",
+	"frostfire_adjective": "霜火",
+	"frostfire_promo_text": "1 枚核心系列宝珠、精魄，",
+	"frostfire_promo_text2": "以及一件霜火外观物品！",
+	"frostfire_premium_adjective": "高级霜火",
+	"frostfire_premium_promo_text": "2 枚不朽宝珠、精魄，",
+	"frostfire_premium_promo_text2": "以及一件霜火外观物品！"
+}

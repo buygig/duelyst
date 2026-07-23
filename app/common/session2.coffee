@@ -1,10 +1,11 @@
 debug = require('debug')('session')
 {EventEmitter} = require 'events'
 Promise = require 'bluebird'
-Firebase = require 'firebase'
+Firebase = require 'app/common/firebase'
 fetch = require 'isomorphic-fetch'
 moment = require 'moment'
 Storage = require('app/common/storage')
+OfflineMode = require('app/common/offline_mode')
 i18next = require('i18next')
 
 class Session extends EventEmitter
@@ -78,6 +79,21 @@ class Session extends EventEmitter
     @username = token.auth.username
     @expires = token.expires
 
+  _restoreOfflineSession: (silent = false) ->
+    debug('restoreOfflineSession')
+    @fbRef = null
+    @token = OfflineMode.TOKEN
+    @expires = null
+    @userId = OfflineMode.USER_ID
+    @username = OfflineMode.getUsername()
+    @analyticsData = {}
+    @saveToStorage()
+
+    data = {token: @token, userId: @userId, analyticsData: @analyticsData}
+    if !silent
+      @emit 'login', data
+    return data
+
   ###
     Show url for purchasing premium currency on external site
   ###
@@ -86,6 +102,9 @@ class Session extends EventEmitter
 
   login: (username, password, silent = false) ->
     debug("login: #{username}")
+
+    if OfflineMode.isEnabled()
+      return Promise.resolve(@_restoreOfflineSession(silent))
 
     body = {}
     body.password = password
@@ -124,7 +143,7 @@ class Session extends EventEmitter
     # if @userId
       # @_deauthFirebase()
 
-    if @token
+    if @token && !OfflineMode.isEnabled()
       fetch "#{@url}/session/logout",
         method: 'GET'
         headers:
@@ -254,6 +273,10 @@ class Session extends EventEmitter
     .then(@_checkResponse)
 
   isAuthenticated: (token) ->
+    if OfflineMode.isEnabled()
+      @_restoreOfflineSession()
+      return Promise.resolve(true)
+
     if not token? then return Promise.resolve(false)
 
     # decode with Firebase
@@ -291,6 +314,10 @@ class Session extends EventEmitter
       return false
 
   refreshToken: (silent = false) ->
+    if OfflineMode.isEnabled()
+      @_restoreOfflineSession(silent)
+      return Promise.resolve(true)
+
     if not @token? then return Promise.resolve(null)
     return Promise.resolve(
       fetch "#{@url}/session",

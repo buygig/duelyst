@@ -7,6 +7,7 @@ var RSX = require('app/data/resources');
 var audio_engine = require('app/audio/audio_engine');
 var NavigationManager = require('app/ui/managers/navigation_manager');
 var EscMainMenuTmpl = require('app/ui/templates/item/esc_main_menu.hbs');
+var i18next = require('i18next');
 var UtilityMenuItemView = require('./utility_menu');
 var ConfirmDialogItemView = require('./confirm_dialog');
 
@@ -56,7 +57,7 @@ var EscMainMenuItemView = UtilityMenuItemView.extend({
   },
 
   onLogoutClicked: function () {
-    var confirmDialogItemView = new ConfirmDialogItemView({ title: 'Are you sure you want to logout?' });
+    var confirmDialogItemView = new ConfirmDialogItemView({ title: i18next.t('settings.logout_confirm_message') });
     this.listenToOnce(confirmDialogItemView, 'confirm', function () {
       Session.logout();
     }.bind(this));
@@ -68,7 +69,7 @@ var EscMainMenuItemView = UtilityMenuItemView.extend({
 
   onDesktopQuitClicked: function () {
     if (window.isDesktop) {
-      var confirmDialogItemView = new ConfirmDialogItemView({ title: 'Are you sure you want to quit?' });
+      var confirmDialogItemView = new ConfirmDialogItemView({ title: i18next.t('settings.quit_confirm_message') });
       this.listenToOnce(confirmDialogItemView, 'confirm', function () {
         window.quitDesktop();
       }.bind(this));

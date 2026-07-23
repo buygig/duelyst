@@ -72,15 +72,15 @@ class CardFactory_CoreshatterSet_Faction1
       card = new Unit(gameSession)
       card.factionId = Factions.Faction1
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Grand Strategos"
-      card.setDescription("Trial: Summon 12 minions with 1 or less Attack.\nDestiny: Promote other friendly minions at the end of your turn.")
+      card.name = i18next.t("cards.coreshatter_faction_1_rightful_heir_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_rightful_heir_desc"))
       card.atk = 5
       card.maxHP = 5
       card.manaCost = 5
       card.rarityId = Rarity.Mythron
       emblemModifier = PlayerModifierEmblemEndTurnWatchLyonarSmallMinionQuest.createContextObject()
-      emblemModifier.appliedName = "Grand Stratagem"
-      emblemModifier.appliedDescription = "At the end of your turn, transform friendly minions other than Grand Strategos into faction minions that cost 1 more."
+      emblemModifier.appliedName = i18next.t("modifiers.coreshatter_faction_1_rightful_heir_grand_stratagem_name")
+      emblemModifier.appliedDescription = i18next.t("modifiers.coreshatter_faction_1_rightful_heir_grand_stratagem_desc")
       card.setInherentModifiersContextObjects([
         ModifierStartsInHand.createContextObject(),
         ModifierCannotBeReplaced.createContextObject(),
@@ -115,11 +115,11 @@ class CardFactory_CoreshatterSet_Faction1
       card.factionId = Factions.Faction1
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.IncreasingDominance
-      card.name = "Bolster"
-      card.setDescription("Intensify: Give friendly minions +2 Health.")
+      card.name = i18next.t("cards.coreshatter_faction_1_increasing_dominance_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_increasing_dominance_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Common
-      card.modifierAppliedName = "Bolstered"
+      card.modifierAppliedName = i18next.t("modifiers.coreshatter_faction_1_increasing_dominance_bolstered_name")
       card.spellFilterType = SpellFilterType.None
       card.addKeywordClassToInclude(ModifierIntensify)
       card.setInherentModifiersContextObjects([ModifierCounterIntensify.createContextObject()])
@@ -136,8 +136,8 @@ class CardFactory_CoreshatterSet_Faction1
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction1
-      card.name = "Legion"
-      card.setDescription("Intensify: Put 1 Crestfallen into your action bar. Shuffle a copy of this minion into your deck.")
+      card.name = i18next.t("cards.coreshatter_faction_1_one_man_army_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_one_man_army_desc"))
       card.atk = 3
       card.maxHP = 2
       card.manaCost = 3
@@ -171,8 +171,8 @@ class CardFactory_CoreshatterSet_Faction1
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction1
-      card.name = "Gryphon Fledgling"
-      card.setDescription("Zeal: Flying")
+      card.name = i18next.t("cards.coreshatter_faction_1_catapult_gryphon_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_catapult_gryphon_desc"))
       card.atk = 5
       card.maxHP = 3
       card.manaCost = 3
@@ -206,16 +206,16 @@ class CardFactory_CoreshatterSet_Faction1
       card.factionId = Factions.Faction1
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.DivinestBonderest
-      card.name = "Divine Liturgy"
-      card.setDescription("Give all friendly minions +Attack equal to their Health.")
+      card.name = i18next.t("cards.coreshatter_faction_1_divinest_bonderest_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_divinest_bonderest_desc"))
       card.manaCost = 6
       card.rarityId = Rarity.Rare
       card.spellFilterType = SpellFilterType.AllyIndirect
       card.radius = CONFIG.WHOLE_BOARD_RADIUS
       card.attributeTarget = "atk"
       card.attributeSource = "hp"
-      card.appliedName = "Strength of Will"
-      card.appliedDescription = "Gained +Attack equal to Health"
+      card.appliedName = i18next.t("modifiers.coreshatter_faction_1_divinest_bonderest_strength_of_will_name")
+      card.appliedDescription = i18next.t("modifiers.coreshatter_faction_1_divinest_bonderest_strength_of_will_desc")
       card.setFXResource(["FX.Cards.Spell.DivineLiturgy"])
       card.setBaseSoundResource(
         apply : RSX.sfx_f6_voiceofthewind_attack_impact.audio
@@ -230,8 +230,8 @@ class CardFactory_CoreshatterSet_Faction1
       card.factionId = Factions.Faction1
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.Resilience
-      card.name = "Lifestream"
-      card.setDescription("Fully heal a friendly minion, then draw a copy of it from your deck.")
+      card.name = i18next.t("cards.coreshatter_faction_1_resilience_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_resilience_desc"))
       card.manaCost = 1
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.AllyDirect
@@ -249,8 +249,8 @@ class CardFactory_CoreshatterSet_Faction1
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction1
-      card.name = "Windcliffe Protector"
-      card.setDescription("Provoke\nWhen a friendly Windcliffe Alarmist dies, transform this minion into a Windcliffe Alarmist.")
+      card.name = i18next.t("cards.coreshatter_faction_1_friendsguard_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_friendsguard_desc"))
       card.atk = 5
       card.maxHP = 5
       card.manaCost = 5
@@ -285,8 +285,8 @@ class CardFactory_CoreshatterSet_Faction1
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction1
-      card.name = "Windcliffe Alarmist"
-      card.setDescription("Opening Gambit: Summon a 5/5 Windcliffe Protector with Provoke from your deck.")
+      card.name = i18next.t("cards.coreshatter_faction_1_friend_fighter_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_friend_fighter_desc"))
       card.atk = 2
       card.maxHP = 2
       card.manaCost = 4
@@ -323,11 +323,11 @@ class CardFactory_CoreshatterSet_Faction1
       card.factionId = Factions.Faction1
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.Rally
-      card.name = "Marching Orders"
-      card.setDescription("Give friendly minions directly in front of and behind your General +2/+2.  If they have Zeal, they cannot be targeted by enemy spells.")
+      card.name = i18next.t("cards.coreshatter_faction_1_rally_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_rally_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Rare
-      card.buffName = "Marching Command"
+      card.buffName = i18next.t("modifiers.coreshatter_faction_1_rally_marching_command_name")
       card.spellFilterType = SpellFilterType.None
       card.canTargetGeneral = false
       card.addKeywordClassToInclude(ModifierBanding)
@@ -345,8 +345,8 @@ class CardFactory_CoreshatterSet_Faction1
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction1
       card.id = Cards.Artifact.TwoHander
-      card.name = "Radiant Standard"
-      card.setDescription("Your General has +3 Attack.\nWhen your General attacks, summon a minion that costs 3 from your deck nearby.")
+      card.name = i18next.t("cards.coreshatter_faction_1_two_hander_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_two_hander_desc"))
       card.manaCost = 6
       card.rarityId = Rarity.Epic
       card.durability = 3
@@ -368,8 +368,8 @@ class CardFactory_CoreshatterSet_Faction1
       card.factionId = Factions.Faction1
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.ChargeIntoBattle
-      card.name = "Lionize"
-      card.setDescription("Give Celerity to a friendly minion directly behind your General.")
+      card.name = i18next.t("cards.coreshatter_faction_1_charge_into_battle_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_charge_into_battle_desc"))
       card.manaCost = 5
       card.rarityId = Rarity.Epic
       card.spellFilterType = SpellFilterType.AllyDirect
@@ -392,8 +392,8 @@ class CardFactory_CoreshatterSet_Faction1
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction1
-      card.name = "Indominus"
-      card.setDescription("Your General is Invulnerable BUT cannot move or attack.")
+      card.name = i18next.t("cards.coreshatter_faction_1_invincibuddy_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_invincibuddy_desc"))
       card.atk = 7
       card.maxHP = 9
       card.manaCost = 7
@@ -428,8 +428,8 @@ class CardFactory_CoreshatterSet_Faction1
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction1
-      card.name = "War Exorcist"
-      card.setDescription("Provoke\nAt the start of your turn, Holy Immolation your damaged minions.")
+      card.name = i18next.t("cards.coreshatter_faction_1_suntide_expert_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_suntide_expert_desc"))
       card.atk = 3
       card.maxHP = 8
       card.manaCost = 5
@@ -465,8 +465,8 @@ class CardFactory_CoreshatterSet_Faction1
       card.factionId = Factions.Faction1
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.OnceMoreWithProvoke
-      card.name = "Amaranthine Vow"
-      card.setDescription("Summon around your General all friendly minions with Provoke that died this game.")
+      card.name = i18next.t("cards.coreshatter_faction_1_once_more_with_provoke_name")
+      card.setDescription(i18next.t("cards.coreshatter_faction_1_once_more_with_provoke_desc"))
       card.manaCost = 9
       card.rarityId = Rarity.Legendary
       card.addKeywordClassToInclude(ModifierProvoke)

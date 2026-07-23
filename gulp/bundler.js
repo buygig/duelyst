@@ -61,6 +61,7 @@ bundler.transform(envify({
   NODE_ENV: env,
   VERSION: version,
   API_URL: config.get('api'),
+  OFFLINE_MODE: config.get('offlineMode'),
   FIREBASE_URL: config.get('firebase.url'),
   ALL_CARDS_AVAILABLE: config.get('allCardsAvailable'),
   AI_TOOLS_ENABLED: config.get('aiToolsEnabled'),

@@ -73,15 +73,15 @@ class CardFactory_CoreshatterSet_Faction5
       card = new Unit(gameSession)
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Hatefurnace"
-      card.setDescription("Trial: Cast 7 spells that cause a minion to gain +Attack.\nDestiny: Minions summoned from your action bar gain Rush and Frenzy.")
+      card.name = "cards.coreshatter_faction_5_dinomancer_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_dinomancer_desc"))
       card.atk = 5
       card.maxHP = 4
       card.manaCost = 4
       card.rarityId = Rarity.Mythron
       emblemModifier = PlayerModifierEmblemSummonWatchFromHandMagmarBuffQuest.createContextObject([ModifierFirstBlood.createContextObject(), ModifierFrenzy.createContextObject()])
-      emblemModifier.appliedName = "Spark of Hatred"
-      emblemModifier.appliedDescription = "Minions summoned from your action bar have Rush and Frenzy."
+      emblemModifier.appliedName = "modifiers.coreshatter_faction_5_dinomancer_destiny_applied_name"
+      emblemModifier.appliedDescription = "modifiers.coreshatter_faction_5_dinomancer_destiny_applied_desc"
       card.setInherentModifiersContextObjects([
         ModifierStartsInHand.createContextObject(),
         ModifierCannotBeReplaced.createContextObject(),
@@ -118,14 +118,14 @@ class CardFactory_CoreshatterSet_Faction5
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction5
-      card.name = "Angered Okkadok"
-      card.setDescription("Intensify: This minion gains +1/+1.")
+      card.name = "cards.coreshatter_faction_5_increasing_dino_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_increasing_dino_desc"))
       card.atk = 1
       card.maxHP = 2
       card.manaCost = 2
       card.rarityId = Rarity.Common
       card.setInherentModifiersContextObjects([
-        ModifierIntensifyBuffSelf.createContextObject(1,1,"Even More Angered")
+        ModifierIntensifyBuffSelf.createContextObject(1,1,"modifiers.coreshatter_faction_5_increasing_dino_applied_name")
         ModifierCounterIntensify.createContextObject()
       ])
       card.setFXResource(["FX.Cards.Neutral.VineEntangler"])
@@ -153,8 +153,8 @@ class CardFactory_CoreshatterSet_Faction5
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.IncreasingHeal
-      card.name = "Invigoration"
-      card.setDescription("Intensify: Restore 3 Health to your General.")
+      card.name = "cards.coreshatter_faction_5_increasing_heal_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_increasing_heal_desc"))
       card.manaCost = 2
       card.healAmount = 3
       card.rarityId = Rarity.Common
@@ -175,8 +175,8 @@ class CardFactory_CoreshatterSet_Faction5
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction5
-      card.name = "Mortar-maw"
-      card.setDescription("Ranged\nWhenever this minion attacks, it also damages enemies around its target.")
+      card.name = "cards.coreshatter_faction_5_firebreather_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_firebreather_desc"))
       card.atk = 4
       card.maxHP = 4
       card.manaCost = 5
@@ -209,8 +209,8 @@ class CardFactory_CoreshatterSet_Faction5
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction5
-      card.name = "Beastclad Hunter"
-      card.setDescription("Takes no damage from minions with less Attack.")
+      card.name = "cards.coreshatter_faction_5_tough_dino_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_tough_dino_desc"))
       card.atk = 3
       card.maxHP = 6
       card.manaCost = 4
@@ -242,8 +242,8 @@ class CardFactory_CoreshatterSet_Faction5
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction5
-      card.name = "Oropsisaur"
-      card.setDescription("Grow: +1/+1.\nWhenever another friendly minion with Grow survives damage, that minion grows.")
+      card.name = "cards.coreshatter_faction_5_armadops_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_armadops_desc"))
       card.atk = 2
       card.maxHP = 5
       card.manaCost = 3
@@ -277,8 +277,8 @@ class CardFactory_CoreshatterSet_Faction5
       card = new Unit(gameSession)
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Krater"
-      card.setDescription("Opening Gambit: Deal 1 damage to everything (including itself).")
+      card.name = "cards.coreshatter_faction_5_burst_lizard_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_burst_lizard_desc"))
       card.atk = 2
       card.maxHP = 4
       card.manaCost = 3
@@ -309,8 +309,8 @@ class CardFactory_CoreshatterSet_Faction5
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.Spaghettify
-      card.name = "Deep Impact"
-      card.setDescription("Deal damage to a minion to reduce its Health to 1.")
+      card.name = "cards.coreshatter_faction_5_spaghettify_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_spaghettify_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Rare
       card.spellFilterType = SpellFilterType.NeutralDirect
@@ -329,8 +329,8 @@ class CardFactory_CoreshatterSet_Faction5
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.BigTime
-      card.name = "Gargantuan Growth"
-      card.setDescription("Give a minion, \"Grow: +8/+8.\"")
+      card.name = "cards.coreshatter_faction_5_big_time_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_big_time_desc"))
       card.manaCost = 4
       card.rarityId = Rarity.Rare
       card.spellFilterType = SpellFilterType.NeutralDirect
@@ -350,8 +350,8 @@ class CardFactory_CoreshatterSet_Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction5
       card.id = Cards.Artifact.EggArmor
-      card.name = "Zoetic Charm"
-      card.setDescription("Your General has +1 Attack.\nYour Eggs have Forcefield.")
+      card.name = "cards.coreshatter_faction_5_egg_armor_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_egg_armor_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Epic
       card.durability = 3
@@ -377,8 +377,8 @@ class CardFactory_CoreshatterSet_Faction5
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.Reggplicate
-      card.name = "Mitotic Induction"
-      card.setDescription("Summon an Egg of the minion most recently summoned from your action bar.")
+      card.name = "cards.coreshatter_faction_5_reggplicate_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_reggplicate_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Epic
       card.spellFilterType = SpellFilterType.SpawnSource
@@ -397,7 +397,7 @@ class CardFactory_CoreshatterSet_Faction5
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.setIsHiddenInCollection(true)
-      card.name = "Katastrophosaurus"
+      card.name = "cards.coreshatter_faction_5_megabrontodon_name"
       card.atk = 6
       card.maxHP = 26
       card.manaCost = 5
@@ -430,8 +430,8 @@ class CardFactory_CoreshatterSet_Faction5
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.MarchOfTheBrontos
-      card.name = "Extinction Event"
-      card.setDescription("Each of your Eggs hatches into a Katastrophosaurus.")
+      card.name = "cards.coreshatter_faction_5_march_of_the_brontos_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_march_of_the_brontos_desc"))
       card.manaCost = 8
       card.rarityId = Rarity.Legendary
       card.spellFilterType = SpellFilterType.NeutralIndirect
@@ -451,13 +451,13 @@ class CardFactory_CoreshatterSet_Faction5
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.YellRealLoud
-      card.name = "Bellow"
-      card.setDescription("Give a friendly minion +3 Attack.\nStun enemy minions around it.")
+      card.name = "cards.coreshatter_faction_5_yell_real_loud_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_yell_real_loud_desc"))
       card.manaCost = 3
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.AllyDirect
       statContextObject = Modifier.createContextObjectWithAttributeBuffs(3,0)
-      statContextObject.appliedName = "Yelled Real Loud"
+      statContextObject.appliedName = "modifiers.coreshatter_faction_5_yell_real_loud_applied_name"
       card.setTargetModifiersContextObjects([
         statContextObject
       ])
@@ -475,8 +475,8 @@ class CardFactory_CoreshatterSet_Faction5
       card = new Unit(gameSession)
       card.factionId = Factions.Faction5
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Haruspex"
-      card.setDescription("Whenever this minion takes damage, your opponent draws a card.")
+      card.name = "cards.coreshatter_faction_5_brundl_beast_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_5_brundl_beast_desc"))
       card.atk = 7
       card.maxHP = 6
       card.manaCost = 4

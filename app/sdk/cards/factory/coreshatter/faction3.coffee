@@ -76,15 +76,15 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.factionId = Factions.Faction3
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Notion of Starless Eternity"
-      card.setDescription("Trial: General reaches the other edge of the battlefield with an equipped artifact.\nDestiny: Each equipped artifact gives your General a tier of ascension.")
+      card.name = "cards.coreshatter_faction_3_keeper_of_ages_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_keeper_of_ages_desc"))
       card.atk = 3
       card.maxHP = 3
       card.manaCost = 6
       card.rarityId = Rarity.Mythron
       emblemModifier1 = PlayerModifierEmblemSituationalVetQuestFrenzy.createContextObject(1)
-      emblemModifier1.appliedName = "Overcome Eternity"
-      emblemModifier1.appliedDescription = "Each equipped artifact gives your General a tier of ascension: Frenzy, Flying, Celerity."
+      emblemModifier1.appliedName = i18next.t("modifiers.coreshatter_faction_3_keeper_of_ages_overcome_eternity_name")
+      emblemModifier1.appliedDescription = i18next.t("modifiers.coreshatter_faction_3_keeper_of_ages_overcome_eternity_desc")
       emblemModifier2 = PlayerModifierEmblemSituationalVetQuestFlying.createContextObject(2)
       emblemModifier2.isHiddenToUI = true
       emblemModifier3 = PlayerModifierEmblemSituationalVetQuestCelerity.createContextObject(3)
@@ -122,8 +122,8 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
-      card.name = "Orbrider"
-      card.setDescription("Opening Gambit: Return a nearby friendly minion to your action bar.")
+      card.name = "cards.coreshatter_faction_3_wind_giver_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_wind_giver_desc"))
       card.addKeywordClassToInclude(ModifierOpeningGambit)
       card.atk = 2
       card.maxHP = 2
@@ -163,8 +163,8 @@ class CardFactory_CoreshatterSet_Faction3
       card.factionId = Factions.Faction3
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.IncreasingWinds
-      card.name = "Accumulonimbus"
-      card.setDescription("Intensify: Summon 2 Wind Dervishes nearby your General.")
+      card.name = "cards.coreshatter_spell_increasing_winds_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_increasing_winds_desc"))
       card.manaCost = 5
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.None
@@ -187,13 +187,13 @@ class CardFactory_CoreshatterSet_Faction3
       card.factionId = Factions.Faction3
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.GoneWithTheWind
-      card.name = "Wither"
-      card.setDescription("An enemy minion disappears at the start of your next turn.")
+      card.name = "cards.coreshatter_spell_gone_with_the_wind_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_gone_with_the_wind_desc"))
       card.manaCost = 3
       card.rarityId = Rarity.Rare
       removeEntityContextObject = ModifierStartOpponentsTurnWatchRemoveEntity.createContextObject()
-      removeEntityContextObject.appliedName = "Withering"
-      removeEntityContextObject.appliedDescription = "Disappears when you end your turn."
+      removeEntityContextObject.appliedName = i18next.t("modifiers.coreshatter_spell_gone_with_the_wind_withering_name")
+      removeEntityContextObject.appliedDescription = i18next.t("modifiers.coreshatter_spell_gone_with_the_wind_withering_desc")
       removeEntityContextObject.isRemovable = false
       card.setTargetModifiersContextObjects([
         removeEntityContextObject
@@ -214,8 +214,8 @@ class CardFactory_CoreshatterSet_Faction3
       card.factionId = Factions.Faction3
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.SummoningStones
-      card.name = "Circle of Fabrication"
-      card.setDescription("Summon one of each Obelysk from your deck on random spaces.")
+      card.name = "cards.coreshatter_spell_summoning_stones_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_summoning_stones_desc"))
       card.manaCost = 9
       card.rarityId = Rarity.Legendary
       card.spellFilterType = SpellFilterType.None
@@ -232,8 +232,8 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
-      card.name = "Fifth Canopic"
-      card.setDescription("The enemy General cannot cast their Bloodbound Spell.")
+      card.name = "cards.coreshatter_faction_3_coughing_gus_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_coughing_gus_desc"))
       card.atk = 4
       card.maxHP = 8
       card.manaCost = 5
@@ -266,8 +266,8 @@ class CardFactory_CoreshatterSet_Faction3
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
       card.id = Cards.Artifact.RepairSword
-      card.name = "Obdurator"
-      card.setDescription("Your General gains +1 Attack.\nAt the start of your turn, repair all of your artifacts by 1 durability.")
+      card.name = "cards.coreshatter_artifact_repair_sword_name"
+      card.setDescription(i18next.t("cards.coreshatter_artifact_repair_sword_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Epic
       card.durability = 3
@@ -288,16 +288,16 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
-      card.name = "Dustdrinker"
+      card.name = "cards.coreshatter_faction_3_cursed_dervish_name"
       card.raceId = Races.Dervish
-      card.setDescription("Intensify: Deal 1 damage to the enemy General and this minion gains +1 Health.")
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_cursed_dervish_desc"))
       card.atk = 2
       card.maxHP = 1
       card.manaCost = 2
       card.rarityId = Rarity.Common
       card.setInherentModifiersContextObjects([
         ModifierIntensifyDamageEnemyGeneral.createContextObject(1),
-        ModifierIntensifyBuffSelf.createContextObject(0, 1, "Borrowed Time"),
+        ModifierIntensifyBuffSelf.createContextObject(0, 1, i18next.t("modifiers.coreshatter_faction_3_cursed_dervish_borrowed_time_name")),
         ModifierCounterIntensify.createContextObject()
       ])
       card.setBoundingBoxWidth(100)
@@ -327,8 +327,8 @@ class CardFactory_CoreshatterSet_Faction3
       card.factionId = Factions.Faction3
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.GrabAThing
-      card.name = "Planar Foundry"
-      card.setDescription("Draw an artifact from your deck.")
+      card.name = "cards.coreshatter_spell_grab_a_thing_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_grab_a_thing_desc"))
       card.manaCost = 1
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.None
@@ -346,8 +346,8 @@ class CardFactory_CoreshatterSet_Faction3
       card.factionId = Factions.Faction3
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.ThoughtExchange
-      card.name = "Synaptic Arbitrage"
-      card.setDescription("Give your opponent a minion to take control of nearby enemy minions with less Attack.")
+      card.name = "cards.coreshatter_spell_thought_exchange_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_thought_exchange_desc"))
       card.manaCost = 4
       card.rarityId = Rarity.Epic
       card.spellFilterType = SpellFilterType.AllyDirect
@@ -366,8 +366,8 @@ class CardFactory_CoreshatterSet_Faction3
       card.factionId = Factions.Faction3
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.Metalworking
-      card.name = "Metalmeld"
-      card.setDescription("Equip a friendly artifact that was destroyed this game.")
+      card.name = "cards.coreshatter_spell_metalworking_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_metalworking_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Rare
       card.spellFilterType = SpellFilterType.None
@@ -384,9 +384,9 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
-      card.name = "Khanuum-ka"
+      card.name = "cards.coreshatter_faction_3_golden_guide_name"
       card.raceId = Races.Dervish
-      card.setDescription("Flying, Rush\nDying Wish: A random friendly Dervish disappears, summoning a Khanuum-ka in its place.")
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_golden_guide_desc"))
       card.atk = 3
       card.maxHP = 3
       card.manaCost = 5
@@ -420,8 +420,8 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
-      card.name = "Swarmking Scarab"
-      card.setDescription("Blast\nWhenever this minion blasts, summon 1/1 Scarabyte with Flying and Rush in those spaces.")
+      card.name = "cards.coreshatter_faction_3_scarab_pulverizer_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_scarab_pulverizer_desc"))
       card.atk = 5
       card.maxHP = 7
       card.manaCost = 6
@@ -459,8 +459,8 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
-      card.name = "Scarabyte"
-      card.setDescription("Flying\nRush")
+      card.name = "cards.coreshatter_faction_3_scarab_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_scarab_desc"))
       card.atk = 1
       card.maxHP = 1
       card.manaCost = 1
@@ -495,13 +495,13 @@ class CardFactory_CoreshatterSet_Faction3
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction3
-      card.name = "Atom Klinger"
-      card.setDescription("Whenever you equip an artifact, this minion gains +Attack equal to the artifact's cost.")
+      card.name = "cards.coreshatter_faction_3_staff_wielder_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_3_staff_wielder_desc"))
       card.atk = 1
       card.maxHP = 5
       card.manaCost = 3
       card.rarityId = Rarity.Rare
-      buffName = "Atomized"
+      buffName = i18next.t("modifiers.coreshatter_faction_3_staff_wielder_atomized_name")
       card.setInherentModifiersContextObjects([ModifierEquipFriendlyArtifactWatchGainAttackEqualToCost.createContextObject(buffName)])
       card.setFXResource(["FX.Cards.Neutral.ArakiHeadhunter"])
       card.setBaseSoundResource(

@@ -4,6 +4,7 @@
 
 var SlidingPanelItemView = require('app/ui/views/item/sliding_panel');
 var ProgressionManager = require('app/ui/managers/progression_manager');
+var i18next = require('i18next');
 var CodexChapterPreviewTmpl = require('./templates/codex_chapter_preview.hbs');
 
 var CodexChapterPreviewItemView = SlidingPanelItemView.extend({
@@ -18,14 +19,15 @@ var CodexChapterPreviewItemView = SlidingPanelItemView.extend({
     // add unlock message for not enough games
     if (this.model.get('enabled') && !this.hasUnlockedChapter()) {
       var gamesRequiredToUnlock = this.model.get('gamesRequiredToUnlock');
+      var gamesRemaining = gamesRequiredToUnlock - ProgressionManager.getInstance().getGameCount();
 
-      this.model.set('unlockMessage', 'Play ' + (gamesRequiredToUnlock - ProgressionManager.getInstance().getGameCount()) + ' more games to unlock.');
+      this.model.set('unlockMessage', i18next.t('codex.play_more_games_to_unlock', { count: gamesRemaining }));
     }
   },
 
   serializeModel: function (model) {
     var data = model.toJSON.apply(model, _.rest(arguments));
-    data.description = model.get('description').replace(/\n|\r/g, '<br/>');
+    data.description = String(model.get('description') || '').replace(/\n|\r/g, '<br/>');
     return data;
   },
 

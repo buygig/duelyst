@@ -9,6 +9,7 @@ var EventBus = require('app/common/eventbus');
 var EVENTS = require('app/common/event_types');
 var audio_engine = require('app/audio/audio_engine');
 var UtilsEnv = require('app/common/utils/utils_env');
+var OfflineMode = require('app/common/offline_mode');
 var NavigationManager = require('app/ui/managers/navigation_manager');
 var GamesManager = require('app/ui/managers/games_manager');
 var DecksCollection = require('app/ui/collections/decks');
@@ -84,6 +85,11 @@ var PlayLayout = Backbone.Marionette.LayoutView.extend({
       playModeIdentifier = '';
     }
 
+    if (OfflineMode.isEnabled()
+    && [SDK.PlayModes.Practice, SDK.PlayModes.Challenges, SDK.PlayModes.Sandbox].indexOf(playModeIdentifier) === -1) {
+      playModeIdentifier = '';
+    }
+
     // show new play mode
     this.model.set('playModeIdentifier', playModeIdentifier);
 
@@ -110,7 +116,10 @@ var PlayLayout = Backbone.Marionette.LayoutView.extend({
       showPromise = this.modeRegion.show(new RiftDeckSelectLayout());
     } else {
       var playModesDisplayed = SDK.PlayModeFactory.getAllVisiblePlayModes();
-      if (!UtilsEnv.getIsInProduction()) {
+      if (OfflineMode.isEnabled()) {
+        var offlineSandboxPlayMode = _.extend({}, SDK.PlayModeFactory.playModeForIdentifier(SDK.PlayModes.Sandbox));
+        playModesDisplayed.push(offlineSandboxPlayMode);
+      } else if (!UtilsEnv.getIsInProduction()) {
         var sandboxPlayMode = _.extend({}, SDK.PlayModeFactory.playModeForIdentifier(SDK.PlayModes.Sandbox));
         playModesDisplayed.push(sandboxPlayMode);
         var developerPlayMode = _.extend({}, SDK.PlayModeFactory.playModeForIdentifier(SDK.PlayModes.Developer));

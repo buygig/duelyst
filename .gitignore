@@ -6,6 +6,7 @@ serviceAccountKey.json
 # Build artifacts
 /app/data/packages.js
 /app/localization/locales/en/index.json
+/app/localization/locales/zh-cn/index.json
 /dist
 node_modules
 .awspublish*

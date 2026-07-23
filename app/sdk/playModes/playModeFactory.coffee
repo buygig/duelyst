@@ -3,6 +3,7 @@ RSX = require('app/data/resources')
 PlayModes = require './playModesLookup'
 moment = require 'moment'
 i18next = require 'i18next'
+OfflineMode = require 'app/common/offline_mode'
 
 class PlayModeFactory
 
@@ -23,7 +24,8 @@ class PlayModeFactory
     playModeIdentifiers = Object.keys(PlayModeFactory.playModes)
     for playModeIdentifier in playModeIdentifiers
       playMode = @playModeForIdentifier(playModeIdentifier)
-      if !playMode.isHiddenInUI then playModes.push(playMode)
+      isOfflineMode = playModeIdentifier == PlayModes.Practice or playModeIdentifier == PlayModes.Challenges
+      if !playMode.isHiddenInUI and (!OfflineMode.isEnabled() or isOfflineMode) then playModes.push(playMode)
 
     return playModes
 
@@ -33,7 +35,8 @@ class PlayModeFactory
     playModeIdentifiers = Object.keys(PlayModeFactory.playModes)
     for playModeIdentifier in playModeIdentifiers
       playMode = @playModeForIdentifier(playModeIdentifier)
-      if playMode.enabled and !playMode.isHiddenInUI then playModes.push(playMode)
+      isOfflineMode = playModeIdentifier == PlayModes.Practice or playModeIdentifier == PlayModes.Challenges
+      if playMode.enabled and !playMode.isHiddenInUI and (!OfflineMode.isEnabled() or isOfflineMode) then playModes.push(playMode)
 
     return playModes
 
@@ -121,8 +124,8 @@ class PlayModeFactory
 
       pm[PlayModes.Sandbox] = {
         id: PlayModes.Sandbox,
-        name: "Sandbox",
-        description: "Play against yourself as both Player 1 and Player 2.",
+        name: i18next.t("main_menu.play_mode_sandbox_name"),
+        description: i18next.t("main_menu.play_mode_sandbox_description"),
         img: RSX.play_mode_sandbox.img,
         enabled: true
         isHiddenInUI: true

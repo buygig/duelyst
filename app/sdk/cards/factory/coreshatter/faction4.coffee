@@ -75,18 +75,18 @@ class CardFactory_CoreshatterSet_Faction4
       card = new Unit(gameSession)
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Underlord Xor'Xuul"
-      card.setDescription("Trial: Cast 6 spells that destroy a friendly minion.\nDestiny: Whenever a friendly minion dies, re-summon it on a random space.")
+      card.name = "cards.coreshatter_faction_4_demon_of_eternity_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_4_demon_of_eternity_desc"))
       card.atk = 6
       card.maxHP = 1
       card.manaCost = 6
       card.rarityId = Rarity.Mythron
       dyingWishModifier = ModifierQuestBuffAbyssian.createContextObject()
-      dyingWishModifier.appliedName = "Will of the Undying"
-      dyingWishModifier.appliedDescription = "Whenever this minion dies, re-summon it on a random space."
+      dyingWishModifier.appliedName = i18next.t("modifiers.coreshatter_faction_4_demon_of_eternity_will_of_the_undying_name")
+      dyingWishModifier.appliedDescription = i18next.t("modifiers.coreshatter_faction_4_demon_of_eternity_will_of_the_undying_desc")
       emblemModifier = PlayerModifierEmblemSummonWatchAbyssUndyingQuest.createContextObject([dyingWishModifier])
-      emblemModifier.appliedName = "Underlord's Decree"
-      emblemModifier.appliedDescription = "Whenever a friendly minion dies, re-summon it on a random space."
+      emblemModifier.appliedName = i18next.t("modifiers.coreshatter_faction_4_demon_of_eternity_underlords_decree_name")
+      emblemModifier.appliedDescription = i18next.t("modifiers.coreshatter_faction_4_demon_of_eternity_underlords_decree_desc")
       card.setInherentModifiersContextObjects([
         ModifierStartsInHand.createContextObject(),
         ModifierCannotBeReplaced.createContextObject(),
@@ -120,15 +120,15 @@ class CardFactory_CoreshatterSet_Faction4
       card = new Unit(gameSession)
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Hexclaw"
-      card.setDescription("Dying Wish: The enemy General gains, \"At the start of your turn, take 1 damage.\"")
+      card.name = "cards.coreshatter_faction_4_curse_monger_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_4_curse_monger_desc"))
       card.atk = 7
       card.maxHP = 2
       card.manaCost = 5
       card.rarityId = Rarity.Legendary
       damageSelf = ModifierStartTurnWatchDamageMyGeneral.createContextObject(1)
-      damageSelf.appliedName = "Curse"
-      damageSelf.appliedDescription = "At the start of your turn, your General takes 1 damage."
+      damageSelf.appliedName = i18next.t("modifiers.coreshatter_faction_4_curse_monger_curse_name")
+      damageSelf.appliedDescription = i18next.t("modifiers.coreshatter_faction_4_curse_monger_curse_desc")
       card.setInherentModifiersContextObjects([ModifierDyingWishApplyModifiersToGenerals.createContextObject([damageSelf],false,true)])
       card.setFXResource(["FX.Cards.Neutral.Necroseer"])
       card.setBaseSoundResource(
@@ -155,18 +155,18 @@ class CardFactory_CoreshatterSet_Faction4
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction4
       card.id = Cards.Artifact.WraithlingAmulet
-      card.name = "Wraithcrown"
-      card.setDescription("Friendly Wraithlings have +2/+2.")
+      card.name = "cards.coreshatter_artifact_wraithling_amulet_name"
+      card.setDescription(i18next.t("cards.coreshatter_artifact_wraithling_amulet_desc"))
       card.manaCost = 4
       card.rarityId = Rarity.Epic
       card.durability = 3
       attackBuffContextObject = Modifier.createContextObjectWithAttributeBuffs(2,2)
-      attackBuffContextObject.appliedName = "Crown of the Meek"
+      attackBuffContextObject.appliedName = i18next.t("modifiers.coreshatter_artifact_wraithling_amulet_crown_of_the_meek_name")
       wraithlingId = [
         Cards.Faction4.Wraithling
       ]
       card.setTargetModifiersContextObjects([
-        Modifier.createContextObjectWithAuraForAllAllies([attackBuffContextObject], null, wraithlingId, null, "Crown of the Meek")
+        Modifier.createContextObjectWithAuraForAllAllies([attackBuffContextObject], null, wraithlingId, null, i18next.t("modifiers.coreshatter_artifact_wraithling_amulet_crown_of_the_meek_name"))
       ])
       card.setFXResource(["FX.Cards.Artifact.Mindlathe"])
       card.setBaseAnimResource(
@@ -181,8 +181,8 @@ class CardFactory_CoreshatterSet_Faction4
       card = new Unit(gameSession)
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Carrion Collector"
-      card.setDescription("Dying Wish: Lower the cost of all minions with Dying Wish in your deck and action bar by 1.")
+      card.name = "cards.coreshatter_faction_4_dying_wish_reducer_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_4_dying_wish_reducer_desc"))
       card.atk = 1
       card.maxHP = 1
       card.manaCost = 2
@@ -213,8 +213,8 @@ class CardFactory_CoreshatterSet_Faction4
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.ShadowBlossom
-      card.name = "Painful Pluck"
-      card.setDescription("Intensify: Turn 1 random space into Shadow Creep, prioritizing spaces under enemy minions.")
+      card.name = "cards.coreshatter_spell_shadow_blossom_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_shadow_blossom_desc"))
       card.manaCost = 1
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.None
@@ -236,8 +236,8 @@ class CardFactory_CoreshatterSet_Faction4
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.Triggered
-      card.name = "Yielding Depths"
-      card.setDescription("If you have three or more Shadow Creep, draw 2 cards.")
+      card.name = "cards.coreshatter_spell_triggered_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_triggered_desc"))
       card.manaCost = 2
       card.rarityId = Rarity.Rare
       card.spellFilterType = SpellFilterType.None
@@ -258,8 +258,8 @@ class CardFactory_CoreshatterSet_Faction4
       card = new Unit(gameSession)
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
-      card.name = "Abyssal Tormentor"
-      card.setDescription("Provoke\nYour Shadow Creep deals damage equal to the number of friendly Shadow Creep.")
+      card.name = "cards.coreshatter_faction_4_creep_demon_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_4_creep_demon_desc"))
       card.atk = 6
       card.maxHP = 6
       card.manaCost = 6
@@ -298,8 +298,8 @@ class CardFactory_CoreshatterSet_Faction4
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.GateToDudesHouse
-      card.name = "Unfathomable Rite"
-      card.setDescription("Draw cards from your opponent's deck to fill your action bar.")
+      card.name = "cards.coreshatter_spell_gate_to_dudes_house_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_gate_to_dudes_house_desc"))
       card.manaCost = 6
       card.rarityId = Rarity.Epic
       card.setFXResource(["FX.Cards.Spell.UnfathomableRite"])
@@ -316,8 +316,8 @@ class CardFactory_CoreshatterSet_Faction4
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.TickleTendril
-      card.name = "Munch"
-      card.setDescription("Steal Health from an enemy minion for each friendly Shadow Creep (but not more than its Health).")
+      card.name = "cards.coreshatter_spell_tickle_tendril_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_tickle_tendril_desc"))
       card.manaCost = 3
       card.rarityId = Rarity.Rare
       card.spellFilterType = SpellFilterType.EnemyDirect
@@ -335,14 +335,14 @@ class CardFactory_CoreshatterSet_Faction4
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction4
-      card.name = "Bonecrusher"
-      card.setDescription("Intensify: This minion gains +5 Attack.")
+      card.name = "cards.coreshatter_faction_4_shadow_brute_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_4_shadow_brute_desc"))
       card.atk = 0
       card.maxHP = 3
       card.manaCost = 3
       card.rarityId = Rarity.Common
       card.setInherentModifiersContextObjects([
-        ModifierIntensifyBuffSelf.createContextObject(5, 0, "Shadow Strength"),
+        ModifierIntensifyBuffSelf.createContextObject(5, 0, i18next.t("modifiers.coreshatter_faction_4_shadow_brute_shadow_strength_name")),
         ModifierCounterIntensify.createContextObject()
       ])
       card.setFXResource(["FX.Cards.Neutral.SilhoutteTracer"])
@@ -369,8 +369,8 @@ class CardFactory_CoreshatterSet_Faction4
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction4
-      card.name = "Chittering Tiller"
-      card.setDescription("Frenzy\nOpening Gambit: Teleport the enemy General one space forward.")
+      card.name = "cards.coreshatter_faction_4_whistling_harvester_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_4_whistling_harvester_desc"))
       card.atk = 4
       card.maxHP = 3
       card.manaCost = 3
@@ -405,8 +405,8 @@ class CardFactory_CoreshatterSet_Faction4
       card = new Unit(gameSession)
       card.setCardSetId(CardSet.Coreshatter)
       card.factionId = Factions.Faction4
-      card.name = "Gibbet"
-      card.setDescription("Whenever this attacks an enemy minion, destroy that minion and summon a Gibbet on that space.")
+      card.name = "cards.coreshatter_faction_4_mini_minion_name"
+      card.setDescription(i18next.t("cards.coreshatter_faction_4_mini_minion_desc"))
       card.atk = 1
       card.maxHP = 2
       card.manaCost = 2
@@ -439,12 +439,12 @@ class CardFactory_CoreshatterSet_Faction4
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.TwoForMe
-      card.name = "Demonic Conversion"
-      card.setDescription("Draw a minion from your opponent\'s deck. It gains +1/+1.")
+      card.name = "cards.coreshatter_spell_two_for_me_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_two_for_me_desc"))
       card.manaCost = 1
       card.rarityId = Rarity.Common
       card.spellFilterType = SpellFilterType.None
-      card.buffName = "Demonic Persuasion"
+      card.buffName = i18next.t("modifiers.coreshatter_spell_two_for_me_demonic_persuasion_name")
       card.setFXResource(["FX.Cards.Spell.DemonicConversion"])
       card.setBaseSoundResource(
         apply : RSX.sfx_spell_voidpulse02.audio
@@ -459,8 +459,8 @@ class CardFactory_CoreshatterSet_Faction4
       card.factionId = Factions.Faction4
       card.setCardSetId(CardSet.Coreshatter)
       card.id = Cards.Spell.EvilXerox
-      card.name = "Unleash the Evil"
-      card.setDescription("Summon a copy of the minion your opponent most recently summoned from their action bar. It gains Rush and Flying.")
+      card.name = "cards.coreshatter_spell_evil_xerox_name"
+      card.setDescription(i18next.t("cards.coreshatter_spell_evil_xerox_desc"))
       card.manaCost = 8
       card.rarityId = Rarity.Legendary
       card.spellFilterType = SpellFilterType.SpawnSource

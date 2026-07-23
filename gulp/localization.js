@@ -19,6 +19,7 @@ export function consolidate(locale) {
 export function copy() {
   // consolidate all individual language parts into index.json
   consolidate('en');
+  consolidate('zh-cn');
   return gulp.src('app/localization/locales/**/index.json')
     .pipe(gulp.dest('dist/src/resources/locales'));
 }

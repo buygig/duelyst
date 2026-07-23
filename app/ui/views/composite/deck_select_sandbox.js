@@ -13,6 +13,7 @@ var VirtualCollection = require('backbone-virtual-collection');
 var ProfileManager = require('app/ui/managers/profile_manager');
 var DeckSelectSandboxTmpl = require('app/ui/templates/composite/deck_select_sandbox.hbs');
 var CosmeticsFactory = require('app/sdk/cosmetics/cosmeticsFactory');
+var i18next = require('i18next');
 var _ = require('underscore');
 var DeckSelectCompositeView = require('./deck_select');
 
@@ -30,7 +31,7 @@ var DeckSelectSandboxCompositeView = DeckSelectCompositeView.extend({
     DeckSelectCompositeView.prototype.initialize.apply(this, arguments);
 
     // update title
-    this.model.set('title', 'Select Decks');
+    this.model.set('title', i18next.t('game_setup.choose_two_decks_header'));
   },
 
   /* region SELECTION */
@@ -131,7 +132,7 @@ var DeckSelectSandboxCompositeView = DeckSelectCompositeView.extend({
       EventBus.getInstance().trigger(EVENTS.start_challenge, challenge);
     } else {
       audio_engine.current().play_effect_for_interaction(RSX.sfx_ui_error.audio, CONFIG.ERROR_SFX_PRIORITY);
-      this._showSelectDeckWarningPopover(this.ui.$deckSelectConfirm, 'You must select 2 decks!');
+      this._showSelectDeckWarningPopover(this.ui.$deckSelectConfirm, i18next.t('game_setup.must_select_two_decks_message'));
     }
   },
 

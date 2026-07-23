@@ -15,7 +15,7 @@ userAgent = uaparser.getResult()
 App = new Backbone.Marionette.Application()
 
 # require Firebase via browserify but temporarily alias it global scope
-Firebase = window.Firebase = require 'firebase'
+Firebase = window.Firebase = require 'app/common/firebase'
 Promise = require 'bluebird'
 moment = require 'moment'
 semver = require 'semver'

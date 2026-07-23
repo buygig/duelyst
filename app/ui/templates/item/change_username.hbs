@@ -20,7 +20,7 @@
                   <div class="form-control-buttons">
 											{{#if canChangeUsernameForFree}}
                       <button class="btn btn-clean btn-clean-confirm prompt-submit">
-													Change
+												{{localize 'profile.change_username_submit_button_label'}}
                       </button>
 											{{else}}
                       <button class="btn btn-clean btn-clean-secondary prompt-submit">
@@ -33,7 +33,7 @@
                   	<p>{{localize 'profile.change_username_max_per_month_error'}}</p>
 									</div>
                   <div style="text-align: center; margin-top:20px;">
-                      <button class="btn btn-clean btn-clean-cancel prompt-cancel">OK</button>
+                      <button class="btn btn-clean btn-clean-cancel prompt-cancel">{{localize 'common.default_error_dialog_button_label'}}</button>
                   </div>
 							{{/if}}
             </div>
@@ -46,7 +46,7 @@
             <div class="prompt-success">
                 <div class="icon-container"><i class="fa fa-check"></i></div>
                 <h2 class="prompt-title">{{localize 'common.success_title'}}</h2>
-                <p class="prompt-message">{{localize 'common.change_username_success'}}</p>
+                <p class="prompt-message">{{localize 'profile.change_username_success'}}</p>
             </div>
 
             <div class="prompt-error">

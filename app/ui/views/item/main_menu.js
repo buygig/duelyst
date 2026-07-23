@@ -30,6 +30,7 @@ var PlayLayout = require('app/ui/views/layouts/play');
 var CosmeticsFactory = require('app/sdk/cosmetics/cosmeticsFactory');
 var ShopManager = require('app/ui/managers/shop_manager');
 var ShopData = require('app/data/shop.json');
+var OfflineMode = require('app/common/offline_mode');
 
 var moment = require('moment');
 
@@ -198,7 +199,7 @@ var MainMenuItemView = Backbone.Marionette.ItemView.extend({
     var selectedSceneData = SDK.CosmeticsFactory.sceneForIdentifier(CONFIG.selectedScene);
     this.ui.$sceneName.text(selectedSceneData.name);
 
-    if (!NewPlayerManager.getInstance().canSeeCrates() && CrateManager.getInstance().getGiftCrateCount() == 0) {
+    if (OfflineMode.isEnabled() || (!NewPlayerManager.getInstance().canSeeCrates() && CrateManager.getInstance().getGiftCrateCount() == 0)) {
       this.ui.$btnCrateInventory.addClass('hide');
     } else {
       this.ui.$btnCrateInventory.removeClass('hide');
@@ -211,7 +212,7 @@ var MainMenuItemView = Backbone.Marionette.ItemView.extend({
       this.ui.$btnCodex.removeClass('hide');
     }
 
-    if (!NewPlayerManager.getInstance().canSeeWatchSection()) {
+    if (OfflineMode.isEnabled() || !NewPlayerManager.getInstance().canSeeWatchSection()) {
       this.ui.$btnWatch.addClass('hide');
     } else {
       this.ui.$btnWatch.removeClass('hide');

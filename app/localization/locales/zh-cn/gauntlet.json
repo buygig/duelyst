@@ -1,0 +1,20 @@
+{
+	"gauntlet_title": "试炼场",
+	"gauntlet_instructions": "在试炼场检验你的实力。选取 30 张卡牌组成牌组，与其他玩家一决高下。每次获胜都会解锁更好的奖励，直到累计落败 3 次为止。",
+	"gauntlet_start_instructions": "花费 {{gold_price}} 金币开始一次试炼场征程，或用 {{hard_currency_price}} 购买门票。",
+	"ticket_inventory_label": "你有 {{count}} 张门票",
+	"ticket_inventory_label_plural": "你有 {{count}} 张门票",
+	"start_button_label": "开始",
+	"start_error_message_insufficient_gold": "你的金币不足，无法开始试炼场征程。",
+	"start_error_message_generic": "糟糕……开始试炼场征程时出现问题，请重试。",
+	"select_faction_label": "选择你的阵营",
+	"select_general_label": "选择你的将军",
+	"select_card_label": "选择一张卡牌",
+	"resign_run_button_label": "退出征程",
+	"resign_confirmation_message": "确定要退出本次征程吗？",
+	"claim_rewards_win_count_label": "胜利 {{count}} 场",
+	"claim_rewards_win_count_label_plural": "胜利 {{count}} 场",
+	"claim_rewards_button_label": "领取奖励",
+	"win_loss_label": "胜利：{{win_count}}   失败：{{loss_count}}",
+	"no_available_gauntlet_decks": "你最近没有使用过试炼场牌组。"
+}

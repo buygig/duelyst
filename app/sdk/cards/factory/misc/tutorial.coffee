@@ -639,7 +639,7 @@ class CardFactory_Tutorial
     if (identifier == Cards.Tutorial.TutorialRepulsor)
       card = new Unit(gameSession)
       card.factionId = Factions.Tutorial
-      card.name = i18next.t("neutral_repulsor_beast_name")
+      card.name = i18next.t("cards.neutral_repulsor_beast_name")
       card.setFXResource(["FX.Cards.Neutral.RepulsionBeast"])
       card.setBaseSoundResource(
         apply : RSX.sfx_unit_deploy.audio
@@ -678,7 +678,7 @@ class CardFactory_Tutorial
     if (identifier == Cards.Tutorial.TutorialVox)
       card = new Unit(gameSession)
       card.factionId = Factions.Tutorial
-      card.name = "Vox"
+      card.name = i18next.t("cards.runtime_misc_tutorial_tutorial_vox_name")
       card.setFXResource(["FX.Cards.Neutral.Vex"])
       card.setBaseSoundResource(
         apply : RSX.sfx_neutral_luxignis_death.audio
@@ -803,8 +803,8 @@ class CardFactory_Tutorial
       card.durability = 3
       card.setTargetModifiersContextObjects([
         Modifier.createContextObjectWithAttributeBuffs(1,undefined, {
-          name: "Ironcliffe Cestus"
-          description: "+1 Attack."
+          name: i18next.t("modifiers.runtime_misc_tutorial_tutorial_sunstone_bracers_ironcliffe_cestus_name")
+          description: i18next.t("modifiers.runtime_misc_tutorial_tutorial_sunstone_bracers_ironcliffe_cestus_desc")
         })
       ])
       card.setFXResource(["FX.Cards.Artifact.SunstoneBracers"])

@@ -157,7 +157,7 @@ class CardFactory_BloodstormSet_Faction6
       customContextObject.resetsDamage = true
       customContextObject.isRemovable = false
       customContextObject.appliedName = i18next.t("modifiers.faction_6_spell_enfeeble_1")
-      customContextObject.appliedDescription = i18next.t("modifiers.faction_6_spell_enfeeble_2_1")
+      customContextObject.appliedDescription = i18next.t("modifiers.faction_6_spell_enfeeble_2")
       card.setTargetModifiersContextObjects([  customContextObject])
       card.setFXResource(["FX.Cards.Spell.Enfeeble"])
       card.setBaseSoundResource(
