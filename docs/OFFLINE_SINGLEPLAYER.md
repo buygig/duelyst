@@ -52,7 +52,8 @@ profile, and port to retain progress. Clearing site data for the matching
 corepack yarn build:offline
 ```
 
-The normal online build remains available through `corepack yarn build`.
+`corepack yarn build` is an alias for the same offline build. The removed
+online/CDN release pipeline is no longer a supported product path.
 
 ## Windows installer
 

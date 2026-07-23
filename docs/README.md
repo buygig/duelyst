@@ -1,8 +1,7 @@
-# OpenDuelyst Documentation
+# Duelyst Offline 文档
 
-- [Quick Start Guide](QUICKSTART.md)
-- [Contributing to OpenDuelyst](CONTRIBUTING.md)
-- [Duelyst Service Architecture](ARCHITECTURE.md)
-- [Building and Testing Docker Images](DOCKER.md)
-- [Workflow Automation with Gulp](GULP.md)
-- [Infrastructure Documentation](infrastructure/README.md)
+- [离线单机运行、构建与安装包](OFFLINE_SINGLEPLAYER.md)
+- [离线单机架构](ARCHITECTURE.md)
+- [中文翻译与玩家文本维护](LOCALIZATION.md)
+- [贡献指南](CONTRIBUTING.md)
+- [离线构建工作流](GULP.md)

@@ -1,143 +1,53 @@
-# Duelyst Service Architecture
+# 离线单机架构
 
-<img src="diagrams/services.png" alt="Service Architecture Diagram" width=600 />
+这个分支只有一个产品形态：在浏览器或 Electron 中运行的本地单机游戏。
+它不再包含 HTTP API、多人游戏服务器、Worker、Firebase 服务、PostgreSQL、
+Redis、Socket.IO、Docker、Terraform 或云端发布链路。
 
-## Client Architecture
+## 运行边界
 
-The game client is a Backbone.js + Marionette application which runs in the
-browser. Code can be found in `app/`, and configuration can be found in
-`app/common/config.js`.
+```text
+浏览器 / Electron
+  -> Backbone + Marionette 界面（app/ui）
+  -> 本地管理器与兼容适配层（app/offline、app/ui/managers）
+  -> 游戏规则与会话（app/sdk）
+  -> 电脑 AI（packages/game-ai）
+  -> localStorage / Electron 用户数据目录
+```
 
-The game engine to render the client in HTML is [Cocos2d-JS (vs 3.3)](https://docs.cocos.com/cocos2d-x/manual/en/)
+- `app/index.coffee` 等待本地化资源就绪后启动应用。
+- `app/application.coffee` 只连接离线需要的管理器，并负责菜单、牌组选择、
+  挑战和对局界面之间的导航。
+- `app/common/session2.coffee` 在离线模式下自动创建固定的本地玩家会话。
+- `app/offline/local_api.js` 实现离线功能需要的有限 API 兼容面；未知路由会
+  明确报错，避免静默伪造成功。
+- `app/offline/local_firebase.js` 是仅在进程内和本机存储上工作的
+  Firebase-compatible 适配器。`packages/backfire` 只把 Backbone
+  Model/Collection 接到这个本地适配器。
+- `app/common/storage.js` 负责浏览器存档；Electron 会将同样的数据保存到自身
+  的用户数据目录。
+- `app/sdk` 是确定性的游戏规则、卡牌、行动、验证器、挑战与序列化层。
+- `packages/game-ai` 是从旧服务端独立出来的纯游戏 AI，不依赖网络或数据库。
 
-## Server Architecture
+## 内容与资源
 
-Duelyst's backend primarily consists of four CoffeeScript services:
+- 卡牌、规则、挑战和典籍数据位于 `app/sdk`。
+- 玩家可见字符串统一位于 `app/localization/locales`；具体约定见
+  [LOCALIZATION.md](LOCALIZATION.md)。
+- 图片、音频、字体和特效位于 `app/resources`。
+- 离线构建会排除商店、表情、竞技场、开包、宝箱和赛季奖励等纯在线资源，
+  但保留对战、牌组、挑战和典籍所需资源。
 
-API Server:
+## 构建与桌面壳
 
-- The API server is an Express.js app which handles routes for game clients.
-- The service stores user and game data in Postgres and Redis.
-- The service listens on port 3000 by default, and it serves the browser client
-	on the default route.
-- Code can be found in `server/api.coffee`, and configuration can be found in
-	`config/`.
+- `gulpfile.babel.js` 只注册本地构建任务。
+- `gulp/bundler.js` 用 Browserify 生成游戏 bundle。
+- `gulp/rsx.js` 生成资源包清单并复制离线资源。
+- `desktop-offline` 是唯一桌面壳，只打包 `dist/src`，不启动任何本地后端。
+- `scripts/serve_offline.js` 是开发时使用的静态文件服务器。
 
-Game Server:
+## 依赖方向
 
-- The Game server is a Socket.io WebSocket server which handles multiplayer
-	games.
-- The service enqueues tasks in Redis to be picked up by the workers.
-- The service listens on port 8001 by default.
-- Code can be found in `server/game.coffee`, and configuration can be found in
-	`config/`.
-
-Single Player (SP) Server:
-
-- The SP server is a Socket.io WebSocket server which handles single-player
-	games.
-- The service enqueues tasks in Redis to be picked up by the workers.
-- The service listens on port 8000 by default.
-- Code can be found in `server/single_player.coffee`, and configuration can be
-	found in `config/`.
-
-Worker:
-
-- The worker uses Kue to poll Redis-backed queues for tasks like game creation
-	and matchmaking.
-- Some matchmaking tasks also use Postgres, for server healthchecks and
-	retrieving bot users.
-- Code can be found in `worker/worker.coffee`, and configuration can be found
-	in `config/`.
-- A Kue GUI is available at `http://localhost:4000` via
-	`docker compose up worker-ui`).
-
-## Other Dependencies
-
-Firebase Realtime Database:
-
-- Provides a way to the game client to access both permanent and transient
-	data, without direct access to Postgres, such as transmitting game steps.
-- Client code can be found in `app` (see `new Firebase()` calls) and
-	`server/lib/duelyst_firebase_module.coffee`, and configuration can be found
-	in `config/`
-
-Postgres:
-
-- Stores relational data for users, completed games, database migrations, and
-	more
-- Client code can be found in `server/lib/data_access/knex.coffee` and
-	`server/knexfile.js`, and configuration can be found in `config/`
-- Migrations can be run via `docker compose up migrate`
-
-Redis:
-
-- Used as a backing queue for Kue tasks, as well as for matchmaking, game
-	management, player queues, and more
-- Client code can be found in `server/redis/index.coffee`, and configuration
-	can be found in `config/`
-
-Consul:
-
-- Not required in single-server deployments, but was historically used for
-	service discovery, matchmaking, and spectating
-- Client code can be found in `server/lib/consul.coffee`, and configuration can
-	be found in `config/`
-
-AWS S3:
-
-- Provides binary large object (blob) storage for generic file storage.
-- Not currently used, but code is available to use S3 for CDN, unfinished game
-	archiving, client logging, and database backup features.
-
-## Resource Utilization <a id="resource-utilization" />
-
-The following resource utilization numbers were measured by Docker locally. The
-baseline numbers were measured when idle, and the peak and per-game numbers
-were measured when playing a practice game (which performs the same work as the
-Game WebSocket server, plus computational work for AI decisions).
-
-#### Node.js processes (API, Game, SP, Worker):
-
-- CPU: 0-1% baseline; API spikes to 15-65% on loads; SP spikes to 5% on AI
-	processing.
-  - NOTE: The API spikes during loads are largely due to serving 75MB of static
-		assets from Express instead of CDN.
-- Memory: 300MB baseline. API increases to ~500MB over time.
-- Network: Near-zero baseline.
-	- API sends about 500KB per game.
-	- Game and SP send about 200KB per game.
-	- Worker's baseline is 1-2KB/s (internal, unbilled traffic).
-		- This ongoing traffic is due to Kue polling; see
-			`server/redis/r-jobs.coffee`.
-- Storage: About 5GB (2.0GB for OS baseline, 1.3GB for `app/`, 0.8GB for
-	`node_modules/`, 0.5GB for `dist/`)
-
-#### Postgres database:
-
-- CPU: Near-zero baseline. Reaches 7% on user retrieval (login etc.)
-- Memory: 20MB baseline. Increases to 70MB after logging in and playing games
-	(caching)
-- Network: Near-zero baseline. Sends 10-15KB (internal, unbilled traffic) on
-	user operations (fetching users, challenges, cards, etc.)
-- Storage: About 1GB (0.5GB for OS baseline, 0.1GB for `/var/lib/postgresql`
-	with ~5 users, ~20 games)
-
-#### Redis cache:
-
-- CPU: 1% baseline. Stays under 2% during games.
-	- Redis 6.x has a second thread for connection handling, but we don't benefit
-		much from this at our small scale.
-- Memory: 4MB baseline; under 5MB when playing local single player.
-- Network: 1KB/s baseline. Sends under 1MB per game (internal, unbilled
-	traffic).
-	- This ongoing traffic is due to Kue polling; see
-		`server/redis/r-jobs.coffee`.
-- Storage: Under 200MB.
-
-#### Total resources used for 250 concurrent, 10-minute games (125 MP, 125 SP):
-
-- vCPU: About 10 (Half of this is API and Worker)
-- Memory: About 2GB (though more will improve buffer/cache efficiency)
-- Network: About 300 KB/s overall; 175MB total for 250 games (700KB per game)
-- Storage: About 22GB with each service on a different instance.
+游戏规则和 AI 不应依赖界面或桌面壳；本地兼容适配层可以依赖规则层，但不得
+发起外部网络请求。新增功能若需要持久化，应扩展本地存储模型或显式版本化的
+存档结构，而不是重新引入在线服务接口。

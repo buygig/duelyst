@@ -1,4 +1,4 @@
-# Contributing to OpenDuelyst
+# Contributing to Duelyst Offline
 
 This document will introduce you to the code and guide you through making
 changes.
@@ -14,47 +14,42 @@ changes.
 
 ## Helpful Links <a id="helpful-links" />
 
-- [Quick Start Guide](QUICKSTART.md)
+- [Offline Single-player Guide](OFFLINE_SINGLEPLAYER.md)
 - [Architecture Documentation](ARCHITECTURE.md)
-- [Open Issues](https://github.com/open-duelyst/duelyst/issues)
 - [Mocha Unit Testing API Reference](https://mochajs.org/api/)
 - [Chai Assertion API Reference](https://www.chaijs.com/api/)
 
 ## Code Structure <a id="code-structure" />
 
 An in-depth explanation of the code can be found in the Architecture
-Documentation above. It contains some pointers to the specific places in the
-code used by each service or component.
+Documentation above. It explains the local runtime boundary and the dependency
+direction between the UI, compatibility adapters, game rules, and AI.
 
 To help you get acquainted more quickly, here is a list of files and
 directories commonly used when working on the game:
 
-- `app/` contains code for the frontend / game client
-- `config/` contains configuration for backend services
-- `docker-compose.yaml` contains our Docker container configuration
-- `docs` contains documentation, including this guide
+- `app/` contains the UI, local adapters, game rules, cards, and resources
+- `config/` contains the offline build configuration
+- `desktop-offline/` contains the Electron shell and Windows installer metadata
+- `docs/` contains documentation, including this guide
 - `gulp/` and `gulpfile.babel.js` contain workflow automation, for tasks like
 	building the code
-- `package.json` contains our Node.js dependencies
-- `server` contains code for the HTTP API server and the WebSocket game servers
-- `terraform` contains code for provisioning staging and production
-	environments
-- `test` contains unit and integration tests
-- `worker` contains code for the worker, which processes asynchronous
-	background jobs
+- `packages/game-ai/` contains the local computer opponent
+- `package.json` contains Node.js dependencies and supported commands
+- `scripts/` contains offline serving, localization, asset, and content tools
+- `test/` contains unit, localization, offline-adapter, and game-rule tests
 
 #### Code Style and Linting
 
 For JavaScript code, we use ESLint to enforce code style.
 Its configuration can be found in `.eslintrc.json`.
-You can run the linter with `yarn lint:js`.
+You can run the linter with `corepack yarn lint:js:all`.
 You can automatically format JS code to meet these standards by running
-`yarn format:js`.
+`corepack yarn format:js:all`.
 
 For CoffeeScript code, we use CoffeeLint to enforce code style.
 Its configuration can be found in `coffeelint.json`.
-You can run linters with `yarn lint:coffee`, `yarn lint:coffee:app`, or
-`yarn lint:coffee:backend`.
+You can run it with `corepack yarn lint:coffee`.
 
 #### Regarding JavaScript, CoffeeScript, and TypeScript
 
@@ -69,17 +64,16 @@ preconfigured for new code. After writing new TypeScript code, you can run
 
 ## Running Tests <a id="tests" />
 
-We use `mocha` and `chai` to run unit and integration tests in the project. Both
-of these are triggered by `yarn`.
+We use `mocha` and `chai` for local unit and regression tests.
 
-To run unit tests:
+To run the focused offline regression suite:
 ```
-yarn test:unit
+corepack yarn test:offline
 ```
 
-To run integration tests:
+To run every retained unit test:
 ```
-yarn test:integration
+corepack yarn test:unit
 ```
 
 ## Opening Pull Requests <a id="pull-requests" />
@@ -87,9 +81,8 @@ yarn test:integration
 Once you have a contribution ready, you can open a pull request to get it
 reviewed.
 
-First, fork OpenDuelyst on Github, and push your branch to the fork. Then, when
-signed into Github, you'll be prompted to open a pull request when viewing the
-OpenDuelyst repo.
+Push the branch to the repository that owns this offline fork, then open a pull
+request against its default branch.
 
 If the contribution solves an open issue, you can automatically close that
 issue when the PR is merged. To do this, include the text "Closes #1234" in the
@@ -101,8 +94,8 @@ Continuous Integration (CI) environment to lint and test the code.
 We use [Github Actions](https://github.com/features/actions) for CI, so you can
 see the atatus and results of these tasks right in the pull request itself.
 
-Once the PR has been reviewed and accepted, it will be merged into the `main`
-branch. At this point, you are now an OpenDuelyst developer. Congratulations!
+Before requesting review, run the offline tests and at least one complete
+`corepack yarn build:offline`.
 
 ## Versioning <a id="versioning" />
 
@@ -115,8 +108,6 @@ immediate release after `1.99` is `1.100` and not `2.0.0`.
 
 ## Where to Get Help <a id="help" />
 
-At the moment, you can get help with OpenDuelyst by opening an issue. Since this
-is a volunteer project, it may take a while for someone to look at your issue.
-
-You can also join the [OpenDuelyst Discord server](https://discord.gg/HhUWfZ9cxe)
-for technical discussion and support.
+Open an issue in the repository that owns this offline fork and include the
+exact command, error output, operating system, and whether the browser or
+desktop build was used.

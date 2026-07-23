@@ -1,54 +1,43 @@
-# OpenDuelyst
+# Duelyst Offline
 
 ![Duelyst Logo](app/resources/ui/brand_duelyst.png)
 
-This is the source code for Duelyst, a digital collectible card game and
-turn-based strategy hybrid developed by Counterplay Games and released in 2016.
+这是《Duelyst》的本地单机版本。游戏、电脑 AI、牌组、设置和挑战进度均在本机运行和保存，不需要 Firebase、PostgreSQL、Redis、Docker 或在线游戏服务器。
 
-This repo preserves the state of the game as it existed before the shutdown in
-2020, with improvements targeting the code and infrastructure. The game is
-playable by hosting a local server; there is no public server available at the
-moment. When playing locally, all factions and cards are unlocked, and you start
-with bonus Gold and Spirit for building new decks.
+## 快速开始
 
-For more information, you can join the Discord server for this project
-[here](https://discord.gg/HhUWfZ9cxe).
+安装 Node.js 后，在仓库根目录运行：
 
-## Quick Start
+```powershell
+corepack yarn workspaces focus
+corepack yarn offline
+```
 
-Running Duelyst locally requires a free Google Firebase account, software for
-running Docker containers, and a Node.js environment. For detailed instructions,
-see the [Quick Start Guide](docs/QUICKSTART.md).
+首次构建完成后，可以用下面的命令直接启动已有版本：
 
-## Playing on Android or iOS
+```powershell
+corepack yarn start:offline
+```
 
-The game can currently be played in Chrome or Safari on mobile platforms. Use
-the "Add to Home Screen" browser feature to hide the status bar during gameplay.
+构建 Windows 安装包：
 
-## Filing Issues and Reporting Bugs
+```powershell
+corepack yarn build:installer
+```
 
-If you encounter a bug and would like to report it, first check the
-[Open Issues](https://github.com/open-duelyst/duelyst/issues/) to see if the
-bug has already been reported. If not, create a new issue with the `bug` label.
+安装包会生成到 `dist/installer`。详细的运行方式、存档位置和已支持功能参见[离线单机说明](docs/OFFLINE_SINGLEPLAYER.md)。
 
-If you would like to request a technical feature or enhancement to the code,
-you can create a new issue with the `enhancement` label.
+## 中文与文本维护
 
-## Contributing
+游戏支持英文和简体中文。新增或修改玩家可见文本时，请统一写入本地化资源，不要直接写死在模板或业务代码中。具体约定参见[本地化指南](docs/LOCALIZATION.md)。
 
-If you're interested in contributing to the project, check out the
-[Contributor Guide](docs/CONTRIBUTING.md). This has some important details
-on technical issues and programming practices.
+## 开发文档
 
-### Localization
-
-The game currently includes English and German localization. If you'd like to
-contribute translations for another language, take a look at the
-`app/localization/locales` directory. You can copy the `en` folder and start
-updating strings for the new language, then submit a Pull Request with your
-contributions.
+- [文档索引](docs/README.md)
+- [离线单机架构](docs/ARCHITECTURE.md)
+- [贡献指南](docs/CONTRIBUTING.md)
+- [Gulp 构建说明](docs/GULP.md)
 
 ## License
 
-OpenDuelyst is licensed under the Creative Commons Zero v1.0 Universal license.
-You can see a copy of the license [here](LICENSE).
+本项目采用 Creative Commons Zero v1.0 Universal 许可证，详见 [LICENSE](LICENSE)。

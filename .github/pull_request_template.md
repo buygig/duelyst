@@ -1,29 +1,21 @@
 ## Summary
 
-Describe your changes here. Remove any inapplicable sections.
+Describe the player-visible result and the implementation boundary.
 
-**App changes (`app/`, etc.):**
+## Areas changed
 
-- ...
+- [ ] Offline UI or navigation
+- [ ] Game rules, cards, challenges, or AI
+- [ ] Local save/API/Firebase-compatible adapters
+- [ ] Localization or lore
+- [ ] Build, resources, or installer
+- [ ] Tests or documentation
 
-**Server changes (`config/`, `server/`, `worker/`, etc.):**
+## Verification
 
-- ...
-
-**Build changes (`docker/`, `gulp/`, `scripts/`, etc.):**
-
-- ...
-
-**Infrastructure changes (`.github/`, `terraform/`, etc.):**
-
-- ...
-
-## Testing
-
-Have you have tested your changes in the following scenarios?
-Feel free to check off scenarios which don't apply.
-
-- [ ] Starting backend services locally with `docker compose up` succeeds.
-- [ ] I am able to create a new user and log in locally.
-- [ ] I am able to complete a practice game locally.
-- [ ] I am able to complete a purchase of Orbs, etc.
+- [ ] `corepack yarn test:offline`
+- [ ] `corepack yarn build:offline`
+- [ ] A practice game can start, finish, and return to the main menu.
+- [ ] A challenge can start and save completion.
+- [ ] The changed flow works after restarting the browser or desktop app.
+- [ ] New player-facing text is stored in localization resources.
